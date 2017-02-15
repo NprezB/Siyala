@@ -17,10 +17,9 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Created by Natanael on 10/02/2017.
+ * Created by Natanael on 15/02/2017.
  */
-public class PantallaMenu implements Screen {
-
+public class PantallaCreditos implements Screen {
     private static final float ANCHO = 1280;
     private static final float ALTO = 800;
     private final Siyala siyala;
@@ -31,16 +30,14 @@ public class PantallaMenu implements Screen {
 
     //Texturas
     private Texture texturaFondo;
-    private Texture texturaBotonJuegoHist;
-    private Texture texturaBotonJuegoSurv;
-    private Texture texturaBotonCreditos;
+    private Texture texturaBotonSalir;
 
     //Escenas
     private Stage escena;
     private SpriteBatch batch;
 
     //Manejo de pantallas
-    public PantallaMenu(Siyala siyala) {
+    public PantallaCreditos(Siyala siyala) {
         this.siyala = siyala;
     }
 
@@ -57,57 +54,26 @@ public class PantallaMenu implements Screen {
         Image imgFondo = new Image(texturaFondo);
         escena.addActor(imgFondo);
 
-        //Boton Play Hist
-        TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHist));
-        ImageButton btnPlayHist = new ImageButton(trdBtnPlayHist);
-        btnPlayHist.setPosition(3*ANCHO/4,5*ALTO/16);
-        escena.addActor(btnPlayHist);
+        //Boton Salir
+        TextureRegionDrawable trdBtnSalir = new TextureRegionDrawable(new TextureRegion(texturaBotonSalir));
+        ImageButton btnSalir = new ImageButton(trdBtnSalir);
+        btnSalir.setPosition(ANCHO-texturaBotonSalir.getWidth()/2,ALTO-texturaBotonSalir.getHeight()/2);
+        escena.addActor(btnSalir);
 
-        //Evento del Boton Play Hist
-        btnPlayHist.addListener(new ClickListener(){
+        //Evento del Boton Salir
+        btnSalir.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
                 Gdx.app.log("Clicked","Me hicieron click");
-                siyala.setScreen(new PantallaPlayHist(siyala));
+                siyala.setScreen(new PantallaMenu(siyala));
             }
-        });
-
-        //Boton Play Surv
-        TextureRegionDrawable trdBtnPlaySurv = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoSurv));
-        ImageButton btnPlaySurv = new ImageButton(trdBtnPlaySurv);
-        btnPlaySurv.setPosition(3*ANCHO/4,6*ALTO/16);
-        escena.addActor(btnPlaySurv);
-
-        //Evento del Boton Play Surv
-        btnPlaySurv.addListener(new ClickListener(){
-            public void clicked(InputEvent event,float x, float y){
-                Gdx.app.log("Clicked","Me hicieron click");
-                siyala.setScreen(new PantallaPlaySurv(siyala));
-            }
-
-        });
-
-        //Boton Creditos
-        TextureRegionDrawable trdBtnCred = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
-        ImageButton btnCred = new ImageButton(trdBtnCred);
-        btnCred.setPosition(3*ANCHO/4,7*ALTO/16);
-        escena.addActor(btnCred);
-
-        //Evento del Boton Creditos
-        btnCred.addListener(new ClickListener(){
-           public void clicked(InputEvent event,float x, float y){
-               Gdx.app.log("Clicked","Me hicieron click");
-               siyala.setScreen(new PantallaCreditos(siyala));
-           }
 
         });
 
     }
 
     private void cargarTexturas() {
-        texturaFondo = new Texture("FondoMenuInicio.png");
-        texturaBotonCreditos = new Texture("BotonCreditos.png");
-        texturaBotonJuegoHist = new Texture("BotonJuegoHistoria.png");
-        texturaBotonJuegoSurv = new Texture("BotonJuegoSurvival.png");
+        texturaFondo = new Texture("FondoCreditos.png");
+        texturaBotonSalir = new Texture("BotonSalir.png");
     }
 
     private void crearCamara() {
@@ -128,7 +94,6 @@ public class PantallaMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-    @Override
     public void resize(int width, int height) {
         vista.update(width,height);
     }
@@ -151,9 +116,8 @@ public class PantallaMenu implements Screen {
     @Override
     public void dispose() {
         escena.dispose();
-        texturaBotonCreditos.dispose();
-        texturaBotonJuegoSurv.dispose();
-        texturaBotonJuegoHist.dispose();
+        texturaBotonSalir.dispose();
         texturaFondo.dispose();
+
     }
 }
