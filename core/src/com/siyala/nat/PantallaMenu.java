@@ -66,7 +66,6 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Creditos
         btnPlayHist.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y){
-                Gdx.app.log("clicked","Me hicieron click");
                 siyala.setScreen(new PantallaCreditos(siyala));
             }
         });
@@ -80,7 +79,6 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Play Surv
         btnPlaySurv.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                Gdx.app.log("Clicked","Me hicieron click");
                 siyala.setScreen(new PantallaPlaySurv(siyala));
             }
 
@@ -95,7 +93,6 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Jugar Historia
         btnCred.addListener(new ClickListener(){
            public void clicked(InputEvent event,float x, float y){
-               Gdx.app.log("Clicked","Me hicieron click");
               siyala.setScreen(new PantallaPlayHist(siyala));
            }
 

@@ -63,7 +63,6 @@ public class PantallaCreditos implements Screen {
         //Evento del Boton Salir
         btnSalir.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
-                Gdx.app.log("Clicked","Me hicieron click");
                 siyala.setScreen(new PantallaMenu(siyala));
             }
 
