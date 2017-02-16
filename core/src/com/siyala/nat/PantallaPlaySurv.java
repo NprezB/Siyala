@@ -57,7 +57,7 @@ public class PantallaPlaySurv implements Screen {
         //Boton Salir
         TextureRegionDrawable trdBtnSalir = new TextureRegionDrawable(new TextureRegion(texturaBotonSalir));
         ImageButton btnSalir = new ImageButton(trdBtnSalir);
-        btnSalir.setPosition(ANCHO-texturaBotonSalir.getWidth()/2,ALTO-texturaBotonSalir.getHeight()/2);
+        btnSalir.setPosition(ANCHO-texturaBotonSalir.getWidth(),ALTO-texturaBotonSalir.getHeight());
         escena.addActor(btnSalir);
 
         //Evento del Boton Salir
@@ -68,11 +68,12 @@ public class PantallaPlaySurv implements Screen {
             }
 
         });
+        Gdx.input.setInputProcessor(escena);
 
     }
 
     private void cargarTexturas() {
-        texturaFondo = new Texture("FondoJuegoSurv.png");
+        texturaFondo = new Texture("FondoJuego.png");
         texturaBotonSalir = new Texture("BotonSalir.png");
     }
 

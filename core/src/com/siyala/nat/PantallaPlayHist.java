@@ -38,6 +38,7 @@ public class PantallaPlayHist implements Screen {
 
     //Manejo de pantallas
     public PantallaPlayHist(Siyala siyala) {
+
         this.siyala = siyala;
     }
 
@@ -57,7 +58,7 @@ public class PantallaPlayHist implements Screen {
         //Boton Salir
         TextureRegionDrawable trdBtnSalir = new TextureRegionDrawable(new TextureRegion(texturaBotonSalir));
         ImageButton btnSalir = new ImageButton(trdBtnSalir);
-        btnSalir.setPosition(ANCHO-texturaBotonSalir.getWidth()/2,ALTO-texturaBotonSalir.getHeight()/2);
+        btnSalir.setPosition(ANCHO-texturaBotonSalir.getWidth(),ALTO-texturaBotonSalir.getHeight());
         escena.addActor(btnSalir);
 
         //Evento del Boton Salir
@@ -68,7 +69,7 @@ public class PantallaPlayHist implements Screen {
             }
 
         });
-
+        Gdx.input.setInputProcessor(escena);
     }
 
     private void cargarTexturas() {

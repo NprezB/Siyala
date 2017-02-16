@@ -57,24 +57,24 @@ public class PantallaMenu implements Screen {
         Image imgFondo = new Image(texturaFondo);
         escena.addActor(imgFondo);
 
-        //Boton Play Hist
-        TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHist));
+        //Boton Creditos
+        TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
         ImageButton btnPlayHist = new ImageButton(trdBtnPlayHist);
-        btnPlayHist.setPosition(3*ANCHO/4,5*ALTO/16);
+        btnPlayHist.setPosition(3*ANCHO/4,3*ALTO/8);
         escena.addActor(btnPlayHist);
 
-        //Evento del Boton Play Hist
+        //Evento del Boton Creditos
         btnPlayHist.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y){
-                Gdx.app.log("Clicked","Me hicieron click");
-                siyala.setScreen(new PantallaPlayHist(siyala));
+            public void clicked(InputEvent event,float x,float y){
+                Gdx.app.log("clicked","Me hicieron click");
+                siyala.setScreen(new PantallaCreditos(siyala));
             }
         });
 
         //Boton Play Surv
         TextureRegionDrawable trdBtnPlaySurv = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoSurv));
         ImageButton btnPlaySurv = new ImageButton(trdBtnPlaySurv);
-        btnPlaySurv.setPosition(3*ANCHO/4,6*ALTO/16);
+        btnPlaySurv.setPosition(3*ANCHO/4,4.5f*ALTO/8);
         escena.addActor(btnPlaySurv);
 
         //Evento del Boton Play Surv
@@ -86,28 +86,29 @@ public class PantallaMenu implements Screen {
 
         });
 
-        //Boton Creditos
-        TextureRegionDrawable trdBtnCred = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
+        //Boton JugarHist
+        TextureRegionDrawable trdBtnCred = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHist));
         ImageButton btnCred = new ImageButton(trdBtnCred);
-        btnCred.setPosition(3*ANCHO/4,7*ALTO/16);
+        btnCred.setPosition(3*ANCHO/4,6*ALTO/8);
         escena.addActor(btnCred);
 
-        //Evento del Boton Creditos
+        //Evento del Boton Jugar Historia
         btnCred.addListener(new ClickListener(){
            public void clicked(InputEvent event,float x, float y){
                Gdx.app.log("Clicked","Me hicieron click");
-               siyala.setScreen(new PantallaCreditos(siyala));
+              siyala.setScreen(new PantallaPlayHist(siyala));
            }
 
         });
+        Gdx.input.setInputProcessor(escena);
 
     }
 
     private void cargarTexturas() {
         texturaFondo = new Texture("FondoMenuInicio.png");
-        texturaBotonCreditos = new Texture("BotonCreditos.png");
+        texturaBotonCreditos = new Texture("BotonJuegoHistoria.png");
         texturaBotonJuegoHist = new Texture("BotonJuegoHistoria.png");
-        texturaBotonJuegoSurv = new Texture("BotonJuegoSurvival.png");
+        texturaBotonJuegoSurv = new Texture("BotonJuegoHistoria.png");
     }
 
     private void crearCamara() {

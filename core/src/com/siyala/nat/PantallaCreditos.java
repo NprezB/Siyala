@@ -57,7 +57,7 @@ public class PantallaCreditos implements Screen {
         //Boton Salir
         TextureRegionDrawable trdBtnSalir = new TextureRegionDrawable(new TextureRegion(texturaBotonSalir));
         ImageButton btnSalir = new ImageButton(trdBtnSalir);
-        btnSalir.setPosition(ANCHO-texturaBotonSalir.getWidth()/2,ALTO-texturaBotonSalir.getHeight()/2);
+        btnSalir.setPosition(ANCHO-texturaBotonSalir.getWidth(),ALTO-texturaBotonSalir.getHeight());
         escena.addActor(btnSalir);
 
         //Evento del Boton Salir
@@ -68,6 +68,7 @@ public class PantallaCreditos implements Screen {
             }
 
         });
+        Gdx.input.setInputProcessor(escena);
 
     }
 
