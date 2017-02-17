@@ -31,10 +31,14 @@ public class PantallaPlayHist implements Screen {
     //Texturas
     private Texture texturaFondo;
     private Texture texturaBotonSalir;
+    private Texture texturaSiyalaCharac;
 
     //Escenas
     private Stage escena;
     private SpriteBatch batch;
+
+    //SiyalaPersonaje
+    private PersonajeSiyala siyala1;
 
     //Manejo de pantallas
     public PantallaPlayHist(Siyala siyala) {
@@ -69,11 +73,15 @@ public class PantallaPlayHist implements Screen {
 
         });
         Gdx.input.setInputProcessor(escena);
+
+        //Crear a Siyala
+        siyala1 = new PersonajeSiyala(texturaSiyalaCharac,ANCHO/4,ALTO/3);
     }
 
     private void cargarTexturas() {
         texturaFondo = new Texture("FondoJuego.png");
         texturaBotonSalir = new Texture("ExitBoton.png");
+        texturaSiyalaCharac = new Texture("Siyala2.png");
     }
 
     private void crearCamara() {
@@ -87,6 +95,13 @@ public class PantallaPlayHist implements Screen {
     public void render(float delta) {
         borrarPantalla();
         escena.draw();
+
+        batch.begin();
+
+        siyala1.dibujar(batch);
+
+        batch.end();
+
     }
 
     private void borrarPantalla() {
