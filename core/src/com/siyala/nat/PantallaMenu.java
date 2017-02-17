@@ -103,9 +103,9 @@ public class PantallaMenu implements Screen {
 
     private void cargarTexturas() {
         texturaFondo = new Texture("FondoMenuInicio.png");
-        texturaBotonCreditos = new Texture("BotonJuegoHistoria.png");
-        texturaBotonJuegoHist = new Texture("BotonJuegoHistoria.png");
-        texturaBotonJuegoSurv = new Texture("BotonJuegoHistoria.png");
+        texturaBotonCreditos = new Texture("CreditssBoton.png");
+        texturaBotonJuegoHist = new Texture("BotonPlayMejorado.png");
+        texturaBotonJuegoSurv = new Texture("SurvivalBoton.png");
     }
 
     private void crearCamara() {

@@ -73,7 +73,7 @@ public class PantallaCreditos implements Screen {
 
     private void cargarTexturas() {
         texturaFondo = new Texture("FondoCreditos.png");
-        texturaBotonSalir = new Texture("BotonSalir.png");
+        texturaBotonSalir = new Texture("ExitBoton.png");
     }
 
     private void crearCamara() {
