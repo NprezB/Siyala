@@ -133,6 +133,6 @@ public class PantallaPlayHist implements Screen {
         escena.dispose();
         texturaBotonSalir.dispose();
         texturaFondo.dispose();
-
     }
+
 }
