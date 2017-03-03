@@ -31,8 +31,9 @@ public class PantallaPausa implements Screen {
 
     //Texturas
     private Texture texturaFondo;
-    private Texture botonSalir;
+    private Texture botonMenu;
     private Texture botonPlay;
+    private Texture botonSets;
 
     //Para escenas
     private SpriteBatch batch;
@@ -55,28 +56,58 @@ public class PantallaPausa implements Screen {
         Image imgFondo = new Image(texturaFondo);
         escena.addActor(imgFondo);
 
-        TextureRegionDrawable trdBtnSalir=new TextureRegionDrawable(new TextureRegion(botonSalir));
-        ImageButton btnSalir= new ImageButton(trdBtnSalir);
-        btnSalir.setPosition(ANCHO/2-btnSalir.getWidth()/2,3*ALTO/4-btnSalir.getHeight()/2);
-        escena.addActor(btnSalir);
+        //Botones
+        TextureRegionDrawable trdBtnPlay= new TextureRegionDrawable(new TextureRegion(botonPlay));
+        ImageButton btnPlay= new ImageButton(trdBtnPlay);
+        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2,6*ALTO/8);
+        escena.addActor(btnPlay);
 
-        btnSalir.addListener(new ClickListener(){
+        btnPlay.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
-                Gdx.app.log("Clicked","Me hicieron click");
                 siyala.setScreen(new PantallaMenu(siyala));
             }
 
         });
 
-        //Falta implementar el boton play
+        TextureRegionDrawable trdBtnMenu=new TextureRegionDrawable(new TextureRegion(botonMenu));
+        ImageButton btnMenu= new ImageButton(trdBtnMenu);
+        btnMenu.setPosition(ANCHO/2-btnMenu.getWidth()/2,3*ALTO/4-btnMenu.getHeight()/2);
+        escena.addActor(btnMenu);
+
+
+        btnMenu.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y){
+                siyala.setScreen(new PantallaMenu(siyala));
+            }
+
+        });
+
+
+        TextureRegionDrawable trdBtnSettings=new TextureRegionDrawable(new TextureRegion(botonSets));
+        ImageButton btnSettings=new ImageButton(trdBtnSettings);
+        btnSettings.setPosition(ANCHO/2-btnSettings.getWidth()/2,4.5f*ALTO/8);
+
+        btnSettings.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y){
+                siyala.setScreen(new PantallaSettings(siyala));
+            }
+
+        });
+
+
+
+
+
+        Gdx.input.setInputProcessor(escena);
 
 
     }
 
     private void cargarTexturas() {
         texturaFondo= new Texture("FondoPausa.png");
-        botonSalir= new Texture("BotonSalir.png");
-        botonPlay=new Texture("BotonPlay.png");
+        botonMenu= new Texture("BotonMenu.png");
+        botonPlay=new Texture("ContinueBoton.png");
+        botonSets=new Texture("BotonSettings.png");
     }
 
     private void crearCamara() {
@@ -121,6 +152,8 @@ public class PantallaPausa implements Screen {
     @Override
     public void dispose() {
         escena.dispose();
-        botonSalir.dispose();
+        botonMenu.dispose();
+        botonPlay.dispose();
+        botonSets.dispose();
     }
 }
