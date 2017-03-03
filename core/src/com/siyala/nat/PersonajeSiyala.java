@@ -1,5 +1,6 @@
 package com.siyala.nat;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,10 +13,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class PersonajeSiyala{
 
-    private final float timeAnimac;
+    private float timeAnimac;
     private Animation<TextureRegion> spriteAnimado;
 
     private Estado estadoSiy = Estado.Corriendo;
+    private float alturaActual;
+    private float alturaOriginal;
+    private final float velocidadSalto = 10;
+
 
     public PersonajeSiyala(Texture textura, float x, float y) {
         TextureRegion texturaCompeta = new TextureRegion(textura);
@@ -26,17 +31,35 @@ public class PersonajeSiyala{
         timeAnimac = 0;
     }
 
-    public void dibujar(SpriteBatch batch){
+    public void setEstado(Estado estadoSiy) {
+        this.estadoSiy = estadoSiy;
+    }
+
+    public void dibujar(SpriteBatch batch, float delta){
         switch (estadoSiy){
             case Corriendo:
-            case Saltando:
+                timeAnimac += Gdx.graphics.getDeltaTime();
+                TextureRegion region = spriteAnimado.getKeyFrame(timeAnimac);
+            case Subiendo:
+                alturaActual = delta*velocidadSalto;
+                if (alturaActual>=alturaOriginal+96){
+                    alturaActual = alturaOriginal+96;
+                    estadoSiy = Estado.Bajando
+                }
+            case Bajando:
+                alturaActual = delta*velocidadSalto;
+                if (alturaActual<=alturaOriginal){
+                    alturaActual = alturaOriginal;
+                    estadoSiy = Estado.Corriendo;
+                }
             case Desapareciendo:
         }
     }
 
     public enum Estado {
         Corriendo,
-        Saltando,
+        Subiendo,
+        Bajando,
         Desapareciendo
     }
 
