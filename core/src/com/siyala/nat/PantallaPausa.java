@@ -2,6 +2,7 @@ package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -106,7 +107,7 @@ public class PantallaPausa implements Screen {
     private void cargarTexturas() {
         texturaFondoPausa = new Texture("FondoPausa.png");
         texturaBotonPlay = new Texture("ContinueBoton.png");
-        texturaBotonSetts = new Texture("BotonSettings.png");
+        texturaBotonSetts = new Texture("BotonSetting.png");
         texturaBotonMenu = new Texture("ExitBoton.png");
     }
 
@@ -119,11 +120,19 @@ public class PantallaPausa implements Screen {
 
     @Override
     public void render(float delta) {
+        borrarPantalla();
+        escena.draw();
 
+    }
+
+    private void borrarPantalla() {
+        Gdx.gl.glClearColor(0,1,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
     @Override
     public void resize(int width, int height) {
+        vista.update(width,height);
 
     }
 

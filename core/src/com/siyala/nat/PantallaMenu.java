@@ -60,7 +60,7 @@ public class PantallaMenu implements Screen {
         //Boton Creditos
         TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
         ImageButton btnPlayHist = new ImageButton(trdBtnPlayHist);
-        btnPlayHist.setPosition(3*ANCHO/4,3*ALTO/8);
+        btnPlayHist.setPosition(2*ANCHO/3,3*ALTO/8);
         escena.addActor(btnPlayHist);
 
         //Evento del Boton Creditos
@@ -73,7 +73,7 @@ public class PantallaMenu implements Screen {
         //Boton Play Surv
         TextureRegionDrawable trdBtnPlaySurv = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoSurv));
         ImageButton btnPlaySurv = new ImageButton(trdBtnPlaySurv);
-        btnPlaySurv.setPosition(3*ANCHO/4,4.5f*ALTO/8);
+        btnPlaySurv.setPosition(2*ANCHO/3,4.5f*ALTO/8);
         escena.addActor(btnPlaySurv);
 
         //Evento del Boton Play Surv
@@ -87,7 +87,7 @@ public class PantallaMenu implements Screen {
         //Boton JugarHist
         TextureRegionDrawable trdBtnCred = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHist));
         ImageButton btnCred = new ImageButton(trdBtnCred);
-        btnCred.setPosition(3*ANCHO/4,6*ALTO/8);
+        btnCred.setPosition(2*ANCHO/3,6*ALTO/8);
         escena.addActor(btnCred);
 
         //Evento del Boton Jugar Historia
