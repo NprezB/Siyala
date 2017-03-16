@@ -44,21 +44,12 @@ public class PantallaPlayHist extends Pantalla {
     private OrthogonalTiledMapRenderer renderarMapa;
     private SpriteBatch batch;
 
-    // Mario
+    // Siyala
     private Personaje siyala;
     private Texture texturaSiyala;
 
     // Música
     private Music musicaFondo;  // Sonidos largos
-    private Sound efectoMoneda; // Sonido cortos
-
-    // Joystick
-    private Touchpad pad;
-
-    // HUD
-    private OrthographicCamera camaraHUD;
-    private Viewport vistaHUD;
-    private Stage escenaHUD;
 
     // AssetManager
     private AssetManager manager;
@@ -72,12 +63,11 @@ public class PantallaPlayHist extends Pantalla {
     @Override
     public void show() {
         cargarRecursosMario();
-        texturaSiyala = manager.get("siyala.png"); //new Texture("marioSprite.png");
+        texturaSiyala = manager.get("siyala.png");
         siyala = new Personaje(texturaSiyala,182,128);
         cargarMapa();
 
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
-        //Gdx.input.setInputProcessor(escenaHUD);
         Gdx.input.setCatchBackKey(true);
     }
 
@@ -88,23 +78,11 @@ public class PantallaPlayHist extends Pantalla {
     }
 
     private void cargarMapa() {
-        /*
-        AssetManager manager = new AssetManager();
-
-        manager.setLoader(TiledMap.class,
-                new TmxMapLoader(new InternalFileHandleResolver()));
-        manager.load("mapaMario.tmx", TiledMap.class);
-        // Cargar audios
-        manager.load("audio/marioBros.mp3",Music.class);
-        manager.load("audio/moneda.mp3",Sound.class);
-        manager.finishLoading();
-        */
         mapa = manager.get("Primer nivel.tmx");
         //musicaFondo = manager.get("Algo.mp3");
         //musicaFondo.setLooping(true);
         //musicaFondo.play();
 
-        //efectoMoneda = manager.get("moneda.mp3");
         batch = new SpriteBatch();
 
         renderarMapa = new OrthogonalTiledMapRenderer(mapa, batch);
@@ -114,17 +92,13 @@ public class PantallaPlayHist extends Pantalla {
     @Override
     public void render(float delta) {
         siyala.actualizar(mapa, delta, velociCamara);
-        //if (siyala.recolectarMonedas(mapa)) {
-        //    efectoMoneda.play();
-        //}
-        // ACTUALIZAR LA CAMARA
         actualizarCamara();
         posiCamara+=delta*velociCamara;
 
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
         renderarMapa.setView(camara);
-        renderarMapa.render();  // DIBUJA el mapa
+        renderarMapa.render();
         float nuevaX = camara.position.x + 1;
         float nuevaY = camara.position.y;
 
@@ -132,7 +106,6 @@ public class PantallaPlayHist extends Pantalla {
         siyala.dibujar(batch);
         batch.end();
 
-        // Salir?
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
             juego.setScreen(new PantallaMenu(juego));
         }
