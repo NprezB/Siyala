@@ -1,18 +1,30 @@
 package com.siyala.nat;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -21,101 +33,117 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Created by Natanael on 15/02/2017.
  */
-public class PantallaPlayHist implements Screen {
-    private static final float ANCHO = 1280;
-    private static final float ALTO = 800;
-    private final Siyala siyala;
 
-    //camara y vista
-    private OrthographicCamera camara;
-    private Viewport vista;
+public class PantallaPlayHist extends Pantalla {
+    public static final int ANCHO_MAPA = 2560;
+    public static final int ALTO_MAPA = 800;
+    private final Siyala juego;
+    private float posiCamara = ANCHO/2;
 
-    //Texturas
-    private Texture texturaFondo;
-    private Texture texturaBotonSalir;
-    private Texture texturaSiyalaCharac;
-
-    //Escenas
-    private Stage escena;
+    private TiledMap mapa;
+    private OrthogonalTiledMapRenderer renderarMapa;
     private SpriteBatch batch;
 
-    //SiyalaPersonaje
-    private PersonajeSiyala siyala1;
+    // Mario
+    private Personaje siyala;
+    private Texture texturaSiyala;
 
-    //Manejo de pantallas
-    public PantallaPlayHist(Siyala siyala) {
+    // Música
+    private Music musicaFondo;  // Sonidos largos
+    private Sound efectoMoneda; // Sonido cortos
 
-        this.siyala = siyala;
+    // Joystick
+    private Touchpad pad;
+
+    // HUD
+    private OrthographicCamera camaraHUD;
+    private Viewport vistaHUD;
+    private Stage escenaHUD;
+
+    // AssetManager
+    private AssetManager manager;
+    private float velociCamara=64;
+
+    public PantallaPlayHist(Siyala juego) {
+        this.juego = juego;
+        manager = juego.getAssetManager();
     }
 
     @Override
     public void show() {
-        crearCamara();
-        cargarTexturas();
-        crearObjetos();
-        Gdx.input.setInputProcessor(new Procesador());
+        cargarRecursosMario();
+        texturaSiyala = manager.get("siyala.png"); //new Texture("marioSprite.png");
+        siyala = new Personaje(texturaSiyala,182,128);
+        cargarMapa();
+
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
+        //Gdx.input.setInputProcessor(escenaHUD);
+        Gdx.input.setCatchBackKey(true);
     }
 
-    private void crearObjetos() {
+    private void cargarRecursosMario() {
+        manager.load("siyala.png", Texture.class);
+        manager.load("Primer nivel.tmx", TiledMap.class);
+        manager.finishLoading();
+    }
+
+    private void cargarMapa() {
+        /*
+        AssetManager manager = new AssetManager();
+
+        manager.setLoader(TiledMap.class,
+                new TmxMapLoader(new InternalFileHandleResolver()));
+        manager.load("mapaMario.tmx", TiledMap.class);
+        // Cargar audios
+        manager.load("audio/marioBros.mp3",Music.class);
+        manager.load("audio/moneda.mp3",Sound.class);
+        manager.finishLoading();
+        */
+        mapa = manager.get("Primer nivel.tmx");
+        //musicaFondo = manager.get("Algo.mp3");
+        //musicaFondo.setLooping(true);
+        //musicaFondo.play();
+
+        //efectoMoneda = manager.get("moneda.mp3");
         batch = new SpriteBatch();
-        escena = new Stage(vista,batch);
-        Image imgFondo = new Image(texturaFondo);
-        escena.addActor(imgFondo);
 
-        //Boton Salir
-        TextureRegionDrawable trdBtnSalir = new TextureRegionDrawable(new TextureRegion(texturaBotonSalir));
-        ImageButton btnSalir = new ImageButton(trdBtnSalir);
-        btnSalir.setPosition(ANCHO-texturaBotonSalir.getWidth(),ALTO-texturaBotonSalir.getHeight());
-        escena.addActor(btnSalir);
-
-        //Evento del Boton Salir
-        btnSalir.addListener(new ClickListener(){
-            public void clicked(InputEvent event,float x, float y){
-                siyala.setScreen(new PantallaMenu(siyala));
-            }
-
-        });
-        Gdx.input.setInputProcessor(escena);
-
-        //Crear a Siyala
-        siyala1 = new PersonajeSiyala(texturaSiyalaCharac,ANCHO/4,ALTO/3);
-    }
-
-    private void cargarTexturas() {
-        texturaFondo = new Texture("FondoJuego.png");
-        texturaBotonSalir = new Texture("ExitBoton.png");
-        texturaSiyalaCharac = new Texture("siyala.png");
-    }
-
-    private void crearCamara() {
-        camara = new OrthographicCamera(ANCHO, ALTO);
-        camara.position.set(ANCHO/2,ALTO/2,0);
-        camara.update();
-        vista = new StretchViewport(ANCHO,ALTO,camara);
+        renderarMapa = new OrthogonalTiledMapRenderer(mapa, batch);
+        renderarMapa.setView(camara);
     }
 
     @Override
     public void render(float delta) {
+        siyala.actualizar(mapa, delta, velociCamara);
+        //if (siyala.recolectarMonedas(mapa)) {
+        //    efectoMoneda.play();
+        //}
+        // ACTUALIZAR LA CAMARA
+        actualizarCamara();
+        posiCamara+=delta*velociCamara;
+
         borrarPantalla();
-        escena.draw();
+        batch.setProjectionMatrix(camara.combined);
+        renderarMapa.setView(camara);
+        renderarMapa.render();  // DIBUJA el mapa
+        float nuevaX = camara.position.x + 1;
+        float nuevaY = camara.position.y;
 
         batch.begin();
-
-        siyala1.dibujar(batch, delta);
-
+        siyala.dibujar(batch);
         batch.end();
 
+        // Salir?
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            juego.setScreen(new PantallaMenu(juego));
+        }
     }
 
-    private void borrarPantalla() {
-        Gdx.gl.glClearColor(0,1,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }
+    private void actualizarCamara() {
 
-    public void resize(int width, int height) {
-
-        vista.update(width,height);
+        camara.position.set(posiCamara,ALTO/2,0);
+        camara.update();
     }
+    // Usar resize para actualizar camaHUD
 
     @Override
     public void pause() {
@@ -128,21 +156,15 @@ public class PantallaPlayHist implements Screen {
     }
 
     @Override
-    public void hide() {
-        dispose();
-    }
-
-    @Override
     public void dispose() {
-        escena.dispose();
-        texturaBotonSalir.dispose();
-        texturaFondo.dispose();
+        manager.unload("siyala.png");
+        manager.unload("Primer nivel.tmx");
+        //manager.unload("Algo.mp3");
     }
 
-    private class Procesador implements InputProcessor {
-
+    private class ProcesadorEntrada implements InputProcessor
+    {
         private Vector3 v = new Vector3();
-
         @Override
         public boolean keyDown(int keycode) {
             return false;
@@ -160,9 +182,11 @@ public class PantallaPlayHist implements Screen {
 
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            v.set(screenX, screenY, 0);
+            v.set(screenX,screenY,0);
             camara.unproject(v);
-            siyala1.setEstado(PersonajeSiyala.Estado.Subiendo);
+            if(siyala.getEstadoMovimiento()==Personaje.EstadoMovimiento.MOV_DERECHA) {
+                siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+            }
             return true;
         }
 
