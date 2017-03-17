@@ -53,7 +53,7 @@ public class PantallaPlayHist extends Pantalla {
 
     // AssetManager
     private AssetManager manager;
-    private float velociCamara=64;
+    private float velociCamara=192;
 
     public PantallaPlayHist(Siyala juego) {
         this.juego = juego;
@@ -74,14 +74,15 @@ public class PantallaPlayHist extends Pantalla {
     private void cargarRecursosMario() {
         manager.load("siyala.png", Texture.class);
         manager.load("Primer nivel.tmx", TiledMap.class);
+        manager.load("DarkMusic.mp3", Music.class);
         manager.finishLoading();
     }
 
     private void cargarMapa() {
         mapa = manager.get("Primer nivel.tmx");
-        //musicaFondo = manager.get("Algo.mp3");
-        //musicaFondo.setLooping(true);
-        //musicaFondo.play();
+        musicaFondo = manager.get("DarkMusic.mp3");
+        musicaFondo.setLooping(true);
+        musicaFondo.play();
 
         batch = new SpriteBatch();
 
@@ -99,8 +100,6 @@ public class PantallaPlayHist extends Pantalla {
         batch.setProjectionMatrix(camara.combined);
         renderarMapa.setView(camara);
         renderarMapa.render();
-        float nuevaX = camara.position.x + 1;
-        float nuevaY = camara.position.y;
 
         batch.begin();
         siyala.dibujar(batch);
@@ -116,7 +115,6 @@ public class PantallaPlayHist extends Pantalla {
         camara.position.set(posiCamara,ALTO/2,0);
         camara.update();
     }
-    // Usar resize para actualizar camaHUD
 
     @Override
     public void pause() {
@@ -132,7 +130,7 @@ public class PantallaPlayHist extends Pantalla {
     public void dispose() {
         manager.unload("siyala.png");
         manager.unload("Primer nivel.tmx");
-        //manager.unload("Algo.mp3");
+        manager.unload("DarkMusic.mp3");
     }
 
     private class ProcesadorEntrada implements InputProcessor
