@@ -1,6 +1,7 @@
 package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,7 +24,7 @@ public class PantallaMenu implements Screen {
 
     private static final float ANCHO = 1280;
     private static final float ALTO = 800;
-    private final Siyala siyala;
+    private final Siyala juego;
 
     //camara y vista
     private OrthographicCamera camara;
@@ -41,7 +42,7 @@ public class PantallaMenu implements Screen {
 
     //Manejo de pantallas
     public PantallaMenu(Siyala siyala) {
-        this.siyala = siyala;
+        this.juego = siyala;
     }
 
     @Override
@@ -49,6 +50,7 @@ public class PantallaMenu implements Screen {
         crearCamara();
         cargarTexturas();
         crearObjetos();
+        Gdx.input.setCatchBackKey(false);
     }
 
     private void crearObjetos() {
@@ -66,7 +68,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Creditos
         btnPlayHist.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y){
-                siyala.setScreen(new PantallaCreditos(siyala));
+                juego.setScreen(new PantallaCreditos(juego));
             }
         });
 
@@ -79,7 +81,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Play Surv
         btnPlaySurv.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                siyala.setScreen(new PantallaPlaySurv(siyala));
+                juego.setScreen(new PantallaPlaySurv(juego));
             }
 
         });
@@ -93,7 +95,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Jugar Historia
         btnCred.addListener(new ClickListener(){
            public void clicked(InputEvent event,float x, float y){
-              siyala.setScreen(new PantallaPlayHist(siyala));
+              juego.setScreen(new PantallaPlayHist(juego));
            }
 
         });

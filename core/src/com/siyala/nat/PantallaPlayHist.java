@@ -30,6 +30,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import sun.security.util.Length;
+
 /**
  * Created by Natanael on 15/02/2017.
  */
@@ -92,7 +94,8 @@ public class PantallaPlayHist extends Pantalla {
 
     @Override
     public void render(float delta) {
-        siyala.actualizar(mapa, delta, velociCamara);
+        boolean pierde = false;
+        pierde = siyala.actualizar(mapa,delta,velociCamara);
         actualizarCamara();
         posiCamara+=delta*velociCamara;
 
@@ -106,6 +109,9 @@ public class PantallaPlayHist extends Pantalla {
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            juego.setScreen(new PantallaMenu(juego));
+        }
+        if (pierde){
             juego.setScreen(new PantallaMenu(juego));
         }
     }
@@ -155,8 +161,11 @@ public class PantallaPlayHist extends Pantalla {
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             v.set(screenX,screenY,0);
             camara.unproject(v);
-            if(siyala.getEstadoMovimiento()==Personaje.EstadoMovimiento.MOV_DERECHA) {
+            if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
                 siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+            }
+            if(siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x <= posiCamara){
+                siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
             }
             return true;
         }
