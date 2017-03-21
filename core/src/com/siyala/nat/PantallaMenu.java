@@ -35,6 +35,7 @@ public class PantallaMenu implements Screen {
     private Texture texturaBotonJuegoHist;
     private Texture texturaBotonJuegoSurv;
     private Texture texturaBotonCreditos;
+    private Texture texturaBotonSetts;
 
     //Escenas
     private Stage escena;
@@ -58,6 +59,22 @@ public class PantallaMenu implements Screen {
         escena = new Stage(vista,batch);
         Image imgFondo = new Image(texturaFondo);
         escena.addActor(imgFondo);
+
+        //Botones de ordenados de abajo hacia arriba como aparecen en menu
+
+        //Boton Settings
+        TextureRegionDrawable trdBtnSetts=new TextureRegionDrawable(new TextureRegion(texturaBotonSetts));
+        ImageButton btnSetts=new ImageButton(trdBtnSetts);
+        btnSetts.setPosition(3* ANCHO/4,1.5f*ALTO/8);
+        escena.addActor(btnSetts);
+
+        //Evento del boton
+        btnSetts.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+
+                juego.setScreen(new PantallaSettings(juego));
+            }
+        });
 
         //Boton Creditos
         TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
@@ -108,6 +125,7 @@ public class PantallaMenu implements Screen {
         texturaBotonCreditos = new Texture("CreditssBoton.png");
         texturaBotonJuegoHist = new Texture("BotonPlayMejorado.png");
         texturaBotonJuegoSurv = new Texture("SurvivalBoton.png");
+        texturaBotonSetts=new Texture("BotonSetting.png");
     }
 
     private void crearCamara() {
