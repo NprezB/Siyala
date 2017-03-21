@@ -11,6 +11,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -37,8 +38,8 @@ import sun.security.util.Length;
  */
 
 public class PantallaPlayHist extends Pantalla {
-    public static final int ANCHO_MAPA = 2560;
-    public static final int ALTO_MAPA = 800;
+    public static final int ANCHO_MAPA = 124*64;
+    public static final int ALTO_MAPA = 35*32;
     private final Siyala juego;
     private float posiCamara = ANCHO/2;
 
@@ -53,9 +54,16 @@ public class PantallaPlayHist extends Pantalla {
     // Música
     private Music musicaFondo;  // Sonidos largos
 
+    //HUDs
+    private OrthographicCamera camaraHUD;
+    private Viewport vistaHUD;
+    private Stage escenaHUD;
+
     // AssetManager
     private AssetManager manager;
     private float velociCamara=192;
+    private float distRecorrida = 0;
+    private Texto texto;
 
     public PantallaPlayHist(Siyala juego) {
         this.juego = juego;
@@ -64,16 +72,18 @@ public class PantallaPlayHist extends Pantalla {
 
     @Override
     public void show() {
-        cargarRecursosMario();
+        cargarRecursosSiyala();
         texturaSiyala = manager.get("siyala.png");
-        siyala = new Personaje(texturaSiyala,182,128);
+        siyala = new Personaje(texturaSiyala,182,14*32);
         cargarMapa();
+        texto = new Texto("fuente.fnt");
 
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
         Gdx.input.setCatchBackKey(true);
+
     }
 
-    private void cargarRecursosMario() {
+    private void cargarRecursosSiyala() {
         manager.load("siyala.png", Texture.class);
         manager.load("Primer nivel.tmx", TiledMap.class);
         manager.load("DarkMusic.mp3", Music.class);
@@ -96,8 +106,8 @@ public class PantallaPlayHist extends Pantalla {
     public void render(float delta) {
         boolean pierde = false;
         pierde = siyala.actualizar(mapa,delta,velociCamara);
-        actualizarCamara();
-        posiCamara+=delta*velociCamara;
+        //actualizarCamara();
+        //posiCamara+=delta*velociCamara;
 
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
@@ -106,6 +116,16 @@ public class PantallaPlayHist extends Pantalla {
 
         batch.begin();
         siyala.dibujar(batch);
+        actualizarCamara();
+        int distImprimir = ((int) distRecorrida);
+        if(siyala.getEstadoMovimiento()!=Personaje.EstadoMovimiento.PERDIENDO){
+            posiCamara+=delta*velociCamara;
+            distRecorrida+= delta*10;
+            texto.mostrarMensaje(batch,distImprimir+" m",camara.position.x+360,camara.position.y+275);
+            }
+        if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.PERDIENDO){
+            texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x,camara.position.y+140);
+        }
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
@@ -117,8 +137,17 @@ public class PantallaPlayHist extends Pantalla {
     }
 
     private void actualizarCamara() {
-
-        camara.position.set(posiCamara,ALTO/2,0);
+        if(siyala.sprite.getY()<=(ALTO_MAPA-(ALTO/2)) && siyala.sprite.getY()>=ALTO/2){
+            camara.position.set(posiCamara,siyala.sprite.getY(),0);
+        }
+        else{
+            if(siyala.sprite.getY()>(ALTO_MAPA-(ALTO/2))){
+                camara.position.set(posiCamara,(ALTO_MAPA-(ALTO/2)),0);
+            }
+            if(siyala.sprite.getY()<(ALTO)/2){
+                camara.position.set(posiCamara,(ALTO)/2,0);
+            }
+        }
         camara.update();
     }
 
@@ -161,17 +190,36 @@ public class PantallaPlayHist extends Pantalla {
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             v.set(screenX,screenY,0);
             camara.unproject(v);
-            if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
-                siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+            if(siyala.getEstadoMovimiento()!= Personaje.EstadoMovimiento.PERDIENDO) {
+                if (!siyala.getDoubleJump()) {
+                    if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
+                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+                    }
+                    //siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA &&
+                    if (v.x <= posiCamara && siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.DESAPARECIDO) {
+                        siyala.setXDesaparecido();
+                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
+                    }
+                }
+                if (siyala.getDoubleJump()) {
+                    if (siyala.getNumJump() <= 2) {
+                        siyala.setY();
+                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+                        siyala.setOneNumJump();
+                    }
+                }
             }
-            if(siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x <= posiCamara){
-                siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
+            else{
+                juego.setScreen(new PantallaMenu(juego));
             }
             return true;
         }
 
         @Override
         public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            //if(siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.DESAPARECIDO){
+            //    siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.MOV_DERECHA);
+            //}
             return false;
         }
 

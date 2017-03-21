@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 public abstract class Pantalla implements Screen
 {
-    public static final float ANCHO = 1280;
-    public static final float ALTO = 800;
+    public static final float ANCHO = 960;
+    public static final float ALTO = 600;
 
     // Disponibles en las subclases
     // Cámara, vista y objeto batch para dibujar
