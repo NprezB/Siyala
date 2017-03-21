@@ -65,7 +65,7 @@ public class PantallaMenu implements Screen {
         //Boton Settings
         TextureRegionDrawable trdBtnSetts=new TextureRegionDrawable(new TextureRegion(texturaBotonSetts));
         ImageButton btnSetts=new ImageButton(trdBtnSetts);
-        btnSetts.setPosition(3* ANCHO/4,1.5f*ALTO/8);
+        btnSetts.setPosition(2* ANCHO/3,1.5f*ALTO/8);
         escena.addActor(btnSetts);
 
         //Evento del boton
