@@ -157,7 +157,7 @@ public class PantallaPlayHist extends Pantalla {
     @Override
     public void render(float delta) {
         boolean pierde = false;
-        pierde = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
+        pierde = siyala.actualizar(mapa,delta,velociCamara);
         //actualizarCamara();
         //posiCamara+=delta*velociCamara;
 
@@ -167,9 +167,8 @@ public class PantallaPlayHist extends Pantalla {
        // renderarMapa.render();
 
         //Mapa dependiendo del estado
-        if(!estaenMundoVivo) {
+       if(!estaenMundoVivo) {
           //  pierde = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
-            siyala.actualizar(mapaMundoOsc, delta, velociCamara);
             renderMapaMundoOsc.setView(camara);
             renderMapaMundoOsc.render();
         }
@@ -177,7 +176,6 @@ public class PantallaPlayHist extends Pantalla {
         else if(estaenMundoVivo)
         {
            // pierde = siyala.actualizar(mapa,delta,velociCamara);
-            siyala.actualizar(mapa,delta,velociCamara);
             renderarMapa.setView(camara);
             renderarMapa.render();
         }
@@ -279,7 +277,7 @@ public class PantallaPlayHist extends Pantalla {
             v.set(screenX,screenY,0);
             camara.unproject(v);
 
-           // if(screenX>75 && screenY>75)
+           if(screenX>75 && screenY>75)
             if(siyala.getEstadoMovimiento()!= Personaje.EstadoMovimiento.PERDIENDO) {
                 if (!siyala.getDoubleJump()) {
                     if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
@@ -300,9 +298,9 @@ public class PantallaPlayHist extends Pantalla {
                 }
             }
 
-           /* else if(screenX<=75 && screenY<=75)
+           if(screenX<=75 && screenY<=75)
                 if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
-                    cambiarMundo();*/
+                    cambiarMundo();
 
             else{
                 juego.setScreen(new PantallaMenu(juego));
