@@ -59,6 +59,19 @@ public class PantallaPlayHist extends Pantalla {
     private float SwitchCooldownTime=0;
     private float TiempoSwitch=0;
 
+    //Pausa
+    private Objeto botonPausa;
+    private Texture texturaPausa;
+    private boolean pausa;
+    private Texture texturaContinuar;
+    private Texture texturaMenu;
+    private Objeto botonContinuar;
+    private Objeto botonMenu;
+    private Sprite spriteFondo;
+
+    //procesador
+    private final ProcesadorEntrada procesadorEntrada=new ProcesadorEntrada();
+
     // Música
     private Music musicaFondo;  // Sonidos largos
 
@@ -85,16 +98,34 @@ public class PantallaPlayHist extends Pantalla {
         botonSwitch= new Texture("BotonWorld.png");
 
         cargarRecursosSiyala();
-        texturaSiyala = manager.get("siyala.png");
+
+        //Boton Pausa
+        texturaPausa=manager.get("BotonPausa.png");
+        botonPausa=new Objeto(texturaPausa,camara.position.x+320,camara.position.y+texturaPausa.getHeight());
+
+        //Boton Continuar
+        texturaContinuar=manager.get("ContinueBoton.png");
+        botonContinuar=new Objeto(texturaContinuar,camara.position.x, 3*(camara.position.y/2)+texturaContinuar.getHeight());
+
+        //Boton Menu
+        texturaMenu=manager.get("ExitBoton.png");
+        botonMenu=new Objeto(texturaMenu,camara.position.x,camara.position.y/2);
+        //Fondo pausa
+        Texture texturaFondo=new Texture("FondoPausa.png");
+        spriteFondo=new Sprite(texturaFondo);
+
+        texturaSiyala=manager.get("siyala.png");
         siyala = new Personaje(texturaSiyala,182,14*32);
         cargarMapa();
 
+        pausa=false;
+
         crearHUD();
-        Gdx.input.setInputProcessor(escenaHUD);
+       // Gdx.input.setInputProcessor(escenaHUD);
 
         texto = new Texto("fuente.fnt");
 
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
+        Gdx.input.setInputProcessor(procesadorEntrada);
         Gdx.input.setCatchBackKey(true);
 
     }
@@ -110,6 +141,7 @@ public class PantallaPlayHist extends Pantalla {
         TextureRegionDrawable tr=new TextureRegionDrawable(new TextureRegion(botonSwitch));
         ImageButton btn=new ImageButton(tr);
 
+
         btn.addListener(new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -120,10 +152,9 @@ public class PantallaPlayHist extends Pantalla {
             }
         });
 
-
-
         escenaHUD = new Stage(vistaHUD);
         escenaHUD.addActor(btn);
+
     }
 
     private void cambiarMundo() {
@@ -135,13 +166,25 @@ public class PantallaPlayHist extends Pantalla {
         manager.load("siyala.png", Texture.class);
         manager.load("Primer nivel.tmx", TiledMap.class);
         manager.load("DarkMusic.mp3", Music.class);
+
+        //cargar los recursos de la pausa
+        manager.load("BotonPausa.png",Texture.class);
+        manager.load("ContinueBoton.png",Texture.class);
+        manager.load("ExitBoton.png",Texture.class);
+        manager.load("ContinueBoton.png",Texture.class);
+        manager.load("ExitBoton.png",Texture.class);
+        manager.load("FondoPausa.png",Texture.class);
+
         manager.finishLoading();
+
     }
 
     private void cargarMapa() {
         mapaMundoOsc = manager.get("Primer nivelosc.tmx");
         mapa = manager.get("Primer nivel.tmx");
         musicaFondo = manager.get("DarkMusic.mp3");
+
+
         musicaFondo.setLooping(true);
         musicaFondo.play();
 
@@ -166,6 +209,11 @@ public class PantallaPlayHist extends Pantalla {
         //renderarMapa.setView(camara);
        // renderarMapa.render();
 
+        if(!pausa){
+            actualizarValores(delta);
+        }
+
+
         //Mapa dependiendo del estado
        if(!estaenMundoVivo) {
           //  pierde = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
@@ -179,6 +227,7 @@ public class PantallaPlayHist extends Pantalla {
             renderarMapa.setView(camara);
             renderarMapa.render();
         }
+
 
         batch.begin();
         siyala.dibujar(batch);
@@ -198,25 +247,48 @@ public class PantallaPlayHist extends Pantalla {
 
         actualizarCamara();
         int distImprimir = ((int) distRecorrida);
-        if(siyala.getEstadoMovimiento()!=Personaje.EstadoMovimiento.PERDIENDO){
-            posiCamara+=delta*velociCamara;
-            distRecorrida+= delta*10;
-            texto.mostrarMensaje(batch,distImprimir+" m",camara.position.x+360,camara.position.y+275);
-            }
+        botonPausa.dibujar(batch);
         if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.PERDIENDO){
-            texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x,camara.position.y+140);
+            //texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x,camara.position.y+140);
+            juego.setScreen(new PantallaFin(juego,distImprimir));
         }
         batch.end();
 
+        if(pausa){
+            batch.setProjectionMatrix(camara.combined);
+            batch.begin();
+            borrarPantalla();
+            spriteFondo.setPosition(camara.position.x-ANCHO/2,camara.position.y-ALTO/2);
+            spriteFondo.draw(batch);
+
+            //Actualizo los valores de las posiciones de ambos botones
+            botonContinuar.actualizar(camara.position.x-texturaContinuar.getWidth()/2,
+                    camara.position.y+ALTO/4-texturaContinuar.getHeight());
+
+            botonMenu.actualizar(camara.position.x-texturaMenu.getWidth()/2,
+                    camara.position.y-ALTO/4-texturaMenu.getHeight()/2);
+            botonMenu.dibujar(batch);
+
+            //dibujo los botones
+            botonContinuar.dibujar(batch);
+            batch.end();
+        }
+
         //Dibujar HUD
         batch.setProjectionMatrix(camaraHUD.combined);
+        batch.begin();
+        texto.mostrarMensaje(batch,distImprimir+" m",camaraHUD.position.x+360,camaraHUD.position.y+275);
+        batch.end();
         escenaHUD.draw();
+
+
+
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
             juego.setScreen(new PantallaMenu(juego));
         }
         if (pierde){
-            juego.setScreen(new PantallaMenu(juego));
+            juego.setScreen(new PantallaFin(juego,distImprimir));
         }
     }
 
@@ -233,6 +305,16 @@ public class PantallaPlayHist extends Pantalla {
             }
         }
         camara.update();
+    }
+
+    //Aqui se actualizan los valores
+    public void actualizarValores(float delta){
+        if(siyala.getEstadoMovimiento()!=Personaje.EstadoMovimiento.PERDIENDO){
+            posiCamara+=delta*velociCamara;
+            distRecorrida+= delta*10;
+            botonPausa.actualizar(camara.position.x+340,camara.position.y-texturaPausa.getHeight());
+
+        }
     }
 
     @Override
@@ -277,6 +359,23 @@ public class PantallaPlayHist extends Pantalla {
             v.set(screenX,screenY,0);
             camara.unproject(v);
 
+            if(pausa){
+                if(botonContinuar.contiene(v)){
+                    pausa=false;
+                    velociCamara=192;
+                }
+                if(botonMenu.contiene(v)){
+                    juego.setScreen(new PantallaMenu(juego));
+                }
+            }
+
+            //checa si pucharon la pausa
+            if(botonPausa.contiene(v)){
+                //La velocidad de camara se pone a 0
+                velociCamara=0;
+                //Se activa pausa
+                pausa=true;
+            }
            if(screenX>75 && screenY>75)
             if(siyala.getEstadoMovimiento()!= Personaje.EstadoMovimiento.PERDIENDO) {
                 if (!siyala.getDoubleJump()) {
@@ -331,4 +430,6 @@ public class PantallaPlayHist extends Pantalla {
             return false;
         }
     }
+
+
 }
