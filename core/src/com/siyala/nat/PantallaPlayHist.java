@@ -58,6 +58,8 @@ public class PantallaPlayHist extends Pantalla {
     private boolean estaenMundoVivo=false;
     private float SwitchCooldownTime=0;
     private float TiempoSwitch=0;
+    private float largoBoton;
+    private float altoBoton;
 
     //Pausa
     private Objeto botonPausa;
@@ -141,19 +143,12 @@ public class PantallaPlayHist extends Pantalla {
         TextureRegionDrawable tr=new TextureRegionDrawable(new TextureRegion(botonSwitch));
         ImageButton btn=new ImageButton(tr);
 
-
-        btn.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo) {
-                    cambiarMundo();
-                }
-                return true;
-            }
-        });
+        largoBoton=btn.getWidth();
+        altoBoton=btn.getHeight();
 
         escenaHUD = new Stage(vistaHUD);
         escenaHUD.addActor(btn);
+
 
     }
 
@@ -200,7 +195,7 @@ public class PantallaPlayHist extends Pantalla {
     @Override
     public void render(float delta) {
         boolean pierde = false;
-        pierde = siyala.actualizar(mapa,delta,velociCamara);
+        //pierde = siyala.actualizar(mapa,delta,velociCamara);
         //actualizarCamara();
         //posiCamara+=delta*velociCamara;
 
@@ -215,19 +210,18 @@ public class PantallaPlayHist extends Pantalla {
 
 
         //Mapa dependiendo del estado
-       if(!estaenMundoVivo) {
-          //  pierde = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
+        if(!estaenMundoVivo) {
+            pierde = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
             renderMapaMundoOsc.setView(camara);
             renderMapaMundoOsc.render();
         }
 
         else if(estaenMundoVivo)
         {
-           // pierde = siyala.actualizar(mapa,delta,velociCamara);
+            pierde = siyala.actualizar(mapa,delta,velociCamara);
             renderarMapa.setView(camara);
             renderarMapa.render();
         }
-
 
         batch.begin();
         siyala.dibujar(batch);
@@ -236,7 +230,7 @@ public class PantallaPlayHist extends Pantalla {
             TiempoSwitch += Gdx.graphics.getDeltaTime();
             SwitchCooldownTime = TiempoSwitch;
 
-            if (TiempoSwitch >= 3) {
+            if (TiempoSwitch >= 7) {
                 TiempoSwitch = 0;
                 estaenMundoVivo = !estaenMundoVivo;
             }
@@ -338,6 +332,8 @@ public class PantallaPlayHist extends Pantalla {
     private class ProcesadorEntrada implements InputProcessor
     {
         private Vector3 v = new Vector3();
+        private Vector3 vHUD = new Vector3();
+
         @Override
         public boolean keyDown(int keycode) {
             return false;
@@ -359,6 +355,9 @@ public class PantallaPlayHist extends Pantalla {
             v.set(screenX,screenY,0);
             camara.unproject(v);
 
+            vHUD.set(screenX,screenY,0);
+            camaraHUD.unproject(vHUD);
+
             if(pausa){
                 if(botonContinuar.contiene(v)){
                     pausa=false;
@@ -376,30 +375,32 @@ public class PantallaPlayHist extends Pantalla {
                 //Se activa pausa
                 pausa=true;
             }
-           if(screenX>75 && screenY>75)
-            if(siyala.getEstadoMovimiento()!= Personaje.EstadoMovimiento.PERDIENDO) {
-                if (!siyala.getDoubleJump()) {
-                    if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
-                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+            if (siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.PERDIENDO) {
+                if (vHUD.x > largoBoton || vHUD.y > altoBoton) {
+                    if (!siyala.getDoubleJump()) {
+                        if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
+                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+                        }
+                        //siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA &&
+                        if (v.x <= posiCamara && siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.DESAPARECIDO) {
+                            siyala.setXDesaparecido();
+                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
+                        }
                     }
-                    //siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA &&
-                    if (v.x <= posiCamara && siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.DESAPARECIDO) {
-                        siyala.setXDesaparecido();
-                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
+                    if (siyala.getDoubleJump()) {
+                        if (siyala.getNumJump() <= 2) {
+                            siyala.setY();
+                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+                            siyala.setOneNumJump();
+                        }
                     }
                 }
-                if (siyala.getDoubleJump()) {
-                    if (siyala.getNumJump() <= 2) {
-                        siyala.setY();
-                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
-                        siyala.setOneNumJump();
-                    }
-                }
-            }
 
-           if(screenX<=75 && screenY<=75)
-                if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
-                    cambiarMundo();
+                if (vHUD.x <= largoBoton && vHUD.y <= altoBoton)
+                    if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
+                        cambiarMundo();
+
+            }
 
             else{
                 juego.setScreen(new PantallaMenu(juego));
