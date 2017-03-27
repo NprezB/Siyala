@@ -59,7 +59,7 @@ public class PantallaPlayHist extends Pantalla {
     private float SwitchCooldownTime=0;
     private float TiempoSwitch=0;
 
-    //Pausa
+    //Pantalla secundaria pausa
     private Objeto botonPausa;
     private Texture texturaPausa;
     private boolean pausa;
@@ -68,6 +68,12 @@ public class PantallaPlayHist extends Pantalla {
     private Objeto botonContinuar;
     private Objeto botonMenu;
     private Sprite spriteFondo;
+
+    //Pantalla secundaria fin
+    private Sprite spriteGameOv;
+    private Objeto botonPlay;
+    private Texture texturaPlay;
+    private boolean perdio;
 
     //procesador
     private final ProcesadorEntrada procesadorEntrada=new ProcesadorEntrada();
@@ -113,6 +119,15 @@ public class PantallaPlayHist extends Pantalla {
         //Fondo pausa
         Texture texturaFondo=new Texture("FondoPausa.png");
         spriteFondo=new Sprite(texturaFondo);
+
+        //Fondo Game Over
+        Texture texturaGameOv=new Texture("GameOver.png");
+        spriteGameOv=new Sprite(texturaGameOv);
+
+        //Boton Jugar
+        texturaPlay=manager.get("BotonPlayMejorado.png");
+        botonPlay=new Objeto(texturaPlay,camara.position.x-320,camara.position.y);
+
 
         texturaSiyala=manager.get("siyala.png");
         siyala = new Personaje(texturaSiyala,182,14*32);
@@ -171,9 +186,9 @@ public class PantallaPlayHist extends Pantalla {
         manager.load("BotonPausa.png",Texture.class);
         manager.load("ContinueBoton.png",Texture.class);
         manager.load("ExitBoton.png",Texture.class);
-        manager.load("ContinueBoton.png",Texture.class);
-        manager.load("ExitBoton.png",Texture.class);
         manager.load("FondoPausa.png",Texture.class);
+
+        manager.load("BotonPlayMejorado.png",Texture.class);
 
         manager.finishLoading();
 
@@ -248,9 +263,25 @@ public class PantallaPlayHist extends Pantalla {
         actualizarCamara();
         int distImprimir = ((int) distRecorrida);
         botonPausa.dibujar(batch);
+        batch.end();
+
+        batch.setProjectionMatrix(camara.combined);
+        batch.begin();
         if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.PERDIENDO){
-            //texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x,camara.position.y+140);
-            juego.setScreen(new PantallaFin(juego,distImprimir));
+            perdio=true;
+
+            //dibuja la pantalla de perder
+            borrarPantalla();
+            spriteGameOv.setPosition(camara.position.x-640,camara.position.y-400);
+            spriteGameOv.draw(batch);
+
+            botonMenu.actualizar(camara.position.x+320-texturaMenu.getWidth()/2,camara.position.y-100);
+            botonMenu.dibujar(batch);
+
+            botonPlay.actualizar(camara.position.x-320-texturaPlay.getWidth()/2,camara.position.y-100);
+            botonPlay.dibujar(batch);
+            texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x,camara.position.y-200);
+
         }
         batch.end();
 
@@ -288,7 +319,7 @@ public class PantallaPlayHist extends Pantalla {
             juego.setScreen(new PantallaMenu(juego));
         }
         if (pierde){
-            juego.setScreen(new PantallaFin(juego,distImprimir));
+            juego.setScreen(new PantallaMenu(juego));
         }
     }
 
@@ -333,6 +364,10 @@ public class PantallaPlayHist extends Pantalla {
         manager.unload("Primer nivel.tmx");
         manager.unload("DarkMusic.mp3");
         manager.unload("Primer nivelosc.tmx");
+        manager.unload("BotonPausa.png");
+        manager.unload("ContinueBoton.png");
+        manager.unload("ExitBoton.png");
+        manager.unload("BotonPlayMejorado.png");
     }
 
     private class ProcesadorEntrada implements InputProcessor
@@ -375,6 +410,15 @@ public class PantallaPlayHist extends Pantalla {
                 velociCamara=0;
                 //Se activa pausa
                 pausa=true;
+            }
+            if(perdio){
+                if(botonPlay.contiene(v)){
+                    juego.setScreen(new PantallaPlayHist(juego));
+                }
+                if(botonMenu.contiene(v)){
+                    juego.setScreen(new PantallaMenu(juego));
+
+                }
             }
            if(screenX>75 && screenY>75)
             if(siyala.getEstadoMovimiento()!= Personaje.EstadoMovimiento.PERDIENDO) {
