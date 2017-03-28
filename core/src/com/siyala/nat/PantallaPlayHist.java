@@ -58,6 +58,8 @@ public class PantallaPlayHist extends Pantalla {
     private boolean estaenMundoVivo=false;
     private float SwitchCooldownTime=0;
     private float TiempoSwitch=0;
+    private float largoBoton;
+    private float altoBoton;
 
     //Pantalla secundaria pausa
     private Objeto botonPausa;
@@ -156,19 +158,11 @@ public class PantallaPlayHist extends Pantalla {
         TextureRegionDrawable tr=new TextureRegionDrawable(new TextureRegion(botonSwitch));
         ImageButton btn=new ImageButton(tr);
 
+        largoBoton=btn.getWidth();
+        altoBoton=btn.getHeight();
 
-        btn.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo) {
-                    cambiarMundo();
-                }
-                return true;
-            }
-        });
-
-        escenaHUD = new Stage(vistaHUD);
-        escenaHUD.addActor(btn);
+            escenaHUD = new Stage(vistaHUD);
+            escenaHUD.addActor(btn);
 
     }
 
@@ -215,34 +209,32 @@ public class PantallaPlayHist extends Pantalla {
     @Override
     public void render(float delta) {
         boolean pierde = false;
-        pierde = siyala.actualizar(mapa,delta,velociCamara);
+        //pierde = siyala.actualizar(mapa,delta,velociCamara);
         //actualizarCamara();
         //posiCamara+=delta*velociCamara;
 
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
         //renderarMapa.setView(camara);
-       // renderarMapa.render();
+        // renderarMapa.render();
 
         if(!pausa){
             actualizarValores(delta);
         }
 
-
         //Mapa dependiendo del estado
-       if(!estaenMundoVivo) {
-          //  pierde = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
+        if(!estaenMundoVivo) {
+            pierde = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
             renderMapaMundoOsc.setView(camara);
             renderMapaMundoOsc.render();
         }
 
         else if(estaenMundoVivo)
         {
-           // pierde = siyala.actualizar(mapa,delta,velociCamara);
+            pierde = siyala.actualizar(mapa,delta,velociCamara);
             renderarMapa.setView(camara);
             renderarMapa.render();
         }
-
 
         batch.begin();
         siyala.dibujar(batch);
@@ -251,7 +243,7 @@ public class PantallaPlayHist extends Pantalla {
             TiempoSwitch += Gdx.graphics.getDeltaTime();
             SwitchCooldownTime = TiempoSwitch;
 
-            if (TiempoSwitch >= 3) {
+            if (TiempoSwitch >= 13) {
                 TiempoSwitch = 0;
                 estaenMundoVivo = !estaenMundoVivo;
             }
@@ -306,14 +298,13 @@ public class PantallaPlayHist extends Pantalla {
         }
 
         //Dibujar HUD
-        batch.setProjectionMatrix(camaraHUD.combined);
-        batch.begin();
-        texto.mostrarMensaje(batch,distImprimir+" m",camaraHUD.position.x+360,camaraHUD.position.y+275);
-        batch.end();
-        escenaHUD.draw();
-
-
-
+        if(siyala.getEstadoMovimiento()!= Personaje.EstadoMovimiento.PERDIENDO) {
+            batch.setProjectionMatrix(camaraHUD.combined);
+            batch.begin();
+            texto.mostrarMensaje(batch, distImprimir + " m", camaraHUD.position.x + 360, camaraHUD.position.y + 275);
+            batch.end();
+            escenaHUD.draw();
+        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
             juego.setScreen(new PantallaMenu(juego));
@@ -373,6 +364,8 @@ public class PantallaPlayHist extends Pantalla {
     private class ProcesadorEntrada implements InputProcessor
     {
         private Vector3 v = new Vector3();
+        private Vector3 vHUD = new Vector3();
+
         @Override
         public boolean keyDown(int keycode) {
             return false;
@@ -391,59 +384,64 @@ public class PantallaPlayHist extends Pantalla {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-            v.set(screenX,screenY,0);
+            v.set(screenX, screenY, 0);
             camara.unproject(v);
 
-            if(pausa){
-                if(botonContinuar.contiene(v)){
-                    pausa=false;
-                    velociCamara=192;
+            vHUD.set(screenX, screenY, 0);
+            camaraHUD.unproject(vHUD);
+
+            if (pausa) {
+                if (botonContinuar.contiene(v)) {
+                    pausa = false;
+                    velociCamara = 192;
                 }
-                if(botonMenu.contiene(v)){
+                if (botonMenu.contiene(v)) {
                     juego.setScreen(new PantallaMenu(juego));
                 }
             }
 
             //checa si pucharon la pausa
-            if(botonPausa.contiene(v)){
+            if (botonPausa.contiene(v)) {
                 //La velocidad de camara se pone a 0
-                velociCamara=0;
+                velociCamara = 0;
                 //Se activa pausa
-                pausa=true;
+                pausa = true;
             }
-            if(perdio){
-                if(botonPlay.contiene(v)){
+            if (perdio) {
+                if (botonPlay.contiene(v)) {
                     juego.setScreen(new PantallaPlayHist(juego));
                 }
-                if(botonMenu.contiene(v)){
+                if (botonMenu.contiene(v)) {
                     juego.setScreen(new PantallaMenu(juego));
 
                 }
             }
-           if(screenX>75 && screenY>75)
-            if(siyala.getEstadoMovimiento()!= Personaje.EstadoMovimiento.PERDIENDO) {
-                if (!siyala.getDoubleJump()) {
-                    if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
-                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
-                    }
-                    //siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA &&
-                    if (v.x <= posiCamara && siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.DESAPARECIDO) {
-                        siyala.setXDesaparecido();
-                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
-                    }
-                }
-                if (siyala.getDoubleJump()) {
-                    if (siyala.getNumJump() <= 2) {
-                        siyala.setY();
-                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
-                        siyala.setOneNumJump();
-                    }
-                }
-            }
 
-           if(screenX<=75 && screenY<=75)
-                if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
-                    cambiarMundo();
+            if (siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.PERDIENDO) {
+                if (vHUD.x > largoBoton || vHUD.y > altoBoton) {
+                    if (!siyala.getDoubleJump()) {
+                        if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
+                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+                        }
+                        //siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA &&
+                        if (v.x <= posiCamara && siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.DESAPARECIDO) {
+                            siyala.setXDesaparecido();
+                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
+                        }
+                    }
+                    if (siyala.getDoubleJump()) {
+                        if (siyala.getNumJump() <= 2) {
+                            siyala.setY();
+                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+                            siyala.setOneNumJump();
+                        }
+                    }
+                }
+
+                if (vHUD.x <= largoBoton && vHUD.y <= altoBoton)
+                    if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
+                        cambiarMundo();
+            }
 
             else{
                 juego.setScreen(new PantallaMenu(juego));
