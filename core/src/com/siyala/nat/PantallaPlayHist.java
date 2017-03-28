@@ -70,12 +70,14 @@ public class PantallaPlayHist extends Pantalla {
     private Objeto botonContinuar;
     private Objeto botonMenu;
     private Sprite spriteFondo;
+    private Texture texturaFondo;
 
     //Pantalla secundaria fin
     private Sprite spriteGameOv;
     private Objeto botonPlay;
     private Texture texturaPlay;
     private boolean perdio;
+    private Texture texturaGameOv;
 
     //procesador
     private final ProcesadorEntrada procesadorEntrada=new ProcesadorEntrada();
@@ -119,16 +121,17 @@ public class PantallaPlayHist extends Pantalla {
         texturaMenu=manager.get("ExitBoton.png");
         botonMenu=new Objeto(texturaMenu,camara.position.x,camara.position.y/2);
         //Fondo pausa
-        Texture texturaFondo=new Texture("FondoPausa.png");
+
+        texturaFondo=new Texture("FondoPausa.png");
         spriteFondo=new Sprite(texturaFondo);
 
         //Fondo Game Over
-        Texture texturaGameOv=new Texture("GameOver.png");
+        texturaGameOv=new Texture("GameOver.png");
         spriteGameOv=new Sprite(texturaGameOv);
 
         //Boton Jugar
-        texturaPlay=manager.get("BotonPlayMejorado.png");
-        botonPlay=new Objeto(texturaPlay,camara.position.x-320,camara.position.y);
+        texturaPlay=manager.get("BotonRetry.png");
+        botonPlay=new Objeto(texturaPlay,320,0);
 
 
         texturaSiyala=manager.get("siyala.png");
@@ -136,6 +139,7 @@ public class PantallaPlayHist extends Pantalla {
         cargarMapa();
 
         pausa=false;
+        perdio=false;
 
         crearHUD();
        // Gdx.input.setInputProcessor(escenaHUD);
@@ -182,7 +186,7 @@ public class PantallaPlayHist extends Pantalla {
         manager.load("ExitBoton.png",Texture.class);
         manager.load("FondoPausa.png",Texture.class);
 
-        manager.load("BotonPlayMejorado.png",Texture.class);
+        manager.load("BotonRetry.png",Texture.class);
 
         manager.finishLoading();
 
@@ -306,12 +310,12 @@ public class PantallaPlayHist extends Pantalla {
             escenaHUD.draw();
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+        /*if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
             juego.setScreen(new PantallaMenu(juego));
-        }
-        if (pierde){
+        }*/
+        /*if (pierde){
             juego.setScreen(new PantallaMenu(juego));
-        }
+        }*/
     }
 
     private void actualizarCamara() {
@@ -358,7 +362,10 @@ public class PantallaPlayHist extends Pantalla {
         manager.unload("BotonPausa.png");
         manager.unload("ContinueBoton.png");
         manager.unload("ExitBoton.png");
-        manager.unload("BotonPlayMejorado.png");
+        manager.unload("BotonRetry.png");
+        texturaFondo.dispose();
+        texturaGameOv.dispose();
+
     }
 
     private class ProcesadorEntrada implements InputProcessor
@@ -442,10 +449,10 @@ public class PantallaPlayHist extends Pantalla {
                     if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
                         cambiarMundo();
             }
-
-            else{
+            /*else{
                 juego.setScreen(new PantallaMenu(juego));
-            }
+            }*/
+
             return true;
         }
 
