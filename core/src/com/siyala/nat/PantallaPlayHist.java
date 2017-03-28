@@ -171,7 +171,7 @@ public class PantallaPlayHist extends Pantalla {
     }
 
     private void cargarRecursosSiyala() {
-        manager.load("Primer nivelosc.tmx",TiledMap.class);
+        manager.load("Segundo Nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
         manager.load("siyala.png", Texture.class);
         manager.load("Primer nivel.tmx", TiledMap.class);
         manager.load("DarkMusic.mp3", Music.class);
@@ -189,8 +189,8 @@ public class PantallaPlayHist extends Pantalla {
     }
 
     private void cargarMapa() {
-        mapaMundoOsc = manager.get("Primer nivelosc.tmx");
-        mapa = manager.get("Primer nivel.tmx");
+        mapaMundoOsc = manager.get("Segundo Nivel.tmx");
+        mapa = manager.get("Segundo Nivel.tmx");
         musicaFondo = manager.get("DarkMusic.mp3");
 
 
@@ -354,7 +354,7 @@ public class PantallaPlayHist extends Pantalla {
         manager.unload("siyala.png");
         manager.unload("Primer nivel.tmx");
         manager.unload("DarkMusic.mp3");
-        manager.unload("Primer nivelosc.tmx");
+        manager.unload("Segundo Nivel.tmx");
         manager.unload("BotonPausa.png");
         manager.unload("ContinueBoton.png");
         manager.unload("ExitBoton.png");

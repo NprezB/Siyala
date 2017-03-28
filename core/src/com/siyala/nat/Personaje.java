@@ -26,6 +26,7 @@ public class Personaje extends Objeto
 
     public float y; //La posición origen de salto, modificada cada vez que se aterriza
     private int numJump = 1;
+    public boolean flagDesap;
 
     // Recibe una imagen con varios frames (ver marioSprite.png)
     public Personaje(Texture textura, float x, float y) {
@@ -49,6 +50,7 @@ public class Personaje extends Objeto
 
     // Dibuja el personaje
     public void dibujar(SpriteBatch batch) {
+        flagDesap=true;
         // Dibuja el personaje dependiendo del estadoMovimiento
         switch (estadoMovimiento) {
             case MOV_DERECHA:
@@ -166,6 +168,7 @@ public class Personaje extends Objeto
         }
 
         if ( estadoMovimiento== EstadoMovimiento.MOV_DERECHA) {
+            flagDesap=true;
             sprite.setColor(1,1,1,1);
             // Obtiene el bloque del lado derecho. Asigna null si puede pasar.
             int x = (int) ((sprite.getX()+44) / 64);   // Convierte coordenadas del mundo en coordenadas del mapa
