@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 /**
  * Created by Natanael on 10/02/2017.
@@ -24,6 +25,7 @@ public class PantallaMenu implements Screen {
 
     private static final float ANCHO = 1280;
     private static final float ALTO = 800;
+    private static boolean InstruccionesJuego=true;
     private final Siyala juego;
 
     //camara y vista
@@ -111,9 +113,14 @@ public class PantallaMenu implements Screen {
 
         //Evento del Boton Jugar Historia
         btnCred.addListener(new ClickListener(){
-           public void clicked(InputEvent event,float x, float y){
-              juego.setScreen(new PantallaPlayHist(juego));
-           }
+            public void clicked(InputEvent event,float x, float y){
+                if(!juego.getInstruccionesCheck()){
+                    juego.setScreen(new PantallaInstrucciones(juego));
+                }
+                else{
+                    juego.setScreen(new PantallaPlayHist(juego));
+                }
+            }
 
         });
         Gdx.input.setInputProcessor(escena);
