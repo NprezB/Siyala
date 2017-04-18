@@ -251,6 +251,10 @@ public class Personaje extends Objeto
         y=sprite.getY();
     }
 
+    public void setDoubJump(boolean flagD) {
+        doubJump=flagD;
+    }
+
     public enum EstadoMovimiento {
         INICIANDO,
         QUIETO,
