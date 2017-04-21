@@ -87,7 +87,7 @@ public class Personaje extends Objeto
     }
 
     private boolean mover(TiledMap mapa, float delta, float velocSiyala) {
-        TiledMapTileLayer capa = (TiledMapTileLayer) mapa.getLayers().get(3);
+        TiledMapTileLayer capa = (TiledMapTileLayer) mapa.getLayers().get(2);
         int x1= (int) (((sprite.getX()+42)/64));
         int x2= (int) (((sprite.getX()+2)/64));
         int y1= (int) (sprite.getY()/32);

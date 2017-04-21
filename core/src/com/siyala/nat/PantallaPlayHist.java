@@ -193,8 +193,8 @@ public class PantallaPlayHist extends Pantalla {
     }
 
     private void cargarMapa() {
-        mapaMundoOsc = manager.get("Segundo Nivel.tmx");
-        mapa = manager.get("Segundo Nivel.tmx");
+        mapaMundoOsc = manager.get("Primer nivel.tmx");
+        mapa = manager.get("Primer nivel.tmx");
         musicaFondo = manager.get("DarkMusic.mp3");
 
 
