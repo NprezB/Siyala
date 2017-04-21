@@ -1,43 +1,28 @@
 package com.siyala.nat;
 
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import sun.security.util.Length;
 
 /**
  * Created by Natanael on 15/02/2017.
  */
 
-public class PantallaPlayHist extends Pantalla {
+public class PantallaPlayHist2 extends Pantalla {
     public static final int ANCHO_MAPA = 124*64;
     public static final int ALTO_MAPA = 35*32;
     private final Siyala juego;
@@ -96,7 +81,7 @@ public class PantallaPlayHist extends Pantalla {
     private float distRecorrida = 0;
     private Texto texto;
 
-    public PantallaPlayHist(Siyala juego) {
+    public PantallaPlayHist2(Siyala juego) {
         this.juego = juego;
         manager = juego.getAssetManager();
     }
@@ -148,6 +133,7 @@ public class PantallaPlayHist extends Pantalla {
 
         Gdx.input.setInputProcessor(procesadorEntrada);
         Gdx.input.setCatchBackKey(true);
+        siyala.setDoubJump(true);
 
     }
 
@@ -207,8 +193,6 @@ public class PantallaPlayHist extends Pantalla {
         renderarMapa = new OrthogonalTiledMapRenderer(mapa, batch);
         renderarMapa.setView(camara);
         renderMapaMundoOsc.setView(camara);
-
-        siyala.setDoubJump(false);
 
     }
 
@@ -399,28 +383,6 @@ public class PantallaPlayHist extends Pantalla {
             vHUD.set(screenX, screenY, 0);
             camaraHUD.unproject(vHUD);
 
-            if (siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.PERDIENDO&&!pausa&&!botonPausa.contiene(v))  {
-                    if (!siyala.getDoubleJump()) {
-                        if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
-                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
-                        }
-                        if (v.x <= posiCamara && siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.DESAPARECIDO) {
-                            siyala.setXDesaparecido();
-                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
-                        }
-                    }
-                    if (siyala.getDoubleJump()) {
-                        if (siyala.getNumJump() <= 2) {
-                            siyala.setY();
-                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
-                            siyala.setOneNumJump();
-                        }
-                    }
-
-                    if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
-                        cambiarMundo();
-            }
-
             if (pausa) {
                 if (botonContinuar.contiene(v)) {
                     pausa = false;
@@ -440,13 +402,42 @@ public class PantallaPlayHist extends Pantalla {
             }
             if (perdio) {
                 if (botonPlay.contiene(v)) {
-                    juego.setScreen(new PantallaPlayHist(juego));
+                    juego.setScreen(new PantallaPlayHist2(juego));
                 }
                 if (botonMenu.contiene(v)) {
                     juego.setScreen(new PantallaMenu(juego));
 
                 }
             }
+
+            if (siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.PERDIENDO) {
+                if (vHUD.x > largoBoton || vHUD.y > altoBoton) {
+                    if (!siyala.getDoubleJump()) {
+                        if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
+                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+                        }
+                        //siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA &&
+                        if (v.x <= posiCamara && siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.DESAPARECIDO) {
+                            siyala.setXDesaparecido();
+                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
+                        }
+                    }
+                    if (siyala.getDoubleJump()) {
+                        if (siyala.getNumJump() <= 2) {
+                            siyala.setY();
+                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+                            siyala.setOneNumJump();
+                        }
+                    }
+                }
+
+                if (vHUD.x <= largoBoton && vHUD.y <= altoBoton)
+                    if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
+                        cambiarMundo();
+            }
+            /*else{
+                juego.setScreen(new PantallaMenu(juego));
+            }*/
 
             return true;
         }

@@ -25,7 +25,6 @@ public class PantallaMenu implements Screen {
 
     private static final float ANCHO = 1280;
     private static final float ALTO = 800;
-    private static boolean InstruccionesJuego=true;
     private final Siyala juego;
 
     //camara y vista
@@ -64,10 +63,25 @@ public class PantallaMenu implements Screen {
 
         //Botones de ordenados de abajo hacia arriba como aparecen en menu
 
+        //Boton Instrucciones
+        TextureRegionDrawable trdBtnInstr=new TextureRegionDrawable(new TextureRegion(texturaBotonSetts));
+        ImageButton btnInstr=new ImageButton(trdBtnInstr);
+        btnInstr.setPosition(2* ANCHO/3,2.5f*ALTO/10);
+        escena.addActor(btnInstr);
+
+        //Evento del boton
+        btnInstr.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+
+                juego.setScreen(new PantallaInstrucciones(juego));
+            }
+        });
+
+
         //Boton Settings
         TextureRegionDrawable trdBtnSetts=new TextureRegionDrawable(new TextureRegion(texturaBotonSetts));
         ImageButton btnSetts=new ImageButton(trdBtnSetts);
-        btnSetts.setPosition(2* ANCHO/3,1.5f*ALTO/8);
+        btnSetts.setPosition(2* ANCHO/3,4f*ALTO/10);
         escena.addActor(btnSetts);
 
         //Evento del boton
@@ -81,7 +95,7 @@ public class PantallaMenu implements Screen {
         //Boton Creditos
         TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
         ImageButton btnPlayHist = new ImageButton(trdBtnPlayHist);
-        btnPlayHist.setPosition(2*ANCHO/3,3*ALTO/8);
+        btnPlayHist.setPosition(2*ANCHO/3,5.5f*ALTO/10);
         escena.addActor(btnPlayHist);
 
         //Evento del Boton Creditos
@@ -94,7 +108,7 @@ public class PantallaMenu implements Screen {
         //Boton Play Surv
         TextureRegionDrawable trdBtnPlaySurv = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoSurv));
         ImageButton btnPlaySurv = new ImageButton(trdBtnPlaySurv);
-        btnPlaySurv.setPosition(2*ANCHO/3,4.5f*ALTO/8);
+        btnPlaySurv.setPosition(2*ANCHO/3,7f*ALTO/10);
         escena.addActor(btnPlaySurv);
 
         //Evento del Boton Play Surv
@@ -108,18 +122,13 @@ public class PantallaMenu implements Screen {
         //Boton JugarHist
         TextureRegionDrawable trdBtnCred = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHist));
         ImageButton btnCred = new ImageButton(trdBtnCred);
-        btnCred.setPosition(2*ANCHO/3,6*ALTO/8);
+        btnCred.setPosition(2*ANCHO/3,8.5f*ALTO/10);
         escena.addActor(btnCred);
 
         //Evento del Boton Jugar Historia
         btnCred.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                if(!juego.getInstruccionesCheck()){
-                    juego.setScreen(new PantallaInstrucciones(juego));
-                }
-                else{
-                    juego.setScreen(new PantallaPlayHist(juego));
-                }
+                juego.setScreen(new PantallaPlayHist(juego));
             }
 
         });

@@ -2,9 +2,13 @@ package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  * Created by Victoria on 25/03/2017.
@@ -13,16 +17,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class PantallaInstrucciones extends Pantalla {
 
     private final Siyala juego;
+    private int countPantalla;
+
+    private static final float ANCHO = 1280;
+    private static final float ALTO = 800;
 
     private Texture texturaInstrucciones1;
     private Texture texturaInstrucciones3;
     private Texture texturaInstrucciones2;
-    private float countAlfa=3.9f;
-    private float countDelta=3.9f;
-    private float counBeta=3.9f;
 
+    private OrthographicCamera camara;
+    private Viewport vista;
+
+    //Escenas
     private Stage escena;
-
+    private SpriteBatch batch;
 
     public PantallaInstrucciones(Siyala juego) {
         this.juego = juego;
@@ -30,8 +39,14 @@ public class PantallaInstrucciones extends Pantalla {
 
     @Override
     public void show() {
+        crearCamara();
         cargarTexturas();
+        batch = new SpriteBatch();
+        escena = new Stage(vista,batch);
+        Image imgFondo = new Image(texturaInstrucciones1);
+        escena.addActor(imgFondo);
         Gdx.input.setInputProcessor(new Procesador());
+        countPantalla=0;
 
     }
 
@@ -45,28 +60,14 @@ public class PantallaInstrucciones extends Pantalla {
     @Override
     public void render(float delta) {
         borrarPantalla();
-        batch.begin();
-        if(countAlfa>=0){
-            batch.draw(texturaInstrucciones1,0,0);
-            countAlfa-=delta;
-        }
-        else{
-            if(countDelta>=0){
-                batch.draw(texturaInstrucciones2,0,0);
-                countDelta-=delta;
-            }
-            else{
-                if(counBeta>=0){
-                    batch.draw(texturaInstrucciones3,0,0);
-                    counBeta-=delta;
-                }
-                else{
-                    juego.setInstruccionesCheck();
-                    juego.setScreen(new PantallaPlayHist(juego));
-                }
-            }
-        }
-        batch.end();
+        escena.draw();
+    }
+
+    private void crearCamara() {
+        camara = new OrthographicCamera(ANCHO, ALTO);
+        camara.position.set(ANCHO/2,ALTO/2,0);
+        camara.update();
+        vista = new StretchViewport(ANCHO,ALTO,camara);
     }
 
     @Override
@@ -102,7 +103,20 @@ public class PantallaInstrucciones extends Pantalla {
 
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            return false;
+            if(countPantalla==2){
+                juego.setScreen(new PantallaMenu(juego));
+            }
+            if(countPantalla==1){
+                Image imgFondo = new Image(texturaInstrucciones3);
+                escena.addActor(imgFondo);
+                countPantalla+=1;
+            }
+            if(countPantalla==0){
+                Image imgFondo = new Image(texturaInstrucciones2);
+                escena.addActor(imgFondo);
+                countPantalla+=1;
+            }
+            return true;
         }
 
         @Override

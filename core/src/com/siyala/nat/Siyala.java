@@ -14,7 +14,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 public class Siyala extends Game {
     // Hay un SOLO assetManager para el juego
     private final AssetManager assetManager;
-    private boolean InstruccionesCheck=false;
 
     public Siyala() {
         assetManager = new AssetManager();
@@ -39,10 +38,4 @@ public class Siyala extends Game {
         assetManager.clear();
     }
 
-    public boolean getInstruccionesCheck(){
-        return InstruccionesCheck;
-    }
-    public void setInstruccionesCheck(){
-        InstruccionesCheck=true;
-    }
 }
