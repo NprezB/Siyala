@@ -142,7 +142,7 @@ public class PantallaPlayHist extends Pantalla {
         perdio=false;
 
         crearHUD();
-       // Gdx.input.setInputProcessor(escenaHUD);
+        // Gdx.input.setInputProcessor(escenaHUD);
 
         texto = new Texto("fuente.fnt");
 
@@ -165,8 +165,8 @@ public class PantallaPlayHist extends Pantalla {
         largoBoton=btn.getWidth();
         altoBoton=btn.getHeight();
 
-            escenaHUD = new Stage(vistaHUD);
-            escenaHUD.addActor(btn);
+        escenaHUD = new Stage(vistaHUD);
+        escenaHUD.addActor(btn);
 
     }
 
@@ -400,25 +400,25 @@ public class PantallaPlayHist extends Pantalla {
             camaraHUD.unproject(vHUD);
 
             if (siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.PERDIENDO&&!pausa&&!botonPausa.contiene(v))  {
-                    if (!siyala.getDoubleJump()) {
-                        if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
-                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
-                        }
-                        if (v.x <= posiCamara && siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.DESAPARECIDO) {
-                            siyala.setXDesaparecido();
-                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
-                        }
+                if (!siyala.getDoubleJump()) {
+                    if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
+                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
                     }
-                    if (siyala.getDoubleJump()) {
-                        if (siyala.getNumJump() <= 2) {
-                            siyala.setY();
-                            siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
-                            siyala.setOneNumJump();
-                        }
+                    if (v.x <= posiCamara && siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.DESAPARECIDO) {
+                        siyala.setXDesaparecido();
+                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
                     }
+                }
+                if (siyala.getDoubleJump()) {
+                    if (siyala.getNumJump() <= 2) {
+                        siyala.setY();
+                        siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
+                        siyala.setOneNumJump();
+                    }
+                }
 
-                    if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
-                        cambiarMundo();
+                if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
+                    cambiarMundo();
             }
 
             if (pausa) {
@@ -427,12 +427,12 @@ public class PantallaPlayHist extends Pantalla {
                     velociCamara = 192;
                 }
                 if (botonMenu.contiene(v)) {
-                    juego.setScreen(new PantallaMenu(juego));
+                    juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
                 }
             }
 
             //checa si pucharon la pausa
-            if (botonPausa.contiene(v)) {
+            if (botonPausa.contiene(v) && !perdio) {
                 //La velocidad de camara se pone a 0
                 velociCamara = 0;
                 //Se activa pausa
@@ -440,10 +440,10 @@ public class PantallaPlayHist extends Pantalla {
             }
             if (perdio) {
                 if (botonPlay.contiene(v)) {
-                    juego.setScreen(new PantallaPlayHist(juego));
+                    juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST));
                 }
                 if (botonMenu.contiene(v)) {
-                    juego.setScreen(new PantallaMenu(juego));
+                    juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
 
                 }
             }

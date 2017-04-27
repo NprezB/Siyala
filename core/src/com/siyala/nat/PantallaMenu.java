@@ -3,6 +3,7 @@ package com.siyala.nat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,7 +26,9 @@ public class PantallaMenu implements Screen {
 
     private static final float ANCHO = 1280;
     private static final float ALTO = 800;
+
     private final Siyala juego;
+    private final AssetManager manager;
 
     //camara y vista
     private OrthographicCamera camara;
@@ -46,6 +49,7 @@ public class PantallaMenu implements Screen {
     //Manejo de pantallas
     public PantallaMenu(Siyala siyala) {
         this.juego = siyala;
+        manager=juego.getAssetManager();
     }
 
     @Override
@@ -74,7 +78,7 @@ public class PantallaMenu implements Screen {
         btnInstr.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
 
-                juego.setScreen(new PantallaInstrucciones(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.INSTRUCCIONES));
             }
         });
 
@@ -89,7 +93,7 @@ public class PantallaMenu implements Screen {
         btnSetts.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
 
-                juego.setScreen(new PantallaSettings(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.SETTS));
             }
         });
 
@@ -102,7 +106,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Creditos
         btnPlayHist.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y){
-                juego.setScreen(new PantallaCreditos(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.CREDITOS));
             }
         });
 
@@ -115,7 +119,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Play Surv
         btnPlaySurv.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                juego.setScreen(new PantallaPlaySurv(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYSURV));
             }
 
         });
@@ -129,7 +133,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Jugar Historia
         btnCred.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                juego.setScreen(new PantallaPlayHist(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST));
             }
 
         });
@@ -138,12 +142,12 @@ public class PantallaMenu implements Screen {
     }
 
     private void cargarTexturas() {
-        texturaFondo = new Texture("FondoMenuInicio.png");
-        texturaBotonCreditos = new Texture("CreditssBoton.png");
-        texturaBotonJuegoHist = new Texture("Botones/BotonPlay1.png");
-        texturaBotonJuegoSurv = new Texture("Botones/BotonSurvival1.png");
-        texturaBotonSetts=new Texture("Botones/BotonSettings1.png");
-        texturaBotonInstr=new Texture("Botones/BotonInstructions1.png");
+        texturaFondo = manager.get("FondoMenuInicio.png");
+        texturaBotonCreditos = manager.get("CreditssBoton.png");
+        texturaBotonJuegoHist = manager.get("Botones/BotonPlay1.png");
+        texturaBotonJuegoSurv = manager.get("Botones/BotonSurvival1.png");
+        texturaBotonSetts=manager.get("Botones/BotonSettings1.png");
+        texturaBotonInstr=manager.get("Botones/BotonInstructions1.png");
     }
 
     private void crearCamara() {
@@ -187,9 +191,11 @@ public class PantallaMenu implements Screen {
     @Override
     public void dispose() {
         escena.dispose();
-        texturaBotonCreditos.dispose();
-        texturaBotonJuegoSurv.dispose();
-        texturaBotonJuegoHist.dispose();
-        texturaFondo.dispose();
+        manager.unload("FondoMenuInicio.png");
+        manager.unload("CreditssBoton.png");
+        manager.unload("Botones/BotonPlay1.png");
+        manager.unload("Botones/BotonSurvival1.png");
+        manager.unload("Botones/BotonSettings1.png");
+        manager.unload("Botones/BotonInstructions1.png");
     }
 }

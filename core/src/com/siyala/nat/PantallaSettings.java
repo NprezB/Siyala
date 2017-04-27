@@ -2,6 +2,7 @@ package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,7 +23,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class PantallaSettings implements Screen {
     private static final float ANCHO = 1280;
     private static final float ALTO = 800;
-    private final Siyala siyala;
+
+    private final Siyala juego;
+    private final AssetManager manager;
 
     //camara y vista
     private OrthographicCamera camara;
@@ -39,9 +42,9 @@ public class PantallaSettings implements Screen {
     //Escenas
     private Stage escena;
     private SpriteBatch batch;
-    public PantallaSettings(Siyala siyala) {
-        this.siyala=siyala;
-
+    public PantallaSettings(Siyala juego) {
+        this.juego=juego;
+        manager=juego.getAssetManager();
     }
 
     @Override
@@ -113,17 +116,17 @@ public class PantallaSettings implements Screen {
         //Evento del Boton Salir
         btnMenu.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                siyala.setScreen(new PantallaMenu(siyala));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
             }
 
         });
     }
 
     private void cargarTexturas() {
-        texturaFondoSetts=new Texture("FondoMenuInicio.png");
-        texturaBotonMusica=new Texture("BotonsSounds.png");
-        texturaBotonSonidos=new Texture("BotonsSounds.png");
-        texturaBotonMenu=new Texture("ExitBoton.png");
+        texturaFondoSetts=manager.get("FondoMenuInicio.png");
+        texturaBotonMusica=manager.get("BotonsSounds.png");
+        texturaBotonSonidos=manager.get("BotonsSounds.png");
+        texturaBotonMenu=manager.get("ExitBoton.png");
         // texturaBotonMusicaMutted=new Texture("mutted.png");
         //texturaBotonSonidosMutted=new Texture("mutted.png");
     }
@@ -170,13 +173,10 @@ public class PantallaSettings implements Screen {
 
     @Override
     public void dispose() {
-        escena.dispose();
-        texturaBotonMenu.dispose();
-        texturaBotonMusica.dispose();
-        //texturaBotonMusicaMutted.dispose();
-        texturaBotonSonidos.dispose();
-        //texturaBotonSonidosMutted.dispose();
-        texturaFondoSetts.dispose();
+        manager.unload("FondoMenuInicio.png");
+        manager.unload("BotonsSounds.png");
+        manager.unload("BotonsSounds.png");
+        manager.unload("ExitBoton.png");
 
     }
 }

@@ -104,7 +104,7 @@ public class PantallaInstrucciones extends Pantalla {
         @Override
         public boolean touchDown(int screenX, int screenY, int pointer, int button) {
             if(countPantalla==2){
-                juego.setScreen(new PantallaMenu(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
             }
             if(countPantalla==1){
                 Image imgFondo = new Image(texturaInstrucciones3);

@@ -24,7 +24,7 @@ public class Siyala extends Game {
         // Lo preparamos para que cargue mapas
         assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         // Pone la pantalla inicial (Splash)
-        setScreen(new PantallaMenu(this));
+        setScreen(new PantallaInicio(this));
     }
 
     // Para que las otras pantallas usen el assetManager
