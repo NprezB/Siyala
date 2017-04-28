@@ -2,6 +2,7 @@ package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class PantallaInstrucciones extends Pantalla {
 
     private final Siyala juego;
+    private final AssetManager manager;
     private int countPantalla;
 
     private static final float ANCHO = 1280;
@@ -35,6 +37,7 @@ public class PantallaInstrucciones extends Pantalla {
 
     public PantallaInstrucciones(Siyala juego) {
         this.juego = juego;
+        this.manager=juego.getAssetManager();
     }
 
     @Override
@@ -51,9 +54,9 @@ public class PantallaInstrucciones extends Pantalla {
     }
 
     private void cargarTexturas() {
-        texturaInstrucciones1 = new Texture("Instrucciones1.jpg");
-        texturaInstrucciones2 = new Texture("Instrucciones2.jpg");
-        texturaInstrucciones3 = new Texture("Instrucciones3.jpg");
+        texturaInstrucciones1 = manager.get("PantallaInstrucc1.png");
+        texturaInstrucciones2 = manager.get("PantallaInstrucc2.png");
+        texturaInstrucciones3 = manager.get("Instrucciones3.jpg");
     }
 
 
@@ -82,6 +85,9 @@ public class PantallaInstrucciones extends Pantalla {
 
     @Override
     public void dispose() {
+        manager.unload("PantallaInstrucc1.png");
+        manager.unload("PantallaInstrucc2.png");
+        manager.unload("Instrucciones3.jpg");
 
     }
 

@@ -75,7 +75,7 @@ public class PantallaCreditos implements Screen {
     }
 
     private void cargarTexturas() {
-        texturaFondo = manager.get("FondoCreditos.png");
+        texturaFondo = manager.get("Pantalla Creditos.png");
         texturaBotonSalir = manager.get("ExitBoton.png");
     }
 
@@ -119,7 +119,7 @@ public class PantallaCreditos implements Screen {
     @Override
     public void dispose() {
         escena.dispose();
-        manager.unload("FondoCreditos.png");
+        manager.unload("Pantalla Creditos.png");
         manager.unload("ExitBoton.png");
 
     }

@@ -107,7 +107,7 @@ public class PantallaPlayHist extends Pantalla {
         //BotonSwitch
         botonSwitch= new Texture("BotonWorld.png");
 
-        cargarRecursosSiyala();
+        //cargarRecursosSiyala();
 
         //Boton Pausa
         texturaPausa=manager.get("BotonPausa.png");
@@ -122,11 +122,11 @@ public class PantallaPlayHist extends Pantalla {
         botonMenu=new Objeto(texturaMenu,camara.position.x,camara.position.y/2);
         //Fondo pausa
 
-        texturaFondo=new Texture("FondoPausa.png");
+        texturaFondo=manager.get("PantallaPausa.png");
         spriteFondo=new Sprite(texturaFondo);
 
         //Fondo Game Over
-        texturaGameOv=new Texture("GameOver.png");
+        texturaGameOv=manager.get("PantallaGameOver.png");
         spriteGameOv=new Sprite(texturaGameOv);
 
         //Boton Jugar
@@ -174,23 +174,6 @@ public class PantallaPlayHist extends Pantalla {
         estaenMundoVivo=!estaenMundoVivo;
     }
 
-    private void cargarRecursosSiyala() {
-        manager.load("Segundo Nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
-        manager.load("siyala.png", Texture.class);
-        manager.load("Primer nivel.tmx", TiledMap.class);
-        manager.load("DarkMusic.mp3", Music.class);
-
-        //cargar los recursos de la pausa
-        manager.load("BotonPausa.png",Texture.class);
-        manager.load("ContinueBoton.png",Texture.class);
-        manager.load("ExitBoton.png",Texture.class);
-        manager.load("FondoPausa.png",Texture.class);
-
-        manager.load("BotonRetry.png",Texture.class);
-
-        manager.finishLoading();
-
-    }
 
     private void cargarMapa() {
         mapaMundoOsc = manager.get("Primer nivel.tmx");
@@ -270,7 +253,7 @@ public class PantallaPlayHist extends Pantalla {
 
             //dibuja la pantalla de perder
             borrarPantalla();
-            spriteGameOv.setPosition(camara.position.x-640,camara.position.y-400);
+            spriteGameOv.setPosition(camara.position.x-610,camara.position.y-500);
             spriteGameOv.draw(batch);
 
             botonMenu.actualizar(camara.position.x+320-texturaMenu.getWidth()/2,camara.position.y-100);
@@ -278,7 +261,7 @@ public class PantallaPlayHist extends Pantalla {
 
             botonPlay.actualizar(camara.position.x-320-texturaPlay.getWidth()/2,camara.position.y-100);
             botonPlay.dibujar(batch);
-            texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x,camara.position.y-200);
+            texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x-320,camara.position.y-200);
 
         }
         batch.end();
@@ -286,16 +269,16 @@ public class PantallaPlayHist extends Pantalla {
         if(pausa){
             batch.setProjectionMatrix(camara.combined);
             batch.begin();
-            borrarPantalla();
-            spriteFondo.setPosition(camara.position.x-ANCHO/2,camara.position.y-ALTO/2);
+            //borrarPantalla();
+            spriteFondo.setPosition(camara.position.x-640,camara.position.y-400);
             spriteFondo.draw(batch);
 
             //Actualizo los valores de las posiciones de ambos botones
             botonContinuar.actualizar(camara.position.x-texturaContinuar.getWidth()/2,
-                    camara.position.y+ALTO/4-texturaContinuar.getHeight());
+                    camara.position.y+100-texturaContinuar.getHeight());
 
             botonMenu.actualizar(camara.position.x-texturaMenu.getWidth()/2,
-                    camara.position.y-ALTO/4-texturaMenu.getHeight()/2);
+                    camara.position.y-80-texturaMenu.getHeight()/2);
             botonMenu.dibujar(batch);
 
             //dibujo los botones
@@ -365,8 +348,8 @@ public class PantallaPlayHist extends Pantalla {
         manager.unload("ContinueBoton.png");
         manager.unload("ExitBoton.png");
         manager.unload("BotonRetry.png");
-        texturaFondo.dispose();
-        texturaGameOv.dispose();
+        manager.unload("PantallaPausa.png");
+        manager.unload("PantallaGameOver.png");
 
     }
 

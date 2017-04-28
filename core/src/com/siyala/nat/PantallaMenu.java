@@ -41,6 +41,11 @@ public class PantallaMenu implements Screen {
     private Texture texturaBotonCreditos;
     private Texture texturaBotonSetts;
     private Texture texturaBotonInstr;
+    private Texture texturaBotonCreditosPress;
+    private Texture texturaBotonJuegoHistPress;
+    private Texture texturaBotonJuegoSurvPress;
+    private Texture texturaBotonInstrPress;
+    private Texture texturaBotonSettsPress;
 
     //Escenas
     private Stage escena;
@@ -70,7 +75,8 @@ public class PantallaMenu implements Screen {
 
         //Boton Instrucciones
         TextureRegionDrawable trdBtnInstr=new TextureRegionDrawable(new TextureRegion(texturaBotonInstr));
-        ImageButton btnInstr=new ImageButton(trdBtnInstr);
+        TextureRegionDrawable trdBtnInstr2=new TextureRegionDrawable(new TextureRegion(texturaBotonInstrPress));
+        ImageButton btnInstr=new ImageButton(trdBtnInstr,trdBtnInstr2);
         btnInstr.setPosition(4* ANCHO/7,2f*ALTO/10);
         escena.addActor(btnInstr);
 
@@ -85,7 +91,8 @@ public class PantallaMenu implements Screen {
 
         //Boton Settings
         TextureRegionDrawable trdBtnSetts=new TextureRegionDrawable(new TextureRegion(texturaBotonSetts));
-        ImageButton btnSetts=new ImageButton(trdBtnSetts);
+        TextureRegionDrawable trdBtnSetts2=new TextureRegionDrawable(new TextureRegion(texturaBotonSettsPress));
+        ImageButton btnSetts=new ImageButton(trdBtnSetts,trdBtnSetts2);
         btnSetts.setPosition(4* ANCHO/7,3.5f*ALTO/10);
         escena.addActor(btnSetts);
 
@@ -98,8 +105,9 @@ public class PantallaMenu implements Screen {
         });
 
         //Boton Creditos
-        TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
-        ImageButton btnPlayHist = new ImageButton(trdBtnPlayHist);
+        TextureRegionDrawable trdBtnCred = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
+        TextureRegionDrawable trdBtnCred2= new TextureRegionDrawable(new TextureRegion(texturaBotonCreditosPress));
+        ImageButton btnPlayHist = new ImageButton(trdBtnCred,trdBtnCred2);
         btnPlayHist.setPosition(4*ANCHO/7,5f*ALTO/10);
         escena.addActor(btnPlayHist);
 
@@ -112,7 +120,8 @@ public class PantallaMenu implements Screen {
 
         //Boton Play Surv
         TextureRegionDrawable trdBtnPlaySurv = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoSurv));
-        ImageButton btnPlaySurv = new ImageButton(trdBtnPlaySurv);
+        TextureRegionDrawable trdBtnPlaySurv2= new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoSurvPress));
+        ImageButton btnPlaySurv = new ImageButton(trdBtnPlaySurv,trdBtnPlaySurv2);
         btnPlaySurv.setPosition(4*ANCHO/7,6.5f*ALTO/10);
         escena.addActor(btnPlaySurv);
 
@@ -125,8 +134,9 @@ public class PantallaMenu implements Screen {
         });
 
         //Boton JugarHist
-        TextureRegionDrawable trdBtnCred = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHist));
-        ImageButton btnCred = new ImageButton(trdBtnCred);
+        TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHist));
+        TextureRegionDrawable trdBtnPlayHist2 = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHistPress));
+        ImageButton btnCred = new ImageButton(trdBtnPlayHist,trdBtnPlayHist2);
         btnCred.setPosition(4*ANCHO/7,8f*ALTO/10);
         escena.addActor(btnCred);
 
@@ -143,11 +153,16 @@ public class PantallaMenu implements Screen {
 
     private void cargarTexturas() {
         texturaFondo = manager.get("FondoMenuInicio.png");
-        texturaBotonCreditos = manager.get("CreditssBoton.png");
+        texturaBotonCreditos = manager.get("Botones/BotonCreditos1.png");
+        texturaBotonCreditosPress=manager.get("Botones/BotonCreditos2.png");
         texturaBotonJuegoHist = manager.get("Botones/BotonPlay1.png");
+        texturaBotonJuegoHistPress=manager.get("Botones/BotonPlay2.png");
         texturaBotonJuegoSurv = manager.get("Botones/BotonSurvival1.png");
+        texturaBotonJuegoSurvPress=manager.get("Botones/BotonSurvival2.png");
         texturaBotonSetts=manager.get("Botones/BotonSettings1.png");
+        texturaBotonSettsPress=manager.get("Botones/BotonSettings2.png");
         texturaBotonInstr=manager.get("Botones/BotonInstructions1.png");
+        texturaBotonInstrPress=manager.get("Botones/BotonInstructions2.png");
     }
 
     private void crearCamara() {
@@ -192,10 +207,16 @@ public class PantallaMenu implements Screen {
     public void dispose() {
         escena.dispose();
         manager.unload("FondoMenuInicio.png");
-        manager.unload("CreditssBoton.png");
+        manager.unload("Botones/BotonCreditos1.png");
         manager.unload("Botones/BotonPlay1.png");
         manager.unload("Botones/BotonSurvival1.png");
         manager.unload("Botones/BotonSettings1.png");
         manager.unload("Botones/BotonInstructions1.png");
+        manager.unload("Botones/BotonCreditos2.png");
+        manager.unload("Botones/BotonPlay2.png");
+        manager.unload("Botones/BotonSurvival2.png");
+        manager.unload("Botones/BotonSettings2.png");
+        manager.unload("Botones/BotonInstructions2.png");
+
     }
 }
