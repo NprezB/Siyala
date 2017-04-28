@@ -59,7 +59,7 @@ public class PantallaPlaySurv extends Pantalla {
 
     @Override
     public void show() {
-        cargarRecursosSiyala();
+        //cargarRecursosSiyala();
         texturaSiyala = manager.get("siyala.png");
         siyala = new Personaje(texturaSiyala,182,14*32);
         cargarMapa();
@@ -69,12 +69,12 @@ public class PantallaPlaySurv extends Pantalla {
 
     }
 
-    private void cargarRecursosSiyala() {
+    /*private void cargarRecursosSiyala() {
         manager.load("siyala.png", Texture.class);
         manager.load("Survival.tmx", TiledMap.class);
         manager.load("DarkMusic.mp3", Music.class);
         manager.finishLoading();
-    }
+    }*/
 
     private void cargarMapa() {
         mapa = manager.get("Survival.tmx");

@@ -2,6 +2,7 @@ package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,7 +23,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class PantallaCreditos implements Screen {
     private static final float ANCHO = 1280;
     private static final float ALTO = 800;
-    private final Siyala siyala;
+    private final Siyala juego;
+    private final AssetManager manager;
 
     //camara y vista
     private OrthographicCamera camara;
@@ -37,8 +39,9 @@ public class PantallaCreditos implements Screen {
     private SpriteBatch batch;
 
     //Manejo de pantallas
-    public PantallaCreditos(Siyala siyala) {
-        this.siyala = siyala;
+    public PantallaCreditos(Siyala juego) {
+        this.juego = juego;
+        manager=juego.getAssetManager();
     }
 
     @Override
@@ -63,7 +66,7 @@ public class PantallaCreditos implements Screen {
         //Evento del Boton Salir
         btnSalir.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
-                siyala.setScreen(new PantallaMenu(siyala));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
             }
 
         });
@@ -72,8 +75,8 @@ public class PantallaCreditos implements Screen {
     }
 
     private void cargarTexturas() {
-        texturaFondo = new Texture("FondoCreditos.png");
-        texturaBotonSalir = new Texture("ExitBoton.png");
+        texturaFondo = manager.get("Pantalla Creditos.png");
+        texturaBotonSalir = manager.get("ExitBoton.png");
     }
 
     private void crearCamara() {
@@ -116,8 +119,8 @@ public class PantallaCreditos implements Screen {
     @Override
     public void dispose() {
         escena.dispose();
-        texturaBotonSalir.dispose();
-        texturaFondo.dispose();
+        manager.unload("Pantalla Creditos.png");
+        manager.unload("ExitBoton.png");
 
     }
 }

@@ -90,9 +90,9 @@ public class PantallaPlayHist2 extends Pantalla {
     public void show() {
 
         //BotonSwitch
-        botonSwitch= new Texture("BotonWorld.png");
+        botonSwitch= manager.get("BotonWorld.png");/**/
 
-        cargarRecursosSiyala();
+        //cargarRecursosSiyala();
 
         //Boton Pausa
         texturaPausa=manager.get("BotonPausa.png");
@@ -107,11 +107,11 @@ public class PantallaPlayHist2 extends Pantalla {
         botonMenu=new Objeto(texturaMenu,camara.position.x,camara.position.y/2);
         //Fondo pausa
 
-        texturaFondo=new Texture("FondoPausa.png");
+        texturaFondo=manager.get("FondoPausa.png");/**/
         spriteFondo=new Sprite(texturaFondo);
 
         //Fondo Game Over
-        texturaGameOv=new Texture("GameOver.png");
+        texturaGameOv=manager.get("GameOver.png");/**/
         spriteGameOv=new Sprite(texturaGameOv);
 
         //Boton Jugar
@@ -160,7 +160,7 @@ public class PantallaPlayHist2 extends Pantalla {
         estaenMundoVivo=!estaenMundoVivo;
     }
 
-    private void cargarRecursosSiyala() {
+    /*private void cargarRecursosSiyala() {
         manager.load("Segundo Nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
         manager.load("siyala.png", Texture.class);
         manager.load("Primer nivel.tmx", TiledMap.class);
@@ -176,7 +176,7 @@ public class PantallaPlayHist2 extends Pantalla {
 
         manager.finishLoading();
 
-    }
+    }*/
 
     private void cargarMapa() {
         mapaMundoOsc = manager.get("Segundo Nivel.tmx");
@@ -349,8 +349,9 @@ public class PantallaPlayHist2 extends Pantalla {
         manager.unload("ContinueBoton.png");
         manager.unload("ExitBoton.png");
         manager.unload("BotonRetry.png");
-        texturaFondo.dispose();
-        texturaGameOv.dispose();
+        manager.unload("BotonWorld.png");
+        manager.unload("FondoPausa.png");
+        manager.unload("GameOver.png");
 
     }
 

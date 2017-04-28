@@ -3,6 +3,7 @@ package com.siyala.nat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,7 +26,9 @@ public class PantallaMenu implements Screen {
 
     private static final float ANCHO = 1280;
     private static final float ALTO = 800;
+
     private final Siyala juego;
+    private final AssetManager manager;
 
     //camara y vista
     private OrthographicCamera camara;
@@ -38,6 +41,11 @@ public class PantallaMenu implements Screen {
     private Texture texturaBotonCreditos;
     private Texture texturaBotonSetts;
     private Texture texturaBotonInstr;
+    private Texture texturaBotonCreditosPress;
+    private Texture texturaBotonJuegoHistPress;
+    private Texture texturaBotonJuegoSurvPress;
+    private Texture texturaBotonInstrPress;
+    private Texture texturaBotonSettsPress;
 
     //Escenas
     private Stage escena;
@@ -46,6 +54,7 @@ public class PantallaMenu implements Screen {
     //Manejo de pantallas
     public PantallaMenu(Siyala siyala) {
         this.juego = siyala;
+        manager=juego.getAssetManager();
     }
 
     @Override
@@ -66,7 +75,8 @@ public class PantallaMenu implements Screen {
 
         //Boton Instrucciones
         TextureRegionDrawable trdBtnInstr=new TextureRegionDrawable(new TextureRegion(texturaBotonInstr));
-        ImageButton btnInstr=new ImageButton(trdBtnInstr);
+        TextureRegionDrawable trdBtnInstr2=new TextureRegionDrawable(new TextureRegion(texturaBotonInstrPress));
+        ImageButton btnInstr=new ImageButton(trdBtnInstr,trdBtnInstr2);
         btnInstr.setPosition(4* ANCHO/7,2f*ALTO/10);
         escena.addActor(btnInstr);
 
@@ -74,14 +84,15 @@ public class PantallaMenu implements Screen {
         btnInstr.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
 
-                juego.setScreen(new PantallaInstrucciones(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.INSTRUCCIONES));
             }
         });
 
 
         //Boton Settings
         TextureRegionDrawable trdBtnSetts=new TextureRegionDrawable(new TextureRegion(texturaBotonSetts));
-        ImageButton btnSetts=new ImageButton(trdBtnSetts);
+        TextureRegionDrawable trdBtnSetts2=new TextureRegionDrawable(new TextureRegion(texturaBotonSettsPress));
+        ImageButton btnSetts=new ImageButton(trdBtnSetts,trdBtnSetts2);
         btnSetts.setPosition(4* ANCHO/7,3.5f*ALTO/10);
         escena.addActor(btnSetts);
 
@@ -89,47 +100,50 @@ public class PantallaMenu implements Screen {
         btnSetts.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
 
-                juego.setScreen(new PantallaSettings(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.SETTS));
             }
         });
 
         //Boton Creditos
-        TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
-        ImageButton btnPlayHist = new ImageButton(trdBtnPlayHist);
+        TextureRegionDrawable trdBtnCred = new TextureRegionDrawable(new TextureRegion(texturaBotonCreditos));
+        TextureRegionDrawable trdBtnCred2= new TextureRegionDrawable(new TextureRegion(texturaBotonCreditosPress));
+        ImageButton btnPlayHist = new ImageButton(trdBtnCred,trdBtnCred2);
         btnPlayHist.setPosition(4*ANCHO/7,5f*ALTO/10);
         escena.addActor(btnPlayHist);
 
         //Evento del Boton Creditos
         btnPlayHist.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y){
-                juego.setScreen(new PantallaCreditos(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.CREDITOS));
             }
         });
 
         //Boton Play Surv
         TextureRegionDrawable trdBtnPlaySurv = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoSurv));
-        ImageButton btnPlaySurv = new ImageButton(trdBtnPlaySurv);
+        TextureRegionDrawable trdBtnPlaySurv2= new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoSurvPress));
+        ImageButton btnPlaySurv = new ImageButton(trdBtnPlaySurv,trdBtnPlaySurv2);
         btnPlaySurv.setPosition(4*ANCHO/7,6.5f*ALTO/10);
         escena.addActor(btnPlaySurv);
 
         //Evento del Boton Play Surv
         btnPlaySurv.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                juego.setScreen(new PantallaPlaySurv(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYSURV));
             }
 
         });
 
         //Boton JugarHist
-        TextureRegionDrawable trdBtnCred = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHist));
-        ImageButton btnCred = new ImageButton(trdBtnCred);
+        TextureRegionDrawable trdBtnPlayHist = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHist));
+        TextureRegionDrawable trdBtnPlayHist2 = new TextureRegionDrawable(new TextureRegion(texturaBotonJuegoHistPress));
+        ImageButton btnCred = new ImageButton(trdBtnPlayHist,trdBtnPlayHist2);
         btnCred.setPosition(4*ANCHO/7,8f*ALTO/10);
         escena.addActor(btnCred);
 
         //Evento del Boton Jugar Historia
         btnCred.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                juego.setScreen(new PantallaPlayHist(juego));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST));
             }
 
         });
@@ -138,12 +152,17 @@ public class PantallaMenu implements Screen {
     }
 
     private void cargarTexturas() {
-        texturaFondo = new Texture("FondoMenuInicio.png");
-        texturaBotonCreditos = new Texture("CreditssBoton.png");
-        texturaBotonJuegoHist = new Texture("Botones/BotonPlay1.png");
-        texturaBotonJuegoSurv = new Texture("Botones/BotonSurvival1.png");
-        texturaBotonSetts=new Texture("Botones/BotonSettings1.png");
-        texturaBotonInstr=new Texture("Botones/BotonInstructions1.png");
+        texturaFondo = manager.get("FondoMenuInicio.png");
+        texturaBotonCreditos = manager.get("Botones/BotonCreditos1.png");
+        texturaBotonCreditosPress=manager.get("Botones/BotonCreditos2.png");
+        texturaBotonJuegoHist = manager.get("Botones/BotonPlay1.png");
+        texturaBotonJuegoHistPress=manager.get("Botones/BotonPlay2.png");
+        texturaBotonJuegoSurv = manager.get("Botones/BotonSurvival1.png");
+        texturaBotonJuegoSurvPress=manager.get("Botones/BotonSurvival2.png");
+        texturaBotonSetts=manager.get("Botones/BotonSettings1.png");
+        texturaBotonSettsPress=manager.get("Botones/BotonSettings2.png");
+        texturaBotonInstr=manager.get("Botones/BotonInstructions1.png");
+        texturaBotonInstrPress=manager.get("Botones/BotonInstructions2.png");
     }
 
     private void crearCamara() {
@@ -187,9 +206,17 @@ public class PantallaMenu implements Screen {
     @Override
     public void dispose() {
         escena.dispose();
-        texturaBotonCreditos.dispose();
-        texturaBotonJuegoSurv.dispose();
-        texturaBotonJuegoHist.dispose();
-        texturaFondo.dispose();
+        manager.unload("FondoMenuInicio.png");
+        manager.unload("Botones/BotonCreditos1.png");
+        manager.unload("Botones/BotonPlay1.png");
+        manager.unload("Botones/BotonSurvival1.png");
+        manager.unload("Botones/BotonSettings1.png");
+        manager.unload("Botones/BotonInstructions1.png");
+        manager.unload("Botones/BotonCreditos2.png");
+        manager.unload("Botones/BotonPlay2.png");
+        manager.unload("Botones/BotonSurvival2.png");
+        manager.unload("Botones/BotonSettings2.png");
+        manager.unload("Botones/BotonInstructions2.png");
+
     }
 }
