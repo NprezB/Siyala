@@ -51,6 +51,7 @@ public class PantallaPlaySurv extends Pantalla {
     // AssetManager
     private AssetManager manager;
     private float velociCamara=192;
+    private int varAcciones;
 
     public PantallaPlaySurv(Siyala juego) {
         this.juego = juego;
@@ -91,7 +92,16 @@ public class PantallaPlaySurv extends Pantalla {
     @Override
     public void render(float delta) {
         boolean pierde = false;
-        pierde = siyala.actualizar(mapa,delta,velociCamara);
+        varAcciones = siyala.actualizar(mapa,delta,velociCamara);
+        if(varAcciones==0){
+            pierde=false;
+        }
+        if(varAcciones==1){
+            pierde=true;
+        }
+        if(varAcciones==2){
+            juego.setScreen(new PantallaMenu(juego));
+        }
         //actualizarCamara();
         //posiCamara+=delta*velociCamara;
 

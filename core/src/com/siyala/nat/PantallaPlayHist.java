@@ -1,37 +1,22 @@
 package com.siyala.nat;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import sun.security.util.Length;
 
 /**
  * Created by Natanael on 15/02/2017.
@@ -40,7 +25,7 @@ import sun.security.util.Length;
 public class PantallaPlayHist extends Pantalla {
     public static final int ANCHO_MAPA = 124*64;
     public static final int ALTO_MAPA = 35*32;
-    private final Siyala juego;
+    private Siyala juego;
     private float posiCamara = ANCHO/2;
 
     private TiledMap mapa;
@@ -95,6 +80,7 @@ public class PantallaPlayHist extends Pantalla {
     private float velociCamara=192;
     private float distRecorrida = 0;
     private Texto texto;
+    private int identificadorAcciones;
 
     public PantallaPlayHist(Siyala juego) {
         this.juego = juego;
@@ -213,16 +199,26 @@ public class PantallaPlayHist extends Pantalla {
 
         //Mapa dependiendo del estado
         if(!estaenMundoVivo) {
-            pierde = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
+            identificadorAcciones = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
             renderMapaMundoOsc.setView(camara);
             renderMapaMundoOsc.render();
         }
 
         else if(estaenMundoVivo)
         {
-            pierde = siyala.actualizar(mapa,delta,velociCamara);
+            identificadorAcciones = siyala.actualizar(mapa,delta,velociCamara);
             renderarMapa.setView(camara);
             renderarMapa.render();
+        }
+
+        if(identificadorAcciones==0){
+            perdio=false;
+        }
+        if(identificadorAcciones==1){
+            perdio=true;
+        }
+        if(identificadorAcciones==2){
+            nextLevel();
         }
 
         batch.begin();
@@ -290,7 +286,7 @@ public class PantallaPlayHist extends Pantalla {
         if(siyala.getEstadoMovimiento()!= Personaje.EstadoMovimiento.PERDIENDO) {
             batch.setProjectionMatrix(camaraHUD.combined);
             batch.begin();
-            texto.mostrarMensaje(batch, distImprimir + " m", camaraHUD.position.x + 360, camaraHUD.position.y + 275);
+            texto.mostrarMensaje(batch, distImprimir + " m", camaraHUD.position.x, camaraHUD.position.y + 275);
             batch.end();
             escenaHUD.draw();
         }
@@ -323,7 +319,7 @@ public class PantallaPlayHist extends Pantalla {
         if(siyala.getEstadoMovimiento()!=Personaje.EstadoMovimiento.PERDIENDO){
             posiCamara+=delta*velociCamara;
             distRecorrida+= delta*10;
-            botonPausa.actualizar(camara.position.x+340,camara.position.y-texturaPausa.getHeight());
+            botonPausa.actualizar(camara.position.x+340,camara.position.y-texturaPausa.getHeight()+320);
 
         }
     }
@@ -350,7 +346,10 @@ public class PantallaPlayHist extends Pantalla {
         manager.unload("BotonRetry.png");
         manager.unload("PantallaPausa.png");
         manager.unload("PantallaGameOver.png");
+    }
 
+    public void nextLevel(){
+        juego.setScreen(new PantallaPlayHist2(juego));
     }
 
     private class ProcesadorEntrada implements InputProcessor

@@ -80,6 +80,7 @@ public class PantallaPlayHist2 extends Pantalla {
     private float velociCamara=192;
     private float distRecorrida = 0;
     private Texto texto;
+    private int varAcciones;
 
     public PantallaPlayHist2(Siyala juego) {
         this.juego = juego;
@@ -152,7 +153,7 @@ public class PantallaPlayHist2 extends Pantalla {
         altoBoton=btn.getHeight();
 
             escenaHUD = new Stage(vistaHUD);
-            escenaHUD.addActor(btn);
+            //escenaHUD.addActor(btn);
 
     }
 
@@ -214,33 +215,30 @@ public class PantallaPlayHist2 extends Pantalla {
 
         //Mapa dependiendo del estado
         if(!estaenMundoVivo) {
-            pierde = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
+            varAcciones = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
             renderMapaMundoOsc.setView(camara);
             renderMapaMundoOsc.render();
         }
 
         else if(estaenMundoVivo)
         {
-            pierde = siyala.actualizar(mapa,delta,velociCamara);
+            varAcciones = siyala.actualizar(mapa,delta,velociCamara);
             renderarMapa.setView(camara);
             renderarMapa.render();
         }
 
-        batch.begin();
-        siyala.dibujar(batch);
-
-        if (estaenMundoVivo) {
-            TiempoSwitch += Gdx.graphics.getDeltaTime();
-            SwitchCooldownTime = TiempoSwitch;
-
-            if (TiempoSwitch >= 13) {
-                TiempoSwitch = 0;
-                estaenMundoVivo = !estaenMundoVivo;
-            }
+        if(varAcciones==0){
+            pierde=false;
+        }
+        if(varAcciones==1){
+            pierde=true;
+        }
+        if(varAcciones==2){
+            nextLevel();
         }
 
-        if(!estaenMundoVivo && SwitchCooldownTime>=0)
-            SwitchCooldownTime-=Gdx.graphics.getDeltaTime();
+        batch.begin();
+        siyala.dibujar(batch);
 
         actualizarCamara();
         int distImprimir = ((int) distRecorrida);
@@ -291,7 +289,7 @@ public class PantallaPlayHist2 extends Pantalla {
         if(siyala.getEstadoMovimiento()!= Personaje.EstadoMovimiento.PERDIENDO) {
             batch.setProjectionMatrix(camaraHUD.combined);
             batch.begin();
-            texto.mostrarMensaje(batch, distImprimir + " m", camaraHUD.position.x + 360, camaraHUD.position.y + 275);
+            texto.mostrarMensaje(batch, distImprimir + " m", camaraHUD.position.x, camaraHUD.position.y + 275);
             batch.end();
             escenaHUD.draw();
         }
@@ -302,6 +300,10 @@ public class PantallaPlayHist2 extends Pantalla {
         /*if (pierde){
             juego.setScreen(new PantallaMenu(juego));
         }*/
+    }
+
+    private void nextLevel() {
+
     }
 
     private void actualizarCamara() {
@@ -324,7 +326,7 @@ public class PantallaPlayHist2 extends Pantalla {
         if(siyala.getEstadoMovimiento()!=Personaje.EstadoMovimiento.PERDIENDO){
             posiCamara+=delta*velociCamara;
             distRecorrida+= delta*10;
-            botonPausa.actualizar(camara.position.x+340,camara.position.y-texturaPausa.getHeight());
+            botonPausa.actualizar(camara.position.x+340,camara.position.y-texturaPausa.getHeight()+200);
 
         }
     }

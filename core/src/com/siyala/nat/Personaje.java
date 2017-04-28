@@ -74,7 +74,7 @@ public class Personaje extends Objeto
     }
 
     // Actualiza el sprite, de acuerdo al estadoMovimiento y estadoSalto
-    public boolean actualizar(TiledMap mapa, float delta, float velocidad) {
+    public int actualizar(TiledMap mapa, float delta, float velocidad) {
         switch (estadoMovimiento) {
             case MOV_DERECHA:
             case SUBIENDO:
@@ -83,10 +83,10 @@ public class Personaje extends Objeto
             case PERDIENDO:
                 return mover(mapa, delta, velocidad);
         }
-        return false;
+        return 0;
     }
 
-    private boolean mover(TiledMap mapa, float delta, float velocSiyala) {
+    private int mover(TiledMap mapa, float delta, float velocSiyala) {
         TiledMapTileLayer capa = (TiledMapTileLayer) mapa.getLayers().get(2);
         int x1= (int) (((sprite.getX()+42)/64));
         int x2= (int) (((sprite.getX()+2)/64));
@@ -98,7 +98,7 @@ public class Personaje extends Objeto
             TiledMapTileLayer.Cell abajoIzquierda = capa.getCell(x2,y1);
             if (abajoDerecha != null) {TiledMapTileLayer.Cell arribaDerecha = capa.getCell(x1,y2);
                 Object tipo = (String) abajoDerecha.getTile().getProperties().get("tipo");
-                if (!"pasto".equals(tipo)&&!"fuego".equals(tipo)) {
+                if (!"pasto".equals(tipo)&&!"fuego".equals(tipo)&&!"collar".equals(tipo)) {
                     abajoDerecha = null;
                 }
                 if("pasto".equals(tipo)){
@@ -109,6 +109,9 @@ public class Personaje extends Objeto
                 }
                 if("fuego".equals(tipo)){
                     setEstadoMovimiento(EstadoMovimiento.PERDIENDO);
+                }
+                if("collar".equals(tipo)){
+                    return 2;
                 }
             }
 
@@ -218,7 +221,7 @@ public class Personaje extends Objeto
                 setEstadoMovimiento(EstadoMovimiento.MOV_DERECHA);
             }
         }
-        return false;
+        return 0;
     }
 
     // Accesor de estadoMovimiento
