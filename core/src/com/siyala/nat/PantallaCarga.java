@@ -101,7 +101,7 @@ public class PantallaCarga extends Pantalla {
 
     }
     private void cargarRecursosPlayHist1() {
-        manager.load("Segundo Nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
+        manager.load("Primer nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
         manager.load("siyala.png", Texture.class);
         manager.load("Primer nivel.tmx", TiledMap.class);
         manager.load("DarkMusic.mp3", Music.class);
@@ -119,9 +119,9 @@ public class PantallaCarga extends Pantalla {
 
     }
     private void cargarRecursosPlayHist2() {
-        manager.load("Segundo Nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
+        manager.load("SegundoNivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
+        manager.load("SegundoNivel2.tmx",TiledMap.class);//"Primer nivelosc.tmx"
         manager.load("siyala.png", Texture.class);
-        manager.load("Primer nivel.tmx", TiledMap.class);
         manager.load("DarkMusic.mp3", Music.class);
         manager.load("BotonWorld.png",Texture.class);
 
@@ -152,14 +152,13 @@ public class PantallaCarga extends Pantalla {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteCarga.draw(batch);
-        texto.mostrarMensaje(batch, porcent + " %", ANCHO / 2, ALTO / 2);
+        texto.mostrarMensaje(batch, porcent + " %", ANCHO / 2, ALTO / 2+20);
         batch.end();
         // Actualizar
         timerAnimacion -= delta;
         if (timerAnimacion <= 0) {
             timerAnimacion = TIEMPO;
             spriteCarga.rotate(20);
-
         }
         actualizarCargaRecursos();
     }

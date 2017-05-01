@@ -224,19 +224,6 @@ public class PantallaPlayHist extends Pantalla {
         batch.begin();
         siyala.dibujar(batch);
 
-        if (estaenMundoVivo) {
-            TiempoSwitch += Gdx.graphics.getDeltaTime();
-            SwitchCooldownTime = TiempoSwitch;
-
-            if (TiempoSwitch >= 13) {
-                TiempoSwitch = 0;
-                estaenMundoVivo = !estaenMundoVivo;
-            }
-        }
-
-        if(!estaenMundoVivo && SwitchCooldownTime>=0)
-            SwitchCooldownTime-=Gdx.graphics.getDeltaTime();
-
         actualizarCamara();
         int distImprimir = ((int) distRecorrida);
         botonPausa.dibujar(batch);
@@ -339,13 +326,14 @@ public class PantallaPlayHist extends Pantalla {
         manager.unload("siyala.png");
         manager.unload("Primer nivel.tmx");
         manager.unload("DarkMusic.mp3");
-        manager.unload("Segundo Nivel.tmx");
+        manager.unload("Primer nivel.tmx");
         manager.unload("BotonPausa.png");
         manager.unload("ContinueBoton.png");
         manager.unload("ExitBoton.png");
         manager.unload("BotonRetry.png");
         manager.unload("PantallaPausa.png");
         manager.unload("PantallaGameOver.png");
+
     }
 
     public void nextLevel(){
