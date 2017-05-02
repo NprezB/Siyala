@@ -80,7 +80,7 @@ public class PantallaSettings implements Screen {
         TextureRegionDrawable trdBtnMusica = new TextureRegionDrawable(new TextureRegion(texturaBotonMusica));
         TextureRegionDrawable trdBtnMusica2= new TextureRegionDrawable(new TextureRegion(texturaBotonMusica2));
         ImageButton btnMusica = new ImageButton(trdBtnMusica,trdBtnMusica2);
-        btnMusica.setPosition(ANCHO/2-btnMusica.getWidth()/2,4.5f*ALTO/8);
+        btnMusica.setPosition(ANCHO/2-btnMusica.getWidth()/2,4*ALTO/8);
         escena.addActor(btnMusica);
 
         //Evento del Boton Musica
