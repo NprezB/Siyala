@@ -61,8 +61,8 @@ public class PantallaCarga extends Pantalla {
                 cargarRecursosPlayHist1();
             case PLAYHIST2:
                 cargarRecursosPlayHist2();
-            case PLAYHIST3:
-                cargarRecursosPlayHist3();
+            //case PLAYHIST3:
+                //cargarRecursosPlayHist3();
             case PLAYSURV:
                 cargarRecursosPlaySurv();
         }
@@ -203,9 +203,9 @@ public class PantallaCarga extends Pantalla {
     private void actualizarCargaRecursos() {
         if(manager.update()) {
             switch (sigPantalla) {
-                case PLAYHIST3:
-                    juego.setScreen(new PantallaPlayHist3(juego));
-                    break;
+               // case PLAYHIST3:
+                   // juego.setScreen(new PantallaPlayHist3(juego));
+                    //break;
                 case PLAYHIST:
                     juego.setScreen(new PantallaPlayHist(juego));
                     break;
