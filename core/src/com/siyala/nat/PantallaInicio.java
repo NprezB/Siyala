@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class PantallaInicio extends Pantalla {
 
-    private float tiempoMuestra=0.5f;
+    private float tiempoMuestra=1.5f;
 
     private Siyala juego;
     private Texture textLogo;
