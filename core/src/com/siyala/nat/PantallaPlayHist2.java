@@ -386,10 +386,10 @@ public class PantallaPlayHist2 extends Pantalla {
             }
             if (perdio) {
                 if (botonPlay.contiene(v)) {
-                    juego.setScreen(new PantallaPlayHist2(juego));
+                    juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST2));
                 }
                 if (botonMenu.contiene(v)){
-                    juego.setScreen(new PantallaMenu(juego));
+                    juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
                 }
             }
 
