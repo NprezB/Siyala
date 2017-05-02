@@ -1,9 +1,7 @@
 package com.siyala.nat;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,10 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.util.Map;
-
-import sun.font.TrueTypeFont;
 
 /**
  * Created by Natanael on 15/02/2017.
@@ -70,10 +64,6 @@ public class PantallaPlayHist extends Pantalla {
     private boolean perdio;
     private Texture texturaGameOv;
 
-    //Marcador
-    private float marcadorMayor;
-    private String nombreMarcadorMayor;
-
     //procesador
     private final ProcesadorEntrada procesadorEntrada=new ProcesadorEntrada();
 
@@ -90,7 +80,6 @@ public class PantallaPlayHist extends Pantalla {
     private float velociCamara=192;
     private float distRecorrida = 0;
     private Texto texto;
-    private Texto textoMarcador;
     private int identificadorAcciones;
 
     public PantallaPlayHist(Siyala juego) {
@@ -142,40 +131,10 @@ public class PantallaPlayHist extends Pantalla {
         // Gdx.input.setInputProcessor(escenaHUD);
 
         texto = new Texto("fuente.fnt");
-        textoMarcador = new Texto("puntuacion.fnt");
 
         Gdx.input.setInputProcessor(procesadorEntrada);
         Gdx.input.setCatchBackKey(true);
 
-        //Cargar marcador mayor
-        cargarMarcadorMayor();
-    }
-
-    private void cargarMarcadorMayor() {
-        Preferences preferencias = Gdx.app.getPreferences("marcador");
-        marcadorMayor = preferencias.getFloat("mayor",0);
-        nombreMarcadorMayor = preferencias.getString("nombre", "");
-    }
-
-    private void verificarMarcadorAlto() {
-        if (distRecorrida>=marcadorMayor) { // Marcador alto??
-            Input.TextInputListener listener = new Input.TextInputListener() {
-                @Override
-                public void input(String text) {
-                    // Guarda el mejor marcador con el nombre del jugador
-                    Preferences preferencias = Gdx.app.getPreferences("marcador");
-                    preferencias.putFloat("mayor", distRecorrida);
-                    preferencias.putString("nombre", text);
-                    preferencias.flush();
-
-                }
-
-                @Override
-                public void canceled() {
-                }
-            };
-            Gdx.input.getTextInput(listener, "Nuevo record, nombre:", nombreMarcadorMayor, "");
-        }
     }
 
     private void crearHUD() {
@@ -184,23 +143,9 @@ public class PantallaPlayHist extends Pantalla {
         camaraHUD.position.set(ANCHO / 2, ALTO / 2, 0);
         camaraHUD.update();
         vistaHUD = new StretchViewport(ANCHO, ALTO, camaraHUD);
-
-        // HUD
-        TextureRegionDrawable tr=new TextureRegionDrawable(new TextureRegion(botonSwitch));
-        ImageButton btn=new ImageButton(tr);
-
-        largoBoton=btn.getWidth();
-        altoBoton=btn.getHeight();
-
         escenaHUD = new Stage(vistaHUD);
-        escenaHUD.addActor(btn);
+
     }
-
-    private void cambiarMundo() {
-        estaenMundoVivo=!estaenMundoVivo;
-    }
-
-
     private void cargarMapa() {
         mapaMundoOsc = manager.get("Primer nivel.tmx");
         mapa = manager.get("Primer nivel.tmx");
@@ -271,11 +216,8 @@ public class PantallaPlayHist extends Pantalla {
 
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.PERDIENDO) {
-            perdio = true;
-
-            //Si se pierde la musica se detiene
-            musicaFondo.stop();
+        if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.PERDIENDO){
+            perdio=true;
 
             //dibuja la pantalla de perder
             borrarPantalla();
@@ -288,6 +230,7 @@ public class PantallaPlayHist extends Pantalla {
             botonPlay.actualizar(camara.position.x-320-texturaPlay.getWidth()/2,camara.position.y-100);
             botonPlay.dibujar(batch);
             texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x-320,camara.position.y-200);
+
         }
         batch.end();
 
@@ -316,10 +259,6 @@ public class PantallaPlayHist extends Pantalla {
             batch.setProjectionMatrix(camaraHUD.combined);
             batch.begin();
             texto.mostrarMensaje(batch, distImprimir + " m", camaraHUD.position.x, camaraHUD.position.y + 275);
-            if(distImprimir>marcadorMayor)
-                marcadorMayor = distImprimir;
-
-            textoMarcador.mostrarMensaje(batch,"High Score: "+((int)marcadorMayor)+" "+ nombreMarcadorMayor,camaraHUD.position.x,camaraHUD.position.y-265);
             batch.end();
             escenaHUD.draw();
         }
@@ -353,6 +292,7 @@ public class PantallaPlayHist extends Pantalla {
             posiCamara+=delta*velociCamara;
             distRecorrida+= delta*10;
             botonPausa.actualizar(camara.position.x+340,camara.position.y-texturaPausa.getHeight()+320);
+
         }
     }
 
@@ -382,8 +322,7 @@ public class PantallaPlayHist extends Pantalla {
     }
 
     public void nextLevel(){
-
-        juego.setScreen(new PantallaPlayHist2(juego));
+        juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST2));
     }
 
     private class ProcesadorEntrada implements InputProcessor
@@ -425,6 +364,7 @@ public class PantallaPlayHist extends Pantalla {
                         siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.DESAPARECIDO);
                     }
                 }
+
                 if (siyala.getDoubleJump()) {
                     if (siyala.getNumJump() <= 2) {
                         siyala.setY();
@@ -433,8 +373,6 @@ public class PantallaPlayHist extends Pantalla {
                     }
                 }
 
-                if ((!estaenMundoVivo && SwitchCooldownTime <= 0) || estaenMundoVivo)
-                    cambiarMundo();
             }
 
             if (pausa) {
@@ -455,19 +393,13 @@ public class PantallaPlayHist extends Pantalla {
                 pausa = true;
             }
             if (perdio) {
-                if(!botonPlay.contiene(v) || !botonMenu.contiene(v))
-                verificarMarcadorAlto();
-
                 if (botonPlay.contiene(v)) {
                     juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST));
-
                 }
                 if (botonMenu.contiene(v)) {
                     juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
 
                 }
-
-                //Llama a funcion de verificar marcador alto
             }
 
             return true;
@@ -483,19 +415,19 @@ public class PantallaPlayHist extends Pantalla {
 
         @Override
         public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
+            return false;
         }
 
-@Override
-public boolean mouseMoved(int screenX, int screenY) {
-        return false;
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            return false;
         }
 
-@Override
-public boolean scrolled(int amount) {
-        return false;
+        @Override
+        public boolean scrolled(int amount) {
+            return false;
         }
-        }
+    }
 
 
-        }
+}

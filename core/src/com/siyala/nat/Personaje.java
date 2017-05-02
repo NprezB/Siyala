@@ -159,6 +159,9 @@ public class Personaje extends Objeto
                 if("pasto".equals(tipo)){
                     setEstadoMovimiento(EstadoMovimiento.PERDIENDO);
                 }
+                if("collar".equals(tipo)){
+                    return 2;
+                }
             }
             if ( abajoDerecha == null) {
                 // Prueba que no salga del mundo por la izquierda
@@ -204,9 +207,14 @@ public class Personaje extends Objeto
                 }
                 if ("pasto".equals(tipo)){
                     setEstadoMovimiento(EstadoMovimiento.PERDIENDO);
+                    return 1;
                 }
                 if("fuego".equals(tipo)){
                     setEstadoMovimiento(EstadoMovimiento.PERDIENDO);
+                    return 1;
+                }
+                if("collar".equals(tipo)){
+                    return 2;
                 }
             }
             if ( celdaDerecha==null) {

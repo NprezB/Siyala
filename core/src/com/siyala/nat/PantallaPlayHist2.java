@@ -229,7 +229,7 @@ public class PantallaPlayHist2 extends Pantalla {
             perdio=true;
         }
         if(varAcciones==2){
-            juego.setScreen(new PantallaMenu(juego));
+            juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
         }
 
         batch.begin();
@@ -404,9 +404,8 @@ public class PantallaPlayHist2 extends Pantalla {
                 if (botonPlay.contiene(v)) {
                     juego.setScreen(new PantallaPlayHist2(juego));
                 }
-                if (botonMenu.contiene(v)) {
+                if (botonMenu.contiene(v)){
                     juego.setScreen(new PantallaMenu(juego));
-
                 }
             }
 
