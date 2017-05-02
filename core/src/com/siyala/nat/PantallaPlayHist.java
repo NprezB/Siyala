@@ -143,8 +143,6 @@ public class PantallaPlayHist extends Pantalla {
         mapaMundoOsc = manager.get("Primer nivel.tmx");
         mapa = manager.get("Primer nivel.tmx");
         musicaFondo = manager.get("DarkMusic.mp3");
-
-
         musicaFondo.setLooping(true);
         musicaFondo.play();
 
