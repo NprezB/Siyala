@@ -83,21 +83,25 @@ public class PantallaCarga extends Pantalla {
 
     }
     private void cargarRecursosCreditos() {
-        manager.load("Pantalla Creditos.png",Texture.class);
-        manager.load("ExitBoton.png",Texture.class);
+        manager.load("PantallaCreditos.png",Texture.class);
+        manager.load("Botones/BotonBack1.png",Texture.class);
+        manager.load("Botones/BotonBack2.png",Texture.class);
 
     }
     private void cargarRecursosSetts() {
-        manager.load("FondoMenuInicio.png",Texture.class);
-        manager.load("BotonsSounds.png",Texture.class);
-        manager.load("BotonsSounds.png",Texture.class);
-        manager.load("ExitBoton.png",Texture.class);
+        manager.load("PantallaSettings.png",Texture.class);
+        manager.load("Botones/BotonSounds1.png",Texture.class);
+        manager.load("Botones/BotonSounds2.png",Texture.class);
+        manager.load("Botones/BotonMusic1.png",Texture.class);
+        manager.load("Botones/BotonMusic2.png",Texture.class);
+        manager.load("Botones/BotonBack1.png",Texture.class);
+        manager.load("Botones/BotonBack2.png",Texture.class);
 
     }
     private void cargarRecursosInst() {
-        manager.load("PantallaInstrucc1.png",Texture.class);
-        manager.load("PantallaInstrucc2.png",Texture.class);
-        manager.load("Instrucciones3.jpg",Texture.class);
+        manager.load("PantallaInstruc1.png",Texture.class);
+        manager.load("PantallaInstruc2.png",Texture.class);
+        manager.load("PantallaInstruc3.png",Texture.class);
 
     }
     private void cargarRecursosPlayHist1() {
@@ -105,16 +109,16 @@ public class PantallaCarga extends Pantalla {
         manager.load("siyala.png", Texture.class);
         manager.load("Primer nivel.tmx", TiledMap.class);
         manager.load("DarkMusic.mp3", Music.class);
-        manager.load("BotonWorld.png",Texture.class);
+        manager.load("Botones/BotonWorld1.png",Texture.class);
 
         //cargar los recursos de la pausa
-        manager.load("BotonPausa.png",Texture.class);
+        manager.load("Botones/BotonPausa1.png",Texture.class);
         manager.load("ContinueBoton.png",Texture.class);
-        manager.load("ExitBoton.png",Texture.class);
+        manager.load("Botones/BotonExit1.png",Texture.class);
         manager.load("PantallaPausa.png",Texture.class);
         manager.load("PantallaGameOver.png",Texture.class);
 
-        manager.load("BotonRetry.png",Texture.class);
+        manager.load("Botones/BotonRetry1.png",Texture.class);
 
 
     }
@@ -123,16 +127,16 @@ public class PantallaCarga extends Pantalla {
         manager.load("SegundoNivel2.tmx",TiledMap.class);//"Primer nivelosc.tmx"
         manager.load("siyala.png", Texture.class);
         manager.load("DarkMusic.mp3", Music.class);
-        manager.load("BotonWorld.png",Texture.class);
+        manager.load("Botones/BotonWorld1.png",Texture.class);
 
         //cargar los recursos de la pausa
-        manager.load("BotonPausa.png",Texture.class);
+        manager.load("Botones/BotonPausa1.png",Texture.class);
         manager.load("ContinueBoton.png",Texture.class);
-        manager.load("ExitBoton.png",Texture.class);
+        manager.load("Botones/BotonExit1.png",Texture.class);
         manager.load("PantallaPausa.png",Texture.class);
         manager.load("PantallaGameOver.png",Texture.class);
 
-        manager.load("BotonRetry.png",Texture.class);
+        manager.load("Botones/BotonRetry1.png",Texture.class);
 
 
     }
@@ -146,13 +150,13 @@ public class PantallaCarga extends Pantalla {
         manager.load("BotonWorld.png",Texture.class);
 
         //cargar los recursos de la pausa
-        manager.load("BotonPausa.png",Texture.class);
+        manager.load("Botones/BotonPausa1.png",Texture.class);
         manager.load("ContinueBoton.png",Texture.class);
         manager.load("ExitBoton.png",Texture.class);
         manager.load("PantallaPausa.png",Texture.class);
         manager.load("PantallaGameOver.png",Texture.class);
 
-        manager.load("BotonRetry.png",Texture.class);
+        manager.load("Botones/BotonRetry1.png",Texture.class);
 
 
 

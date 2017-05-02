@@ -96,7 +96,7 @@ public class PantallaPlayHist extends Pantalla {
         //cargarRecursosSiyala();
 
         //Boton Pausa
-        texturaPausa=manager.get("BotonPausa.png");
+        texturaPausa=manager.get("Botones/BotonPausa1.png");
         botonPausa=new Objeto(texturaPausa,camara.position.x+320,camara.position.y+texturaPausa.getHeight());
 
         //Boton Continuar
@@ -104,7 +104,7 @@ public class PantallaPlayHist extends Pantalla {
         botonContinuar=new Objeto(texturaContinuar,camara.position.x, 3*(camara.position.y/2)+texturaContinuar.getHeight());
 
         //Boton Menu
-        texturaMenu=manager.get("ExitBoton.png");
+        texturaMenu=manager.get("Botones/BotonExit1.png");
         botonMenu=new Objeto(texturaMenu,camara.position.x,camara.position.y/2);
         //Fondo pausa
 
@@ -116,7 +116,7 @@ public class PantallaPlayHist extends Pantalla {
         spriteGameOv=new Sprite(texturaGameOv);
 
         //Boton Jugar
-        texturaPlay=manager.get("BotonRetry.png");
+        texturaPlay=manager.get("Botones/BotonRetry1.png");
         botonPlay=new Objeto(texturaPlay,320,0);
 
 
@@ -221,15 +221,15 @@ public class PantallaPlayHist extends Pantalla {
 
             //dibuja la pantalla de perder
             borrarPantalla();
-            spriteGameOv.setPosition(camara.position.x-610,camara.position.y-500);
+            spriteGameOv.setPosition(camara.position.x-480,camara.position.y-300);
             spriteGameOv.draw(batch);
 
-            botonMenu.actualizar(camara.position.x+320-texturaMenu.getWidth()/2,camara.position.y-100);
+            botonMenu.actualizar(camara.position.x+290-texturaMenu.getWidth()/2,camara.position.y-250);
             botonMenu.dibujar(batch);
 
-            botonPlay.actualizar(camara.position.x-320-texturaPlay.getWidth()/2,camara.position.y-100);
+            botonPlay.actualizar(camara.position.x-290-texturaPlay.getWidth()/2,camara.position.y-250);
             botonPlay.dibujar(batch);
-            texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x-320,camara.position.y-200);
+            texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x-320,camara.position.y+100);
 
         }
         batch.end();
@@ -312,12 +312,13 @@ public class PantallaPlayHist extends Pantalla {
         manager.unload("Primer nivel.tmx");
         manager.unload("DarkMusic.mp3");
         manager.unload("Primer nivel.tmx");
-        manager.unload("BotonPausa.png");
+        manager.unload("Botones/BotonPausa1.png");
         manager.unload("ContinueBoton.png");
-        manager.unload("ExitBoton.png");
-        manager.unload("BotonRetry.png");
+        manager.unload("Botones/BotonExit1.png");
+        manager.unload("Botones/BotonRetry1.png");
         manager.unload("PantallaPausa.png");
         manager.unload("PantallaGameOver.png");
+        manager.unload("Botones/BotonWorld1.png");
 
     }
 

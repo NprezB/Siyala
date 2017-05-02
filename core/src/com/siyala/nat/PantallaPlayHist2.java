@@ -92,13 +92,13 @@ public class PantallaPlayHist2 extends Pantalla {
     public void show() {
 
         //BotonSwitch
-        texturaSwitch= manager.get("BotonWorld.png");/**/
+        texturaSwitch= manager.get("Botones/BotonWorld1.png");/**/
         botonSwitch = new Objeto(texturaSwitch,camara.position.x-350,camara.position.y-300);
 
         //cargarRecursosSiyala();
 
         //Boton Pausa
-        texturaPausa=manager.get("BotonPausa.png");
+        texturaPausa=manager.get("Botones/BotonPausa1.png");
         botonPausa=new Objeto(texturaPausa,camara.position.x+320,camara.position.y+texturaPausa.getHeight());
 
         //Boton Continuar
@@ -156,23 +156,7 @@ public class PantallaPlayHist2 extends Pantalla {
         siyala.setDoubJump(estaenMundoVivo);
     }
 
-    /*private void cargarRecursosSiyala() {
-        manager.load("Segundo Nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
-        manager.load("siyala.png", Texture.class);
-        manager.load("Primer nivel.tmx", TiledMap.class);
-        manager.load("DarkMusic.mp3", Music.class);
 
-        //cargar los recursos de la pausa
-        manager.load("BotonPausa.png",Texture.class);
-        manager.load("ContinueBoton.png",Texture.class);
-        manager.load("ExitBoton.png",Texture.class);
-        manager.load("FondoPausa.png",Texture.class);
-
-        manager.load("BotonRetry.png",Texture.class);
-
-        manager.finishLoading();
-
-    }*/
 
     private void cargarMapa() {
         mapaMundoOsc = manager.get("SegundoNivel2.tmx");
@@ -340,11 +324,11 @@ public class PantallaPlayHist2 extends Pantalla {
         manager.unload("SegundoNivel.tmx");
         manager.unload("DarkMusic.mp3");
         manager.unload("SegundoNivel2.tmx");
-        manager.unload("BotonPausa.png");
+        manager.unload("Botones/BotonPausa1.png");
         manager.unload("ContinueBoton.png");
         manager.unload("ExitBoton.png");
         manager.unload("BotonRetry.png");
-        manager.unload("BotonWorld.png");
+        manager.unload("Botones/BotonWorld1.png");
         manager.unload("PantallaPausa.png");
         manager.unload("PantallaGameOver.png");
 

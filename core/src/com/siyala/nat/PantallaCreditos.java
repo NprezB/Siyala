@@ -33,6 +33,7 @@ public class PantallaCreditos implements Screen {
     //Texturas
     private Texture texturaFondo;
     private Texture texturaBotonSalir;
+    private Texture texturaBotonSalir2;
 
     //Escenas
     private Stage escena;
@@ -59,7 +60,8 @@ public class PantallaCreditos implements Screen {
 
         //Boton Salir
         TextureRegionDrawable trdBtnSalir = new TextureRegionDrawable(new TextureRegion(texturaBotonSalir));
-        ImageButton btnSalir = new ImageButton(trdBtnSalir);
+        TextureRegionDrawable trdBtnSalir2=new TextureRegionDrawable(new TextureRegion(texturaBotonSalir2));
+        ImageButton btnSalir = new ImageButton(trdBtnSalir,trdBtnSalir2);
         btnSalir.setPosition(ANCHO-texturaBotonSalir.getWidth(),ALTO-texturaBotonSalir.getHeight());
         escena.addActor(btnSalir);
 
@@ -75,8 +77,10 @@ public class PantallaCreditos implements Screen {
     }
 
     private void cargarTexturas() {
-        texturaFondo = manager.get("Pantalla Creditos.png");
-        texturaBotonSalir = manager.get("ExitBoton.png");
+        texturaFondo = manager.get("PantallaCreditos.png");
+        texturaBotonSalir = manager.get("Botones/BotonBack1.png");
+        texturaBotonSalir2=manager.get("Botones/BotonBack2.png");
+
     }
 
     private void crearCamara() {
@@ -119,8 +123,9 @@ public class PantallaCreditos implements Screen {
     @Override
     public void dispose() {
         escena.dispose();
-        manager.unload("Pantalla Creditos.png");
-        manager.unload("ExitBoton.png");
+        manager.unload("PantallaCreditos.png");
+        manager.unload("Botones/BotonBack1.png");
+        manager.unload("Botones/BotonBack2.png");
 
     }
 }

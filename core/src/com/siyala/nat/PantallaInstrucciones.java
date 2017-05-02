@@ -54,9 +54,9 @@ public class PantallaInstrucciones extends Pantalla {
     }
 
     private void cargarTexturas() {
-        texturaInstrucciones1 = manager.get("PantallaInstrucc1.png");
-        texturaInstrucciones2 = manager.get("PantallaInstrucc2.png");
-        texturaInstrucciones3 = manager.get("Instrucciones3.jpg");
+        texturaInstrucciones1 = manager.get("PantallaInstruc1.png");
+        texturaInstrucciones2 = manager.get("PantallaInstruc2.png");
+        texturaInstrucciones3 = manager.get("PantallaInstruc3.png");
     }
 
 
@@ -85,9 +85,9 @@ public class PantallaInstrucciones extends Pantalla {
 
     @Override
     public void dispose() {
-        manager.unload("PantallaInstrucc1.png");
-        manager.unload("PantallaInstrucc2.png");
-        manager.unload("Instrucciones3.jpg");
+        manager.unload("PantallaInstruc1.png");
+        manager.unload("PantallaInstruc2.png");
+        manager.unload("PantallaInstruc3.png");
 
     }
 

@@ -36,8 +36,9 @@ public class PantallaSettings implements Screen {
     private Texture texturaBotonMusica;
     private Texture texturaBotonSonidos;
     private Texture texturaBotonMenu;
-    private Texture texturaBotonMusicaMutted;
-    private Texture texturaBotonSonidosMutted;
+    private Texture texturaBotonMenu2;
+    private Texture texturaBotonMusica2;
+    private Texture texturaBotonSonidos2;
 
     //Escenas
     private Stage escena;
@@ -77,8 +78,9 @@ public class PantallaSettings implements Screen {
 
     private void btnMusica(){
         TextureRegionDrawable trdBtnMusica = new TextureRegionDrawable(new TextureRegion(texturaBotonMusica));
-        ImageButton btnMusica = new ImageButton(trdBtnMusica);
-        btnMusica.setPosition(2*ANCHO/3,4.5f*ALTO/8);
+        TextureRegionDrawable trdBtnMusica2= new TextureRegionDrawable(new TextureRegion(texturaBotonMusica2));
+        ImageButton btnMusica = new ImageButton(trdBtnMusica,trdBtnMusica2);
+        btnMusica.setPosition(ANCHO/2-btnMusica.getWidth()/2,4.5f*ALTO/8);
         escena.addActor(btnMusica);
 
         //Evento del Boton Musica
@@ -93,9 +95,9 @@ public class PantallaSettings implements Screen {
 
     private void btnSonidos(){
         TextureRegionDrawable trdBtnSonido = new TextureRegionDrawable(new TextureRegion(texturaBotonSonidos));
+        TextureRegionDrawable trdBtnSonido2=new TextureRegionDrawable(new TextureRegion(texturaBotonSonidos2));
         ImageButton btnSonido = new ImageButton(trdBtnSonido);
-        btnSonido.setPosition(2*ANCHO/3
-                ,6*ALTO/8);
+        btnSonido.setPosition(ANCHO/2-btnSonido.getWidth()/2,ALTO/4);
         escena.addActor(btnSonido);
 
         //Evento del Boton Sonido
@@ -109,8 +111,9 @@ public class PantallaSettings implements Screen {
     }
     private void btnVolver(){
         TextureRegionDrawable trdBtnMenu = new TextureRegionDrawable(new TextureRegion(texturaBotonMenu));
-        ImageButton btnMenu = new ImageButton(trdBtnMenu);
-        btnMenu.setPosition(ANCHO-texturaBotonMenu.getWidth(),ALTO-texturaBotonMenu.getHeight());
+        TextureRegionDrawable trdBtnMenu2= new TextureRegionDrawable(new TextureRegion(texturaBotonMenu2));
+        ImageButton btnMenu = new ImageButton(trdBtnMenu,trdBtnMenu2);
+        btnMenu.setPosition(ANCHO-260,ALTO-240);
         escena.addActor(btnMenu);
 
         //Evento del Boton Salir
@@ -123,12 +126,13 @@ public class PantallaSettings implements Screen {
     }
 
     private void cargarTexturas() {
-        texturaFondoSetts=manager.get("FondoMenuInicio.png");
-        texturaBotonMusica=manager.get("BotonsSounds.png");
-        texturaBotonSonidos=manager.get("BotonsSounds.png");
-        texturaBotonMenu=manager.get("ExitBoton.png");
-        // texturaBotonMusicaMutted=new Texture("mutted.png");
-        //texturaBotonSonidosMutted=new Texture("mutted.png");
+        texturaFondoSetts=manager.get("PantallaSettings.png");
+        texturaBotonMusica=manager.get("Botones/BotonMusic1.png");
+        texturaBotonMusica2=manager.get("Botones/BotonMusic2.png");
+        texturaBotonSonidos=manager.get("Botones/BotonSounds1.png");
+        texturaBotonSonidos2=manager.get("Botones/BotonSounds2.png");
+        texturaBotonMenu=manager.get("Botones/BotonBack1.png");
+        texturaBotonMenu2=manager.get("Botones/BotonBack2.png");
     }
 
     private void crearCamara() {
@@ -176,7 +180,8 @@ public class PantallaSettings implements Screen {
         manager.unload("FondoMenuInicio.png");
         manager.unload("BotonsSounds.png");
         manager.unload("BotonsSounds.png");
-        manager.unload("ExitBoton.png");
+        manager.unload("Botones/BotonBack1.png");
+        manager.unload("Botones/BotonBack2.png");
 
     }
 }
