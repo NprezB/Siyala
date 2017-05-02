@@ -61,6 +61,8 @@ public class PantallaCarga extends Pantalla {
                 cargarRecursosPlayHist1();
             case PLAYHIST2:
                 cargarRecursosPlayHist2();
+            case PLAYHIST3:
+                cargarRecursosPlayHist3();
             case PLAYSURV:
                 cargarRecursosPlaySurv();
         }
@@ -140,6 +142,23 @@ public class PantallaCarga extends Pantalla {
 
 
     }
+    private void cargarRecursosPlayHist3() {
+        manager.load("TercerNivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
+        manager.load("TercerNivel2.tmx",TiledMap.class);//"Primer nivelosc.tmx"
+        manager.load("siyala.png", Texture.class);
+        manager.load("DarkMusic.mp3", Music.class);
+        manager.load("BotonWorld.png",Texture.class);
+
+        //cargar los recursos de la pausa
+        manager.load("BotonPausa.png",Texture.class);
+        manager.load("ContinueBoton.png",Texture.class);
+        manager.load("ExitBoton.png",Texture.class);
+        manager.load("PantallaPausa.png",Texture.class);
+        manager.load("PantallaGameOver.png",Texture.class);
+        manager.load("BotonRetry.png",Texture.class);
+
+    }
+
     private void cargarRecursosPlaySurv() {
         manager.load("siyala.png", Texture.class);
         manager.load("Survival.tmx", TiledMap.class);
@@ -184,6 +203,9 @@ public class PantallaCarga extends Pantalla {
     private void actualizarCargaRecursos() {
         if(manager.update()) {
             switch (sigPantalla) {
+                case PLAYHIST3:
+                    juego.setScreen(new PantallaPlayHist3(juego));
+                    break;
                 case PLAYHIST:
                     juego.setScreen(new PantallaPlayHist(juego));
                     break;

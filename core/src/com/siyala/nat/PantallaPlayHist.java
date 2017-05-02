@@ -39,12 +39,7 @@ public class PantallaPlayHist extends Pantalla {
     private Texture texturaSiyala;
 
     //Cambio de mundo
-    private Texture botonSwitch;
     private boolean estaenMundoVivo=false;
-    private float SwitchCooldownTime=0;
-    private float TiempoSwitch=0;
-    private float largoBoton;
-    private float altoBoton;
 
     //Pantalla secundaria pausa
     private Objeto botonPausa;
@@ -90,9 +85,6 @@ public class PantallaPlayHist extends Pantalla {
     @Override
     public void show() {
 
-        //BotonSwitch
-        botonSwitch= new Texture("BotonWorld.png");
-
         //cargarRecursosSiyala();
 
         //Boton Pausa
@@ -134,6 +126,7 @@ public class PantallaPlayHist extends Pantalla {
 
         Gdx.input.setInputProcessor(procesadorEntrada);
         Gdx.input.setCatchBackKey(true);
+        siyala.setDoubJump(false);
 
     }
 

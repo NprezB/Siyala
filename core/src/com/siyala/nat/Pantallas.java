@@ -11,5 +11,6 @@ public enum Pantallas {
     PLAYHIST,
     PLAYHIST2,
     PLAYSURV,
+    PLAYHIST3,
     SETTS
 }

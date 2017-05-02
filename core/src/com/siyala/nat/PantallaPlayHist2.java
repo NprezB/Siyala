@@ -146,8 +146,7 @@ public class PantallaPlayHist2 extends Pantalla {
         camaraHUD.position.set(ANCHO / 2, ALTO / 2, 0);
         camaraHUD.update();
         vistaHUD = new StretchViewport(ANCHO, ALTO, camaraHUD);
-
-            escenaHUD = new Stage(vistaHUD);
+        escenaHUD = new Stage(vistaHUD);
 
     }
 
@@ -213,7 +212,7 @@ public class PantallaPlayHist2 extends Pantalla {
             perdio=true;
         }
         if(varAcciones==2){
-            juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
+            juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST3));
         }
 
         batch.begin();
@@ -363,37 +362,7 @@ public class PantallaPlayHist2 extends Pantalla {
             vHUD.set(screenX, screenY, 0);
             camaraHUD.unproject(vHUD);
 
-            if (pausa) {
-                if (botonContinuar.contiene(v)) {
-                    pausa = false;
-                    velociCamara = 192;
-                }
-                if (botonMenu.contiene(v)) {
-                    juego.setScreen(new PantallaMenu(juego));
-                }
-            }
-
-            //checa si pucharon la pausa
-            if (botonPausa.contiene(v)) {
-                //La velocidad de camara se pone a 0
-                velociCamara = 0;
-                //Se activa pausa
-                pausa = true;
-            }
-
-            if(botonSwitch.contiene(v)&&!pausa){
-                cambiarMundo();
-            }
-            if (perdio) {
-                if (botonPlay.contiene(v)) {
-                    juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST2));
-                }
-                if (botonMenu.contiene(v)){
-                    juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
-                }
-            }
-
-            if (siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.PERDIENDO&&!pausa&&!botonPausa.contiene(v)&&!botonSwitch.contiene(v)){
+            if (siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.PERDIENDO&&!pausa&&!botonPausa.contiene(v)&&!botonSwitch.contiene(v)) {
                 if (!siyala.getDoubleJump()) {
                     if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
                         siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
@@ -411,8 +380,38 @@ public class PantallaPlayHist2 extends Pantalla {
                         siyala.setOneNumJump();
                     }
                 }
-
             }
+
+            if (pausa) {
+                if (botonContinuar.contiene(v)) {
+                    pausa = false;
+                    velociCamara = 192;
+                }
+                if (botonMenu.contiene(v)) {
+                    juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
+                }
+            }
+
+                //checa si pucharon la pausa
+                if (botonPausa.contiene(v) && !perdio) {
+                    //La velocidad de camara se pone a 0
+                    velociCamara = 0;
+                    //Se activa pausa
+                    pausa = true;
+                }
+                if (perdio) {
+                    if (botonPlay.contiene(v)) {
+                        juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST2));
+                    }
+                    if (botonMenu.contiene(v)) {
+                        juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
+
+                    }
+                }
+
+                if(botonSwitch.contiene(v)&&!pausa){
+                    cambiarMundo();
+                }
             /*else{
                 juego.setScreen(new PantallaMenu(juego));
             }*/
