@@ -143,7 +143,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Jugar Historia
         btnCred.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST));
+                juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST2));
             }
 
         });

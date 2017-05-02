@@ -155,7 +155,7 @@ public class PantallaCarga extends Pantalla {
         manager.load("ExitBoton.png",Texture.class);
         manager.load("PantallaPausa.png",Texture.class);
         manager.load("PantallaGameOver.png",Texture.class);
-        manager.load("BotonRetry.png",Texture.class);
+        manager.load("Botones/BotonRetry1.png",Texture.class);
 
     }
 
