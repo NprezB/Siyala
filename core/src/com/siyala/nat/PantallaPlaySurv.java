@@ -144,7 +144,7 @@ public class PantallaPlaySurv extends Pantalla {
         texto = new Texto("fuente.fnt");
         textoMarcador = new Texto("puntuacion.fnt");
 
-        Gdx.input.setInputProcessor(procesadorEntrada);
+        Gdx.input.setInputProcessor(new PantallaPlaySurv.ProcesadorEntrada());
         Gdx.input.setCatchBackKey(true);
 
         //Cargar marcador mayor
@@ -316,8 +316,6 @@ public class PantallaPlaySurv extends Pantalla {
             batch.setProjectionMatrix(camaraHUD.combined);
             batch.begin();
             texto.mostrarMensaje(batch, distImprimir + " m", camaraHUD.position.x, camaraHUD.position.y + 275);
-
-            //Si la distancia que lleva ya supero el marcador se reescribe la High Score de abajo
             if(distImprimir>marcadorMayor)
                 marcadorMayor = distImprimir;
 
@@ -384,6 +382,7 @@ public class PantallaPlaySurv extends Pantalla {
     }
 
     public void nextLevel(){
+
         juego.setScreen(new PantallaPlayHist2(juego));
     }
 
@@ -457,8 +456,6 @@ public class PantallaPlaySurv extends Pantalla {
             }
             if (perdio) {
 
-                //Al picar en la pantalla se verifica si tiene un marcador alto
-                if(!botonPlay.contiene(v) || !botonMenu.contiene(v))
                     verificarMarcadorAlto();
 
                 if (botonPlay.contiene(v)) {

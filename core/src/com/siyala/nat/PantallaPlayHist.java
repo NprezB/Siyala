@@ -382,6 +382,7 @@ public class PantallaPlayHist extends Pantalla {
     }
 
     public void nextLevel(){
+
         juego.setScreen(new PantallaPlayHist2(juego));
     }
 
