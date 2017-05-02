@@ -115,7 +115,7 @@ public class PantallaCarga extends Pantalla {
 
         //cargar los recursos de la pausa
         manager.load("Botones/BotonPausa1.png",Texture.class);
-        manager.load("ContinueBoton.png",Texture.class);
+        manager.load("Botones/Continue1.png",Texture.class);
         manager.load("Botones/BotonExit1.png",Texture.class);
         manager.load("PantallaPausa.png",Texture.class);
         manager.load("PantallaGameOver.png",Texture.class);
@@ -133,7 +133,7 @@ public class PantallaCarga extends Pantalla {
 
         //cargar los recursos de la pausa
         manager.load("Botones/BotonPausa1.png",Texture.class);
-        manager.load("ContinueBoton.png",Texture.class);
+        manager.load("Botones/Continue1.png",Texture.class);
         manager.load("Botones/BotonExit1.png",Texture.class);
         manager.load("PantallaPausa.png",Texture.class);
         manager.load("PantallaGameOver.png",Texture.class);

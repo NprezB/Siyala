@@ -102,7 +102,7 @@ public class PantallaPlayHist2 extends Pantalla {
         botonPausa=new Objeto(texturaPausa,camara.position.x+320,camara.position.y+texturaPausa.getHeight());
 
         //Boton Continuar
-        texturaContinuar=manager.get("ContinueBoton.png");
+        texturaContinuar=manager.get("Botones/Continue1.png");
         botonContinuar=new Objeto(texturaContinuar,camara.position.x, 3*(camara.position.y/2)+texturaContinuar.getHeight());
 
         //Boton Menu
@@ -323,7 +323,7 @@ public class PantallaPlayHist2 extends Pantalla {
         manager.unload("DarkMusic.mp3");
         manager.unload("SegundoNivel2.tmx");
         manager.unload("Botones/BotonPausa1.png");
-        manager.unload("ContinueBoton.png");
+        manager.unload("Botones/Continue1.png");
         manager.unload("Botones/BotonExit1.png");
         manager.unload("Botones/BotonRetry1.png");
         manager.unload("Botones/BotonWorld1.png");
