@@ -302,7 +302,7 @@ public class PantallaPlayHist2 extends Pantalla {
             posiCamara+=delta*velociCamara;
             distRecorrida+= delta*10;
             botonPausa.actualizar(camara.position.x+340,camara.position.y-texturaPausa.getHeight()+320);
-            botonSwitch.actualizar(camara.position.x-350,camara.position.y-300);
+            botonSwitch.actualizar(camara.position.x-450,camara.position.y-300);
 
         }
     }
