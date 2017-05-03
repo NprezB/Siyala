@@ -143,7 +143,7 @@ public class PantallaPlaySurv extends Pantalla {
         siyala.setDoubJump(true);
         cargarMarcadorMayor();
     }
-
+//
     private void cargarMarcadorMayor() {
         Preferences preferencias = Gdx.app.getPreferences("marcador");
         marcadorMayor = preferencias.getFloat("mayor",0);
