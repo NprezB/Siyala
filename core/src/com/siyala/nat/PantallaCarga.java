@@ -163,22 +163,18 @@ public class PantallaCarga extends Pantalla {
         manager.load("siyala.png", Texture.class);
         manager.load("Survival.tmx", TiledMap.class);
         manager.load("DarkMusic.mp3", Music.class);
-        manager.load("Primer nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
+        manager.load("SegundoNivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
 
-
-        manager.load("BotonWorld.png",Texture.class);
+        manager.load("Botones/BotonWorld1.png",Texture.class);
 
         //cargar los recursos de la pausa
         manager.load("Botones/BotonPausa1.png",Texture.class);
-        manager.load("ContinueBoton.png",Texture.class);
-        manager.load("ExitBoton.png",Texture.class);
+        manager.load("Botones/Continue1.png",Texture.class);
+        manager.load("Botones/BotonExit1.png",Texture.class);
         manager.load("PantallaPausa.png",Texture.class);
         manager.load("PantallaGameOver.png",Texture.class);
 
         manager.load("Botones/BotonRetry1.png",Texture.class);
-
-
-
     }
 
 
