@@ -1,6 +1,7 @@
 package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 
@@ -12,14 +13,17 @@ public class Setts {
     private static boolean musica=true;
     private static boolean eff=true;
     private static Music musicaFondo;
+    protected static float marcadorMayor;
+    protected static String nombreMarcadorMayor;
     private static Preferences setting;
 
     public static void cargarSetts(){
         setting= Gdx.app.getPreferences("setting");
         musica=setting.getBoolean("musica",true);
         eff=setting.getBoolean("efectos",true);
+        marcadorMayor = setting.getFloat("mayor",0);
+        nombreMarcadorMayor = setting.getString("nombre", "");
     }
-
 
     public static void cargarMusica(Music musica){
         musicaFondo=musica;
@@ -54,6 +58,33 @@ public class Setts {
     }
     public static boolean getMus(){
         return musica;
+    }
+
+    public static void verificrMarcadorAlto(float distRecorrida)
+    {
+        final float finalDistRecorrida = distRecorrida;
+        Input.TextInputListener listener = new Input.TextInputListener() {
+            @Override
+            public void input(String text) {
+                // Guarda el mejor marcador con el nombre del jugador
+                setting.putFloat("mayor", finalDistRecorrida +1);
+                setting.putString("nombre", text);
+                setting.flush();
+
+            }
+
+            @Override
+            public void canceled() {
+            }
+        };
+        Gdx.input.getTextInput(listener, "Nuevo record, nombre:", nombreMarcadorMayor, "");
+
+    }
+
+    public static void cargarMarcadorMayor() {
+    cargarSetts();
+        marcadorMayor = setting.getFloat("mayor",0);
+        nombreMarcadorMayor = setting.getString("nombre", "");
     }
 
 

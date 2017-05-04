@@ -161,7 +161,6 @@ public class PantallaPlayHist extends Pantalla {
 
     @Override
     public void render(float delta) {
-        boolean pierde = false;
         //pierde = siyala.actualizar(mapa,delta,velociCamara);
         //actualizarCamara();
         //posiCamara+=delta*velociCamara;
