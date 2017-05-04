@@ -90,21 +90,21 @@ public class PantallaPlayHist3 extends Pantalla {
     public void show() {
 
         //BotonSwitch
-        texturaSwitch= manager.get("BotonWorld.png");/**/
+        texturaSwitch= manager.get("Botones/BotonWorld1.png");/**/
         botonSwitch = new Objeto(texturaSwitch,camara.position.x-350,camara.position.y-300);
 
         //cargarRecursosSiyala();
 
         //Boton Pausa
-        texturaPausa=manager.get("BotonPausa.png");
+        texturaPausa=manager.get("Botones/BotonPausa1.png");
         botonPausa=new Objeto(texturaPausa,camara.position.x+320,camara.position.y+texturaPausa.getHeight());
 
         //Boton Continuar
-        texturaContinuar=manager.get("ContinueBoton.png");
+        texturaContinuar=manager.get("Botones/Continue1.png");
         botonContinuar=new Objeto(texturaContinuar,camara.position.x, 3*(camara.position.y/2)+texturaContinuar.getHeight());
 
         //Boton Menu
-        texturaMenu=manager.get("ExitBoton.png");
+        texturaMenu=manager.get("Botones/BotonExit1.png");
         botonMenu=new Objeto(texturaMenu,camara.position.x,camara.position.y/2);
         //Fondo pausa
 
@@ -116,7 +116,7 @@ public class PantallaPlayHist3 extends Pantalla {
         spriteGameOv=new Sprite(texturaGameOv);
 
         //Boton Jugar
-        texturaPlay=manager.get("BotonRetry.png");
+        texturaPlay=manager.get("Botones/BotonRetry1.png");
         botonPlay=new Objeto(texturaPlay,320,0);
 
 
@@ -172,8 +172,8 @@ public class PantallaPlayHist3 extends Pantalla {
     }*/
 
     private void cargarMapa() {
-        mapaMundoOsc = manager.get("SegundoNivel2.tmx");
-        mapa = manager.get("SegundoNivel.tmx");
+        mapaMundoOsc = manager.get("TercerNivel2.tmx");
+        mapa = manager.get("TercerNivel.tmx");
         musicaFondo = manager.get("DarkMusic.mp3");
 
 
@@ -245,15 +245,15 @@ public class PantallaPlayHist3 extends Pantalla {
 
             //dibuja la pantalla de perder
             borrarPantalla();
-            spriteGameOv.setPosition(camara.position.x-610,camara.position.y-500);
+            spriteGameOv.setPosition(camara.position.x-480,camara.position.y-300);
             spriteGameOv.draw(batch);
 
-            botonMenu.actualizar(camara.position.x+320-texturaMenu.getWidth()/2,camara.position.y-100);
+            botonMenu.actualizar(camara.position.x+290-texturaMenu.getWidth()/2,camara.position.y-250);
             botonMenu.dibujar(batch);
 
-            botonPlay.actualizar(camara.position.x-320-texturaPlay.getWidth()/2,camara.position.y-100);
+            botonPlay.actualizar(camara.position.x-290-texturaPlay.getWidth()/2,camara.position.y-250);
             botonPlay.dibujar(batch);
-            texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x-320,camara.position.y-200);
+            texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x-320,camara.position.y+100);
 
         }
         batch.end();
@@ -316,8 +316,7 @@ public class PantallaPlayHist3 extends Pantalla {
             posiCamara+=delta*velociCamara;
             distRecorrida+= delta*10;
             botonPausa.actualizar(camara.position.x+340,camara.position.y-texturaPausa.getHeight()+320);
-            botonSwitch.actualizar(camara.position.x-350,camara.position.y-300);
-
+            botonSwitch.actualizar(camara.position.x-500,camara.position.y-320);
         }
     }
 
@@ -334,14 +333,14 @@ public class PantallaPlayHist3 extends Pantalla {
     @Override
     public void dispose() {
         manager.unload("siyala.png");
-        manager.unload("SegundoNivel.tmx");
+        manager.unload("TercerNivel.tmx");
         manager.unload("DarkMusic.mp3");
-        manager.unload("SegundoNivel2.tmx");
-        manager.unload("BotonPausa.png");
-        manager.unload("ContinueBoton.png");
-        manager.unload("ExitBoton.png");
-        manager.unload("BotonRetry.png");
-        manager.unload("BotonWorld.png");
+        manager.unload("TercerNivel2.tmx");
+        manager.unload("Botones/BotonPausa1.png");
+        manager.unload("Botones/Continue1.png");
+        manager.unload("Botones/BotonExit1.png");
+        manager.unload("Botones/BotonRetry1.png");
+        manager.unload("Botones/BotonWorld1.png");
         manager.unload("PantallaPausa.png");
         manager.unload("PantallaGameOver.png");
 
