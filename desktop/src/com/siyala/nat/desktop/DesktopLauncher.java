@@ -1,8 +1,8 @@
-package mx.itesm.proyecto.desktop;
+package com.siyala.nat.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import mx.itesm.proyecto.Siyala;
+import com.siyala.nat.Siyala;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
