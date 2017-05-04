@@ -24,7 +24,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  */
 
 public class PantallaPlaySurv extends Pantalla {
-    public static final int ANCHO_MAPA = 124*64;
+    public static final int ANCHO_MAPA = 840*64;
     public static final int ALTO_MAPA = 35*32;
     private final Siyala juego;
     private float posiCamara = ANCHO/2;
@@ -167,8 +167,8 @@ public class PantallaPlaySurv extends Pantalla {
 
 
     private void cargarMapa() {
-        mapaMundoOsc = manager.get("SurvivalOsc.tmx");
-        mapa = manager.get("Survival.tmx");
+        mapaMundoOsc = manager.get("SurvivalF2.tmx");
+        mapa = manager.get("SurvivalF.tmx");
 
 
         batch = new SpriteBatch();
@@ -210,16 +210,6 @@ public class PantallaPlaySurv extends Pantalla {
             renderarMapa.render();
         }
 
-        if(varAcciones==0){
-            perdio=false;
-        }
-        if(varAcciones==1){
-            perdio=true;
-        }
-        if(varAcciones==2){
-            juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST3));
-        }
-
         batch.begin();
         siyala.dibujar(batch);
 
@@ -249,6 +239,8 @@ public class PantallaPlaySurv extends Pantalla {
 
             botonPlay.actualizar(camara.position.x-290-texturaPlay.getWidth()/2,camara.position.y-250);
             botonPlay.dibujar(batch);
+            if(Setts.marcadorMayor>distImprimir)
+                distImprimir=distImprimir+1;
             texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x-320,camara.position.y+100);
 
         }
@@ -279,6 +271,7 @@ public class PantallaPlaySurv extends Pantalla {
             batch.setProjectionMatrix(camaraHUD.combined);
             batch.begin();
             texto.mostrarMensaje(batch, distImprimir + " m", camaraHUD.position.x, camaraHUD.position.y + 275);
+
             if(distImprimir>Setts.marcadorMayor)
                 Setts.marcadorMayor = distImprimir;
 
@@ -333,9 +326,9 @@ public class PantallaPlaySurv extends Pantalla {
     @Override
     public void dispose() {
         manager.unload("siyala.png");
-        manager.unload("Survival.tmx");
+        manager.unload("SurvivalF.tmx");
         manager.unload("DarkMusic.mp3");
-        manager.unload("SurvivalOsc.tmx");
+        manager.unload("SurvivalF2.tmx");
         manager.unload("Botones/BotonPausa1.png");
         manager.unload("Botones/Continue1.png");
         manager.unload("Botones/BotonExit1.png");

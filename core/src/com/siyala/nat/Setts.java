@@ -67,7 +67,7 @@ public class Setts {
             @Override
             public void input(String text) {
                 // Guarda el mejor marcador con el nombre del jugador
-                setting.putFloat("mayor", finalDistRecorrida +1);
+                setting.putFloat("mayor", finalDistRecorrida);
                 setting.putString("nombre", text);
                 setting.flush();
 
