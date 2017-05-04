@@ -1,9 +1,8 @@
-package com.siyala.nat;
+package mx.itesm.proyecto;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -21,14 +20,14 @@ public class PantallaCarga extends Pantalla {
     private AssetManager manager;
 
     //para manejar los recursos y demas
-    private Siyala juego;
-    private Pantallas sigPantalla;
+    private mx.itesm.proyecto.Siyala juego;
+    private mx.itesm.proyecto.Pantallas sigPantalla;
     private int porcent;
-    private Texto texto;
+    private mx.itesm.proyecto.Texto texto;
 
     private Texture textCargando;
 
-    public PantallaCarga(Siyala juego, Pantallas sigPant){
+    public PantallaCarga(mx.itesm.proyecto.Siyala juego, mx.itesm.proyecto.Pantallas sigPant){
         this.juego=juego;
         this.sigPantalla=sigPant;
     }
@@ -41,7 +40,7 @@ public class PantallaCarga extends Pantalla {
         spriteCarga=new Sprite(textCargando);
         spriteCarga.setPosition(ANCHO/2-spriteCarga.getWidth()/2,ALTO/2-spriteCarga.getHeight()/2);
         cargarRecursosSigPantalla();
-        texto=new Texto("fuente.fnt");
+        texto=new mx.itesm.proyecto.Texto("fuente.fnt");
 
     }
 
@@ -240,31 +239,31 @@ public class PantallaCarga extends Pantalla {
         if(manager.update()) {
             switch (sigPantalla) {
                 case PLAYHIST3:
-                    juego.setScreen(new PantallaPlayHist3(juego));
+                    juego.setScreen(new mx.itesm.proyecto.PantallaPlayHist3(juego));
                     break;
                 case PLAYHIST:
-                    juego.setScreen(new PantallaPlayHist(juego));
+                    juego.setScreen(new mx.itesm.proyecto.PantallaPlayHist(juego));
                     break;
                 case MENU:
-                   juego.setScreen(new PantallaMenu(juego));
+                   juego.setScreen(new mx.itesm.proyecto.PantallaMenu(juego));
                     break;
                 case CREDITOS:
-                    juego.setScreen(new PantallaCreditos(juego));
+                    juego.setScreen(new mx.itesm.proyecto.PantallaCreditos(juego));
                     break;
                 case SETTS:
-                    juego.setScreen(new PantallaSettings(juego));
+                    juego.setScreen(new mx.itesm.proyecto.PantallaSettings(juego));
                     break;
                 case INSTRUCCIONES:
-                    juego.setScreen(new PantallaInstrucciones(juego));
+                    juego.setScreen(new mx.itesm.proyecto.PantallaInstrucciones(juego));
                     break;
                 case PLAYHIST2:
-                    juego.setScreen(new PantallaPlayHist2(juego));
+                    juego.setScreen(new mx.itesm.proyecto.PantallaPlayHist2(juego));
                     break;
                 case PLAYSURV:
-                    juego.setScreen(new PantallaPlaySurv(juego));
+                    juego.setScreen(new mx.itesm.proyecto.PantallaPlaySurv(juego));
                     break;
                 case NIVELES:
-                    juego.setScreen(new PantallaNiveles(juego));
+                    juego.setScreen(new mx.itesm.proyecto.PantallaNiveles(juego));
                     break;
             }
         }

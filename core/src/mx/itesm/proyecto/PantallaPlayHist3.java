@@ -1,10 +1,9 @@
-package com.siyala.nat;
+package mx.itesm.proyecto;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -41,21 +40,21 @@ public class PantallaPlayHist3 extends Pantalla {
     private boolean estaenMundoVivo=true;
 
     //Pantalla secundaria pausa
-    private Objeto botonPausa;
+    private mx.itesm.proyecto.Objeto botonPausa;
     private Texture texturaPausa;
     private boolean pausa;
     private Texture texturaContinuar;
     private Texture texturaMenu;
-    private Objeto botonContinuar;
-    private Objeto botonMenu;
+    private mx.itesm.proyecto.Objeto botonContinuar;
+    private mx.itesm.proyecto.Objeto botonMenu;
     private Sprite spriteFondo;
     private Texture texturaFondo;
-    private Objeto botonSwitch;
+    private mx.itesm.proyecto.Objeto botonSwitch;
     private Texture texturaSwitch;
 
     //Pantalla secundaria fin
     private Sprite spriteGameOv;
-    private Objeto botonPlay;
+    private mx.itesm.proyecto.Objeto botonPlay;
     private Texture texturaPlay;
     private boolean perdio;
     private Texture texturaGameOv;
@@ -74,7 +73,7 @@ public class PantallaPlayHist3 extends Pantalla {
 
     // AssetManager
     private AssetManager manager;
-    private float velociCamara=192;
+    private float velociCamara=225;
     private float distRecorrida = 0;
     private Texto texto;
     private int varAcciones;
@@ -100,21 +99,21 @@ public class PantallaPlayHist3 extends Pantalla {
 
         //BotonSwitch
         texturaSwitch= manager.get("Botones/BotonWorld1.png");/**/
-        botonSwitch = new Objeto(texturaSwitch,camara.position.x-350,camara.position.y-300);
+        botonSwitch = new mx.itesm.proyecto.Objeto(texturaSwitch,camara.position.x-350,camara.position.y-300);
 
         //cargarRecursosSiyala();
 
         //Boton Pausa
         texturaPausa=manager.get("Botones/BotonPausa1.png");
-        botonPausa=new Objeto(texturaPausa,camara.position.x+320,camara.position.y+texturaPausa.getHeight());
+        botonPausa=new mx.itesm.proyecto.Objeto(texturaPausa,camara.position.x+320,camara.position.y+texturaPausa.getHeight());
 
         //Boton Continuar
         texturaContinuar=manager.get("Botones/Continue1.png");
-        botonContinuar=new Objeto(texturaContinuar,camara.position.x, 3*(camara.position.y/2)+texturaContinuar.getHeight());
+        botonContinuar=new mx.itesm.proyecto.Objeto(texturaContinuar,camara.position.x, 3*(camara.position.y/2)+texturaContinuar.getHeight());
 
         //Boton Menu
         texturaMenu=manager.get("Botones/BotonExit1.png");
-        botonMenu=new Objeto(texturaMenu,camara.position.x,camara.position.y/2);
+        botonMenu=new mx.itesm.proyecto.Objeto(texturaMenu,camara.position.x,camara.position.y/2);
         //Fondo pausa
 
         texturaFondo=manager.get("PantallaPausa.png");/**/
@@ -126,7 +125,7 @@ public class PantallaPlayHist3 extends Pantalla {
 
         //Boton Jugar
         texturaPlay=manager.get("Botones/BotonRetry1.png");
-        botonPlay=new Objeto(texturaPlay,320,0);
+        botonPlay=new mx.itesm.proyecto.Objeto(texturaPlay,320,0);
 
 
         texturaSiyala=manager.get("siyala.png");

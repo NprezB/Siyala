@@ -1,4 +1,4 @@
-package com.siyala.nat;
+package mx.itesm.proyecto;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

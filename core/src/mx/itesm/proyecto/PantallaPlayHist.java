@@ -1,21 +1,17 @@
-package com.siyala.nat;
+package mx.itesm.proyecto;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.shaders.BaseShader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -23,10 +19,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Created by Natanael on 15/02/2017.
  */
 
-public class PantallaPlaySurv extends Pantalla {
-    public static final int ANCHO_MAPA = 840*64;
+public class PantallaPlayHist extends Pantalla {
+    public static final int ANCHO_MAPA = 124*64;
     public static final int ALTO_MAPA = 35*32;
-    private final Siyala juego;
+    private mx.itesm.proyecto.Siyala juego;
     private float posiCamara = ANCHO/2;
 
     private TiledMap mapa;
@@ -35,32 +31,27 @@ public class PantallaPlaySurv extends Pantalla {
     private OrthogonalTiledMapRenderer renderarMapa;
     private SpriteBatch batch;
 
-    private Texto texto;
-    private Texto textoMarcador;
-
     // Siyala
     private Personaje siyala;
     private Texture texturaSiyala;
 
     //Cambio de mundo
-    private boolean estaenMundoVivo=true;
+    private boolean estaenMundoVivo=false;
 
     //Pantalla secundaria pausa
-    private Objeto botonPausa;
+    private mx.itesm.proyecto.Objeto botonPausa;
     private Texture texturaPausa;
     private boolean pausa;
     private Texture texturaContinuar;
     private Texture texturaMenu;
-    private Objeto botonContinuar;
-    private Objeto botonMenu;
+    private mx.itesm.proyecto.Objeto botonContinuar;
+    private mx.itesm.proyecto.Objeto botonMenu;
     private Sprite spriteFondo;
     private Texture texturaFondo;
-    private Objeto botonSwitch;
-    private Texture texturaSwitch;
 
     //Pantalla secundaria fin
     private Sprite spriteGameOv;
-    private Objeto botonPlay;
+    private mx.itesm.proyecto.Objeto botonPlay;
     private Texture texturaPlay;
     private boolean perdio;
     private Texture texturaGameOv;
@@ -82,59 +73,56 @@ public class PantallaPlaySurv extends Pantalla {
     private AssetManager manager;
     private float velociCamara=192;
     private float distRecorrida = 0;
-    private int varAcciones;
+    private Texto texto;
+    private int identificadorAcciones;
 
-    public PantallaPlaySurv(Siyala juego) {
+    public PantallaPlayHist(mx.itesm.proyecto.Siyala juego) {
         this.juego = juego;
         manager = juego.getAssetManager();
 
-        //Carga la musica y la manda a settings para ponerle play
+
+        //Carga la musica y la manda para ponerle play
         musicaFondo = manager.get("DarkMusic.mp3");
-        effCamina=manager.get("footstep.wav");
+        effCamina = manager.get("footstep.wav");
         effBrinca=manager.get("jump.wav");
         effCamina.setLooping(true);
-        Setts.cargarMusica(musicaFondo);
+        mx.itesm.proyecto.Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
 
-        //Revisa el estatus de la musica para pausarla o reproducirla
-        Setts.ponerMusica();
-
-        //BotonSwitch
-        texturaSwitch= manager.get("Botones/BotonWorld1.png");/**/
-        botonSwitch = new Objeto(texturaSwitch,camara.position.x-350,camara.position.y-300);
-
-        //cargarRecursosSiyala();
+        //revisa si la musica esta pausada o no
+        mx.itesm.proyecto.Setts.ponerMusica();
 
         //Boton Pausa
         texturaPausa=manager.get("Botones/BotonPausa1.png");
-        botonPausa=new Objeto(texturaPausa,camara.position.x+320,camara.position.y+texturaPausa.getHeight());
+        botonPausa=new mx.itesm.proyecto.Objeto(texturaPausa,camara.position.x+320,camara.position.y+texturaPausa.getHeight());
 
         //Boton Continuar
         texturaContinuar=manager.get("Botones/Continue1.png");
-        botonContinuar=new Objeto(texturaContinuar,camara.position.x, 3*(camara.position.y/2)+texturaContinuar.getHeight());
+        botonContinuar=new mx.itesm.proyecto.Objeto(texturaContinuar,camara.position.x, 3*(camara.position.y/2)+texturaContinuar.getHeight());
 
         //Boton Menu
         texturaMenu=manager.get("Botones/BotonExit1.png");
-        botonMenu=new Objeto(texturaMenu,camara.position.x,camara.position.y/2);
+        botonMenu=new mx.itesm.proyecto.Objeto(texturaMenu,camara.position.x,camara.position.y/2);
         //Fondo pausa
 
-        texturaFondo=manager.get("PantallaPausa.png");/**/
+        texturaFondo=manager.get("PantallaPausa.png");
         spriteFondo=new Sprite(texturaFondo);
 
         //Fondo Game Over
-        texturaGameOv=manager.get("PantallaGameOver.png");/**/
+        texturaGameOv=manager.get("PantallaGameOver.png");
         spriteGameOv=new Sprite(texturaGameOv);
 
         //Boton Jugar
         texturaPlay=manager.get("Botones/BotonRetry1.png");
-        botonPlay=new Objeto(texturaPlay,320,0);
+        botonPlay=new mx.itesm.proyecto.Objeto(texturaPlay,320,0);
 
 
         texturaSiyala=manager.get("siyala.png");
         siyala = new Personaje(texturaSiyala,182,14*32);
+        //siyala.efectos(effCamina);
         cargarMapa();
 
         pausa=false;
@@ -144,13 +132,10 @@ public class PantallaPlaySurv extends Pantalla {
         // Gdx.input.setInputProcessor(escenaHUD);
 
         texto = new Texto("fuente.fnt");
-        textoMarcador = new Texto("puntuacion.fnt");
 
         Gdx.input.setInputProcessor(procesadorEntrada);
         Gdx.input.setCatchBackKey(true);
-        siyala.setDoubJump(true);
-
-        Setts.cargarMarcadorMayor();
+        siyala.setDoubJump(false);
 
     }
 
@@ -163,19 +148,9 @@ public class PantallaPlaySurv extends Pantalla {
         escenaHUD = new Stage(vistaHUD);
 
     }
-
-    private void cambiarMundo() {
-        estaenMundoVivo=!estaenMundoVivo;
-        siyala.setDoubJump(estaenMundoVivo);
-    }
-
-
-
     private void cargarMapa() {
-        mapaMundoOsc = manager.get("SurvivalF2.tmx");
-        mapa = manager.get("SurvivalF.tmx");
-
-
+        mapaMundoOsc = manager.get("Primer nivel.tmx");
+        mapa = manager.get("Primer nivel.tmx");
         batch = new SpriteBatch();
 
         renderMapaMundoOsc = new OrthogonalTiledMapRenderer(mapaMundoOsc,batch);
@@ -183,17 +158,20 @@ public class PantallaPlaySurv extends Pantalla {
         renderarMapa.setView(camara);
         renderMapaMundoOsc.setView(camara);
 
+        siyala.setDoubJump(false);
+
     }
 
     @Override
     public void render(float delta) {
-        boolean pierde = false;
         //pierde = siyala.actualizar(mapa,delta,velociCamara);
         //actualizarCamara();
         //posiCamara+=delta*velociCamara;
 
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
+
+
         //renderarMapa.setView(camara);
         // renderarMapa.render();
 
@@ -204,16 +182,26 @@ public class PantallaPlaySurv extends Pantalla {
 
         //Mapa dependiendo del estado
         if(!estaenMundoVivo) {
-            varAcciones = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
+            identificadorAcciones = siyala.actualizar(mapaMundoOsc,delta,velociCamara);
             renderMapaMundoOsc.setView(camara);
             renderMapaMundoOsc.render();
         }
 
         else if(estaenMundoVivo)
         {
-            varAcciones = siyala.actualizar(mapa,delta,velociCamara);
+            identificadorAcciones = siyala.actualizar(mapa,delta,velociCamara);
             renderarMapa.setView(camara);
             renderarMapa.render();
+        }
+
+        if(identificadorAcciones==0){
+            perdio=false;
+        }
+        if(identificadorAcciones==1){
+            perdio=true;
+        }
+        if(identificadorAcciones==2){
+            nextLevel();
         }
 
         batch.begin();
@@ -222,18 +210,12 @@ public class PantallaPlaySurv extends Pantalla {
         actualizarCamara();
         int distImprimir = ((int) distRecorrida);
         botonPausa.dibujar(batch);
-        botonSwitch.dibujar(batch);
         batch.end();
 
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.PERDIENDO){
             perdio=true;
-
-            if(distRecorrida>Setts.marcadorMayor) {
-                Setts.verificrMarcadorAlto(distRecorrida);
-                distRecorrida=Setts.marcadorMayor-1;
-            }
 
             //dibuja la pantalla de perder
             borrarPantalla();
@@ -245,15 +227,16 @@ public class PantallaPlaySurv extends Pantalla {
 
             botonPlay.actualizar(camara.position.x-290-texturaPlay.getWidth()/2,camara.position.y-250);
             botonPlay.dibujar(batch);
-            if(Setts.marcadorMayor>distImprimir)
-                distImprimir=distImprimir+1;
             texto.mostrarMensaje(batch,"SCORE: " + distImprimir,camara.position.x-320,camara.position.y+100);
 
         }
         batch.end();
 
         if(pausa){
+            //pausa el efecto de caminar
             effCamina.pause();
+            effBrinca.pause();
+
             batch.setProjectionMatrix(camara.combined);
             batch.begin();
             //borrarPantalla();
@@ -278,31 +261,20 @@ public class PantallaPlaySurv extends Pantalla {
             batch.setProjectionMatrix(camaraHUD.combined);
             batch.begin();
             texto.mostrarMensaje(batch, distImprimir + " m", camaraHUD.position.x, camaraHUD.position.y + 275);
-
-            if(distImprimir>Setts.marcadorMayor)
-                Setts.marcadorMayor = distImprimir;
-
-            textoMarcador.mostrarMensaje(batch,"High Score: "+((int)Setts.marcadorMayor)+" "+ Setts.nombreMarcadorMayor,camaraHUD.position.x,camaraHUD.position.y-265);
             batch.end();
             escenaHUD.draw();
         }
 
-        /*if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
-            juego.setScreen(new PantallaMenu(juego));
-        }*/
-        /*if (pierde){
-            juego.setScreen(new PantallaMenu(juego));
-        }*/
-    }
 
+    }
     private void ponerEfectos(){
-        if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.MOV_DERECHA && Setts.getefect() ){
+        if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.MOV_DERECHA && mx.itesm.proyecto.Setts.getefect() ){
             effCamina.play();
         }
         else {
             effCamina.pause();
             if((siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.SUBIENDO ||
-                    siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.BAJANDO) && Setts.getefect()){
+                    siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.BAJANDO) && mx.itesm.proyecto.Setts.getefect()){
                 effBrinca.play();
             }
             else{
@@ -332,7 +304,7 @@ public class PantallaPlaySurv extends Pantalla {
             posiCamara+=delta*velociCamara;
             distRecorrida+= delta*10;
             botonPausa.actualizar(camara.position.x+340,camara.position.y-texturaPausa.getHeight()+320);
-            botonSwitch.actualizar(camara.position.x-500,camara.position.y-320);
+
         }
     }
 
@@ -349,19 +321,24 @@ public class PantallaPlaySurv extends Pantalla {
     @Override
     public void dispose() {
         manager.unload("siyala.png");
-        manager.unload("SurvivalF.tmx");
+        manager.unload("Primer nivel.tmx");
         manager.unload("DarkMusic.mp3");
-        manager.unload("SurvivalF2.tmx");
+        manager.unload("Primer nivel.tmx");
         manager.unload("Botones/BotonPausa1.png");
         manager.unload("Botones/Continue1.png");
         manager.unload("Botones/BotonExit1.png");
         manager.unload("Botones/BotonRetry1.png");
-        manager.unload("Botones/BotonWorld1.png");
         manager.unload("PantallaPausa.png");
         manager.unload("PantallaGameOver.png");
-        manager.unload("jump.wav");
+        manager.unload("Botones/BotonWorld1.png");
         manager.unload("footstep.wav");
+        manager.unload("jump.wav");
 
+    }
+
+    public void nextLevel(){
+        mx.itesm.proyecto.Setts.actualizarNiveles(2);
+        juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST2));
     }
 
     private class ProcesadorEntrada implements InputProcessor
@@ -393,7 +370,7 @@ public class PantallaPlaySurv extends Pantalla {
             vHUD.set(screenX, screenY, 0);
             camaraHUD.unproject(vHUD);
 
-            if (siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.PERDIENDO&&!pausa&&!botonPausa.contiene(v)&&!botonSwitch.contiene(v)) {
+            if (siyala.getEstadoMovimiento() != Personaje.EstadoMovimiento.PERDIENDO&&!pausa&&!botonPausa.contiene(v))  {
                 if (!siyala.getDoubleJump()) {
                     if (siyala.getEstadoMovimiento() == Personaje.EstadoMovimiento.MOV_DERECHA && v.x > posiCamara) {
                         siyala.setEstadoMovimiento(Personaje.EstadoMovimiento.SUBIENDO);
@@ -411,6 +388,7 @@ public class PantallaPlaySurv extends Pantalla {
                         siyala.setOneNumJump();
                     }
                 }
+
             }
 
             if (pausa) {
@@ -432,20 +410,13 @@ public class PantallaPlaySurv extends Pantalla {
             }
             if (perdio) {
                 if (botonPlay.contiene(v)) {
-                    juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYSURV));
+                    juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST));
                 }
                 if (botonMenu.contiene(v)) {
                     juego.setScreen(new PantallaCarga(juego,Pantallas.MENU));
 
                 }
             }
-
-            if(botonSwitch.contiene(v)&&!pausa){
-                cambiarMundo();
-            }
-            /*else{
-                juego.setScreen(new PantallaMenu(juego));
-            }*/
 
             return true;
         }
@@ -472,6 +443,8 @@ public class PantallaPlaySurv extends Pantalla {
         public boolean scrolled(int amount) {
             return false;
         }
+
+
     }
 
 

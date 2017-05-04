@@ -1,4 +1,4 @@
-package com.siyala.nat;
+package mx.itesm.proyecto;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -57,12 +57,12 @@ public class PantallaSettings implements Screen {
         this.juego=juego;
         manager=juego.getAssetManager();
         musicaFondo=manager.get("DarkMusic.mp3");
-        Setts.cargarMusica(musicaFondo);
+        mx.itesm.proyecto.Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
-        Setts.ponerMusica();
+        mx.itesm.proyecto.Setts.ponerMusica();
         crearCamara();
         cargarTexturas();
         crearObjetos();
@@ -100,7 +100,7 @@ public class PantallaSettings implements Screen {
         //Evento del Boton Musica
         btnMusica.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
-                Setts.cambiarEstatusMusica();
+                mx.itesm.proyecto.Setts.cambiarEstatusMusica();
 
             }
         });
@@ -116,7 +116,7 @@ public class PantallaSettings implements Screen {
         //Evento del Boton Sonido
         btnSonido.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                Setts.cambiarEstatusEfec();
+                mx.itesm.proyecto.Setts.cambiarEstatusEfec();
 
             }
 
