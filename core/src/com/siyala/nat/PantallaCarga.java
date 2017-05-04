@@ -168,7 +168,6 @@ public class PantallaCarga extends Pantalla {
         manager.load("Botones/BotonWorld1.png",Texture.class);
 
         //cargar los recursos de la pausa
-        manager.load("BotonPausa.png",Texture.class);
         manager.load("Botones/BotonPausa1.png",Texture.class);
         manager.load("Botones/Continue1.png",Texture.class);
         manager.load("Botones/BotonExit1.png",Texture.class);

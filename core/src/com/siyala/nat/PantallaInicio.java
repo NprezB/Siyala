@@ -37,8 +37,6 @@ public class PantallaInicio extends Pantalla {
         spriteLogo.setScale(escala, .6f);
     }
 
-
-
     @Override
     public void render(float delta) {
         borrarPantalla(1,0.55f,0);
