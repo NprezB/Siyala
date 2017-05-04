@@ -1,4 +1,4 @@
-package mx.itesm.proyecto;
+package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

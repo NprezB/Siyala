@@ -1,4 +1,4 @@
-package mx.itesm.proyecto;
+package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -46,12 +46,12 @@ public class PantallaCreditos implements Screen {
         this.juego = juego;
         manager=juego.getAssetManager();
         musicaFondo=manager.get("DarkMusic.mp3");
-        mx.itesm.proyecto.Setts.cargarMusica(musicaFondo);
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
-        mx.itesm.proyecto.Setts.ponerMusica();
+        Setts.ponerMusica();
         crearCamara();
         cargarTexturas();
         crearObjetos();
@@ -73,7 +73,7 @@ public class PantallaCreditos implements Screen {
         //Evento del Boton Salir
         btnSalir.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
-                juego.setScreen(new PantallaCarga(juego, mx.itesm.proyecto.Pantallas.MENU));
+                juego.setScreen(new PantallaCarga(juego, Pantallas.MENU));
             }
 
         });

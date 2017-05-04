@@ -1,4 +1,4 @@
-package mx.itesm.proyecto;
+package com.siyala.nat;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;

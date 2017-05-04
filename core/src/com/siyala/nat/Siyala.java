@@ -1,4 +1,4 @@
-package mx.itesm.proyecto;
+package com.siyala.nat;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;

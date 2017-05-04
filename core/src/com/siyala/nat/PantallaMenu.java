@@ -1,4 +1,4 @@
-package mx.itesm.proyecto;
+package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -57,14 +57,14 @@ public class PantallaMenu implements Screen {
         this.juego = siyala;
         manager=juego.getAssetManager();
         musicaFondo=manager.get("DarkMusic.mp3");
-        mx.itesm.proyecto.Setts.cargarMusica(musicaFondo);
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
         crearCamara();
         cargarTexturas();
-        mx.itesm.proyecto.Setts.ponerMusica();
+        Setts.ponerMusica();
         crearObjetos();
         Gdx.input.setCatchBackKey(false);
     }
@@ -88,7 +88,7 @@ public class PantallaMenu implements Screen {
         btnInstr.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
 
-                juego.setScreen(new PantallaCarga(juego, mx.itesm.proyecto.Pantallas.INSTRUCCIONES));
+                juego.setScreen(new PantallaCarga(juego, Pantallas.INSTRUCCIONES));
             }
         });
 
@@ -103,7 +103,7 @@ public class PantallaMenu implements Screen {
         //Evento del boton
         btnSetts.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                juego.setScreen(new PantallaCarga(juego, mx.itesm.proyecto.Pantallas.SETTS));
+                juego.setScreen(new PantallaCarga(juego, Pantallas.SETTS));
             }
         });
 
@@ -118,7 +118,7 @@ public class PantallaMenu implements Screen {
         btnPlayHist.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y){
 
-                juego.setScreen(new PantallaCarga(juego, mx.itesm.proyecto.Pantallas.CREDITOS));
+                juego.setScreen(new PantallaCarga(juego, Pantallas.CREDITOS));
             }
         });
 
@@ -132,7 +132,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Play Surv
         btnPlaySurv.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                juego.setScreen(new PantallaCarga(juego, mx.itesm.proyecto.Pantallas.PLAYSURV));
+                juego.setScreen(new PantallaCarga(juego, Pantallas.PLAYSURV));
             }
 
         });
@@ -147,7 +147,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Jugar Historia
         btnCred.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
-                juego.setScreen(new PantallaCarga(juego, mx.itesm.proyecto.Pantallas.NIVELES));
+                juego.setScreen(new PantallaCarga(juego, Pantallas.NIVELES));
             }
 
         });
