@@ -84,10 +84,16 @@ public class PantallaPlayHist3 extends Pantalla {
     public PantallaPlayHist3(Siyala juego) {
         this.juego = juego;
         manager = juego.getAssetManager();
+        //Carga la musica y la manda a Settings
+        musicaFondo = manager.get("DarkMusic.mp3");
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
+
+        //Revisa el estatus de la musica para ponerle play o pausarla
+        Setts.ponerMusica();
 
         //BotonSwitch
         texturaSwitch= manager.get("Botones/BotonWorld1.png");/**/
@@ -153,32 +159,11 @@ public class PantallaPlayHist3 extends Pantalla {
         siyala.setDoubJump(estaenMundoVivo);
     }
 
-    /*private void cargarRecursosSiyala() {
-        manager.load("Segundo Nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
-        manager.load("siyala.png", Texture.class);
-        manager.load("Primer nivel.tmx", TiledMap.class);
-        manager.load("DarkMusic.mp3", Music.class);
 
-        //cargar los recursos de la pausa
-        manager.load("BotonPausa.png",Texture.class);
-        manager.load("ContinueBoton.png",Texture.class);
-        manager.load("ExitBoton.png",Texture.class);
-        manager.load("FondoPausa.png",Texture.class);
-
-        manager.load("BotonRetry.png",Texture.class);
-
-        manager.finishLoading();
-
-    }*/
 
     private void cargarMapa() {
         mapaMundoOsc = manager.get("TercerNivel2.tmx");
         mapa = manager.get("TercerNivel.tmx");
-        musicaFondo = manager.get("DarkMusic.mp3");
-
-
-        musicaFondo.setLooping(true);
-        musicaFondo.play();
 
         batch = new SpriteBatch();
 

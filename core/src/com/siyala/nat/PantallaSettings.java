@@ -1,8 +1,10 @@
 package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +33,12 @@ public class PantallaSettings implements Screen {
     private OrthographicCamera camara;
     private Viewport vista;
 
+
+    //para controlar la musica
+    private static Preferences setting;
+    private boolean music;
+    private boolean eff;
+
     //Texturas
     private Texture texturaFondoSetts;
     private Texture texturaBotonMusica;
@@ -40,19 +48,25 @@ public class PantallaSettings implements Screen {
     private Texture texturaBotonMusica2;
     private Texture texturaBotonSonidos2;
 
+    private Music musicaFondo;
+
     //Escenas
     private Stage escena;
     private SpriteBatch batch;
     public PantallaSettings(Siyala juego) {
         this.juego=juego;
         manager=juego.getAssetManager();
+        musicaFondo=manager.get("DarkMusic.mp3");
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
+        Setts.ponerMusica();
         crearCamara();
         cargarTexturas();
         crearObjetos();
+
 
     }
 
@@ -86,8 +100,7 @@ public class PantallaSettings implements Screen {
         //Evento del Boton Musica
         btnMusica.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y){
-
-
+                Setts.cambiarEstatusMusica();
 
             }
         });
@@ -103,6 +116,7 @@ public class PantallaSettings implements Screen {
         //Evento del Boton Sonido
         btnSonido.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x, float y){
+                Setts.cambiarEstatusEfec();
 
             }
 
@@ -126,6 +140,7 @@ public class PantallaSettings implements Screen {
     }
 
     private void cargarTexturas() {
+
         texturaFondoSetts=manager.get("PantallaSettings.png");
         texturaBotonMusica=manager.get("Botones/BotonMusic1.png");
         texturaBotonMusica2=manager.get("Botones/BotonMusic2.png");
@@ -133,6 +148,7 @@ public class PantallaSettings implements Screen {
         texturaBotonSonidos2=manager.get("Botones/BotonSounds2.png");
         texturaBotonMenu=manager.get("Botones/BotonBack1.png");
         texturaBotonMenu2=manager.get("Botones/BotonBack2.png");
+
     }
 
     private void crearCamara() {
@@ -182,6 +198,7 @@ public class PantallaSettings implements Screen {
         manager.unload("BotonsSounds.png");
         manager.unload("Botones/BotonBack1.png");
         manager.unload("Botones/BotonBack2.png");
+        manager.unload("DarkMusic.mp3");
 
     }
 }

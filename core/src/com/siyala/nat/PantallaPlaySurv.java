@@ -89,10 +89,15 @@ public class PantallaPlaySurv extends Pantalla {
     public PantallaPlaySurv(Siyala juego) {
         this.juego = juego;
         manager = juego.getAssetManager();
+
+        musicaFondo=manager.get("DarkMusic.mp3");
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
+
+        Setts.ponerMusica();
 
         //BotonSwitch
         texturaSwitch= manager.get("Botones/BotonWorld1.png");/**/
@@ -192,11 +197,6 @@ public class PantallaPlaySurv extends Pantalla {
     private void cargarMapa() {
         mapaMundoOsc = manager.get("Survival.tmx");
         mapa = manager.get("SegundoNivel.tmx");
-        musicaFondo = manager.get("DarkMusic.mp3");
-
-
-        musicaFondo.setLooping(true);
-        musicaFondo.play();
 
         batch = new SpriteBatch();
 

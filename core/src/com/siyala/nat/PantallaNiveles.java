@@ -3,6 +3,7 @@ package com.siyala.nat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,6 +29,8 @@ public class PantallaNiveles implements Screen {
     private final Siyala juego;
     private final AssetManager manager;
 
+    private Music musicaFondo;
+
     //camara y vista
     private OrthographicCamera camara;
     private Viewport vista;
@@ -49,10 +52,15 @@ public class PantallaNiveles implements Screen {
     public PantallaNiveles(Siyala siyala) {
         this.juego = siyala;
         manager=juego.getAssetManager();
+        musicaFondo=manager.get("DarkMusic.mp3");
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
+
+        Setts.ponerMusica();
+
         crearCamara();
         cargarTexturas();
         crearObjetos();

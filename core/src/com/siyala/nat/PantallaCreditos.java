@@ -3,6 +3,7 @@ package com.siyala.nat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -38,15 +39,19 @@ public class PantallaCreditos implements Screen {
     //Escenas
     private Stage escena;
     private SpriteBatch batch;
+    private Music musicaFondo;
 
     //Manejo de pantallas
     public PantallaCreditos(Siyala juego) {
         this.juego = juego;
         manager=juego.getAssetManager();
+        musicaFondo=manager.get("DarkMusic.mp3");
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
+        Setts.ponerMusica();
         crearCamara();
         cargarTexturas();
         crearObjetos();
@@ -126,6 +131,8 @@ public class PantallaCreditos implements Screen {
         manager.unload("PantallaCreditos.png");
         manager.unload("Botones/BotonBack1.png");
         manager.unload("Botones/BotonBack2.png");
+
+        manager.unload("DarkMusic.mp3");
 
     }
 }

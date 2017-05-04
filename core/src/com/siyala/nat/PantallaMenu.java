@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -47,6 +48,8 @@ public class PantallaMenu implements Screen {
     private Texture texturaBotonInstrPress;
     private Texture texturaBotonSettsPress;
 
+    private Music musicaFondo;
+
     //Escenas
     private Stage escena;
     private SpriteBatch batch;
@@ -55,12 +58,15 @@ public class PantallaMenu implements Screen {
     public PantallaMenu(Siyala siyala) {
         this.juego = siyala;
         manager=juego.getAssetManager();
+        musicaFondo=manager.get("DarkMusic.mp3");
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
         crearCamara();
         cargarTexturas();
+        Setts.ponerMusica();
         crearObjetos();
         Gdx.input.setCatchBackKey(false);
     }
@@ -99,7 +105,6 @@ public class PantallaMenu implements Screen {
         //Evento del boton
         btnSetts.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-
                 juego.setScreen(new PantallaCarga(juego,Pantallas.SETTS));
             }
         });
@@ -114,6 +119,7 @@ public class PantallaMenu implements Screen {
         //Evento del Boton Creditos
         btnPlayHist.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y){
+
                 juego.setScreen(new PantallaCarga(juego,Pantallas.CREDITOS));
             }
         });
@@ -205,7 +211,7 @@ public class PantallaMenu implements Screen {
 
     @Override
     public void dispose() {
-        escena.dispose();
+
         manager.unload("FondoMenuInicio.png");
         manager.unload("Botones/BotonCreditos1.png");
         manager.unload("Botones/BotonPlay1.png");
@@ -217,6 +223,8 @@ public class PantallaMenu implements Screen {
         manager.unload("Botones/BotonSurvival2.png");
         manager.unload("Botones/BotonSettings2.png");
         manager.unload("Botones/BotonInstructions2.png");
+        manager.unload("DarkMusic.mp3");
+        escena.dispose();
 
     }
 }

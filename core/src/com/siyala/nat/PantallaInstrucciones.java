@@ -3,6 +3,7 @@ package com.siyala.nat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,6 +32,8 @@ public class PantallaInstrucciones extends Pantalla {
     private OrthographicCamera camara;
     private Viewport vista;
 
+    private Music musicaFondo;
+
     //Escenas
     private Stage escena;
     private SpriteBatch batch;
@@ -38,10 +41,15 @@ public class PantallaInstrucciones extends Pantalla {
     public PantallaInstrucciones(Siyala juego) {
         this.juego = juego;
         this.manager=juego.getAssetManager();
+        //Carga la musica y la manda a Settings
+        musicaFondo=manager.get("DarkMusic.mp3");
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
+        //Revisa el estatus de la musica
+        Setts.ponerMusica();
         crearCamara();
         cargarTexturas();
         batch = new SpriteBatch();
@@ -88,6 +96,7 @@ public class PantallaInstrucciones extends Pantalla {
         manager.unload("PantallaInstruc1.png");
         manager.unload("PantallaInstruc2.png");
         manager.unload("PantallaInstruc3.png");
+        manager.unload("DarkMusic.mp3");
 
     }
 

@@ -80,12 +80,18 @@ public class PantallaPlayHist extends Pantalla {
     public PantallaPlayHist(Siyala juego) {
         this.juego = juego;
         manager = juego.getAssetManager();
+
+
+        //Carga la musica y la manda para ponerle play
+        musicaFondo = manager.get("DarkMusic.mp3");
+        Setts.cargarMusica(musicaFondo);
     }
 
     @Override
     public void show() {
 
-        //cargarRecursosSiyala();
+        //revisa si la musica esta pausada o no
+        Setts.ponerMusica();
 
         //Boton Pausa
         texturaPausa=manager.get("Botones/BotonPausa1.png");
@@ -142,10 +148,6 @@ public class PantallaPlayHist extends Pantalla {
     private void cargarMapa() {
         mapaMundoOsc = manager.get("Primer nivel.tmx");
         mapa = manager.get("Primer nivel.tmx");
-        musicaFondo = manager.get("DarkMusic.mp3");
-        musicaFondo.setLooping(true);
-        musicaFondo.play();
-
         batch = new SpriteBatch();
 
         renderMapaMundoOsc = new OrthogonalTiledMapRenderer(mapaMundoOsc,batch);

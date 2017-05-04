@@ -73,6 +73,7 @@ public class PantallaCarga extends Pantalla {
     //metodos para cargar recursos de cada pantalla
     private void cargarRecursosMenu() {
         manager.load("FondoMenuInicio.png",Texture.class);
+
         manager.load("Botones/BotonCreditos1.png",Texture.class);
         manager.load("Botones/BotonCreditos2.png",Texture.class);
         manager.load("Botones/BotonPlay1.png",Texture.class);
@@ -84,12 +85,16 @@ public class PantallaCarga extends Pantalla {
         manager.load("Botones/BotonInstructions1.png",Texture.class);
         manager.load("Botones/BotonInstructions2.png",Texture.class);
 
+        manager.load("DarkMusic.mp3", Music.class);
+
 
     }
     private void cargarRecursosCreditos() {
         manager.load("PantallaCreditos.png",Texture.class);
         manager.load("Botones/BotonBack1.png",Texture.class);
         manager.load("Botones/BotonBack2.png",Texture.class);
+
+        manager.load("DarkMusic.mp3", Music.class);
 
     }
     private void cargarRecursosSetts() {
@@ -101,18 +106,21 @@ public class PantallaCarga extends Pantalla {
         manager.load("Botones/BotonBack1.png",Texture.class);
         manager.load("Botones/BotonBack2.png",Texture.class);
 
+        manager.load("DarkMusic.mp3", Music.class);
+
     }
     private void cargarRecursosInst() {
         manager.load("PantallaInstruc1.png",Texture.class);
         manager.load("PantallaInstruc2.png",Texture.class);
         manager.load("PantallaInstruc3.png",Texture.class);
 
+        manager.load("DarkMusic.mp3", Music.class);
+
     }
     private void cargarRecursosPlayHist1() {
         manager.load("Primer nivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
         manager.load("siyala.png", Texture.class);
         manager.load("Primer nivel.tmx", TiledMap.class);
-        manager.load("DarkMusic.mp3", Music.class);
         manager.load("Botones/BotonWorld1.png",Texture.class);
 
         //cargar los recursos de la pausa
@@ -123,6 +131,8 @@ public class PantallaCarga extends Pantalla {
         manager.load("PantallaGameOver.png",Texture.class);
 
         manager.load("Botones/BotonRetry1.png",Texture.class);
+
+        manager.load("DarkMusic.mp3", Music.class);
 
 
     }
@@ -142,8 +152,9 @@ public class PantallaCarga extends Pantalla {
 
         manager.load("Botones/BotonRetry1.png",Texture.class);
 
-
+        manager.load("DarkMusic.mp3", Music.class);
     }
+
     private void cargarRecursosPlayHist3() {
         manager.load("TercerNivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
         manager.load("TercerNivel2.tmx",TiledMap.class);//"Primer nivelosc.tmx"
@@ -160,6 +171,8 @@ public class PantallaCarga extends Pantalla {
         manager.load("PantallaGameOver.png",Texture.class);
 
         manager.load("Botones/BotonRetry1.png",Texture.class);
+
+        manager.load("DarkMusic.mp3", Music.class);
 
     }
 
@@ -178,6 +191,8 @@ public class PantallaCarga extends Pantalla {
         manager.load("PantallaPausa.png",Texture.class);
         manager.load("PantallaGameOver.png",Texture.class);
         manager.load("Botones/BotonRetry1.png",Texture.class);
+
+        manager.load("DarkMusic.mp3", Music.class);
     }
 
     private void cargarRecursosNiveles() {
@@ -188,6 +203,8 @@ public class PantallaCarga extends Pantalla {
         manager.load("Botones/BotonNivel2_2.png",Texture.class);
         manager.load("Botones/BotonNivel3_1.png",Texture.class);
         manager.load("Botones/BotonNivel3_2.png",Texture.class);
+
+        manager.load("DarkMusic.mp3", Music.class);
     }
 
 
