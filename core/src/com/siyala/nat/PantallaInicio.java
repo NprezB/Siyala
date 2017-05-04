@@ -32,9 +32,9 @@ public class PantallaInicio extends Pantalla {
     //para la proporcion
     private void escalarLogo() {
         float factorCamara = ANCHO / ALTO;
-        float factorPantalla = 1.0f*Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-        float escala = factorCamara / factorPantalla;
-        spriteLogo.setScale(escala, 1);
+        float factorPantalla = 1f*Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+        float escala = (factorCamara) / (factorPantalla*1.6f);
+        spriteLogo.setScale(escala, .6f);
     }
 
 
