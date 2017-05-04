@@ -40,10 +40,6 @@ public class PantallaPlayHist2 extends Pantalla {
 
     //Cambio de mundo
     private boolean estaenMundoVivo=true;
-    private float SwitchCooldownTime=0;
-    private float TiempoSwitch=0;
-    private float largoBoton;
-    private float altoBoton;
 
     //Pantalla secundaria pausa
     private Objeto botonPausa;

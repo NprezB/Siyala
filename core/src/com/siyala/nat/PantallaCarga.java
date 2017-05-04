@@ -177,10 +177,12 @@ public class PantallaCarga extends Pantalla {
     }
 
     private void cargarRecursosPlaySurv() {
+
         manager.load("siyala.png", Texture.class);
-        manager.load("Survival.tmx", TiledMap.class);
+        manager.load("Survival.tmx",TiledMap.class);
+        manager.load("SurvivalOsc.tmx",TiledMap.class);
         manager.load("DarkMusic.mp3", Music.class);
-        manager.load("SegundoNivel.tmx",TiledMap.class);//"Primer nivelosc.tmx"
+        //"Primer nivelosc.tmx"
 
         manager.load("Botones/BotonWorld1.png",Texture.class);
 
