@@ -61,10 +61,12 @@ public class PantallaCarga extends Pantalla {
                 cargarRecursosPlayHist1();
             case PLAYHIST2:
                 cargarRecursosPlayHist2();
-            //case PLAYHIST3:
-                //cargarRecursosPlayHist3();
+            case PLAYHIST3:
+                cargarRecursosPlayHist3();
             case PLAYSURV:
                 cargarRecursosPlaySurv();
+            case NIVELES:
+                cargarRecursosNiveles();
         }
     }
 
@@ -173,8 +175,17 @@ public class PantallaCarga extends Pantalla {
         manager.load("Botones/BotonExit1.png",Texture.class);
         manager.load("PantallaPausa.png",Texture.class);
         manager.load("PantallaGameOver.png",Texture.class);
-
         manager.load("Botones/BotonRetry1.png",Texture.class);
+    }
+
+    private void cargarRecursosNiveles() {
+        manager.load("PantallaStorymode.png",Texture.class);
+        manager.load("Botones/BotonNivel1_1.png",Texture.class);
+        manager.load("Botones/BotonNivel1_2.png",Texture.class);
+        manager.load("Botones/BotonNivel2_1.png",Texture.class);
+        manager.load("Botones/BotonNivel2_2.png",Texture.class);
+        manager.load("Botones/BotonNivel3_1.png",Texture.class);
+        manager.load("Botones/BotonNivel3_2.png",Texture.class);
     }
 
 
@@ -199,9 +210,9 @@ public class PantallaCarga extends Pantalla {
     private void actualizarCargaRecursos() {
         if(manager.update()) {
             switch (sigPantalla) {
-               // case PLAYHIST3:
-                   // juego.setScreen(new PantallaPlayHist3(juego));
-                    //break;
+                case PLAYHIST3:
+                    juego.setScreen(new PantallaPlayHist3(juego));
+                    break;
                 case PLAYHIST:
                     juego.setScreen(new PantallaPlayHist(juego));
                     break;
@@ -222,6 +233,9 @@ public class PantallaCarga extends Pantalla {
                     break;
                 case PLAYSURV:
                     juego.setScreen(new PantallaPlaySurv(juego));
+                    break;
+                case NIVELES:
+                    juego.setScreen(new PantallaNiveles(juego));
                     break;
             }
         }
