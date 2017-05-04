@@ -100,7 +100,9 @@ public class PantallaNiveles implements Screen {
         btnNiv2.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
 
-                juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST2));
+                if(Setts.cargarNiveles()>=2){
+                    juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST2));
+                }
             }
         });
 
@@ -114,7 +116,9 @@ public class PantallaNiveles implements Screen {
         //Evento del Boton Nivel3
         btnNiv3.addListener(new ClickListener(){
             public void clicked(InputEvent event,float x,float y){
-                juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST3));
+                if(Setts.cargarNiveles()>=3){
+                    juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST3));
+                }
             }
         });
 

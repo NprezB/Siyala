@@ -16,6 +16,7 @@ public class Setts {
     protected static float marcadorMayor;
     protected static String nombreMarcadorMayor;
     private static Preferences setting;
+    private static int lvl;
 
     private static float finalDistRecorrida=0;
 
@@ -23,6 +24,7 @@ public class Setts {
         setting= Gdx.app.getPreferences("setting");
         musica=setting.getBoolean("musica",true);
         eff=setting.getBoolean("efectos",true);
+        lvl=setting.getInteger("nivel",0);
         marcadorMayor = setting.getFloat("mayor",0);
         nombreMarcadorMayor = setting.getString("nombre", "");
     }
@@ -90,6 +92,16 @@ public class Setts {
     cargarSetts();
         marcadorMayor = setting.getFloat("mayor",0);
         nombreMarcadorMayor = setting.getString("nombre", "");
+    }
+    public static int cargarNiveles(){
+        cargarSetts();
+        lvl=setting.getInteger("nivel",0);
+        return lvl;
+    }
+    public static void actualizarNiveles(int nivel){
+        lvl=nivel;
+        setting.putInteger("nivel",lvl);
+        setting.flush();
     }
 
 

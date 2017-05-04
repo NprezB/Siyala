@@ -341,6 +341,7 @@ public class PantallaPlayHist extends Pantalla {
     }
 
     public void nextLevel(){
+        Setts.actualizarNiveles(2);
         juego.setScreen(new PantallaCarga(juego,Pantallas.PLAYHIST2));
     }
 
