@@ -3,6 +3,7 @@ package com.siyala.nat;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -133,6 +134,8 @@ public class PantallaCarga extends Pantalla {
         manager.load("Botones/BotonRetry1.png",Texture.class);
 
         manager.load("DarkMusic.mp3", Music.class);
+        manager.load("footstep.wav", Music.class);
+        manager.load("jump.wav",Music.class);
 
 
     }
@@ -153,6 +156,8 @@ public class PantallaCarga extends Pantalla {
         manager.load("Botones/BotonRetry1.png",Texture.class);
 
         manager.load("DarkMusic.mp3", Music.class);
+        manager.load("footstep.wav", Music.class);
+        manager.load("jump.wav",Music.class);
     }
 
     private void cargarRecursosPlayHist3() {
@@ -173,6 +178,8 @@ public class PantallaCarga extends Pantalla {
         manager.load("Botones/BotonRetry1.png",Texture.class);
 
         manager.load("DarkMusic.mp3", Music.class);
+        manager.load("footstep.wav", Music.class);
+        manager.load("jump.wav",Music.class);
 
     }
 
@@ -195,6 +202,8 @@ public class PantallaCarga extends Pantalla {
         manager.load("Botones/BotonRetry1.png",Texture.class);
 
         manager.load("DarkMusic.mp3", Music.class);
+        manager.load("footstep.wav", Music.class);
+        manager.load("jump.wav",Music.class);
     }
 
     private void cargarRecursosNiveles() {

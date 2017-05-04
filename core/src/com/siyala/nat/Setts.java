@@ -17,6 +17,8 @@ public class Setts {
     protected static String nombreMarcadorMayor;
     private static Preferences setting;
 
+    private static float finalDistRecorrida=0;
+
     public static void cargarSetts(){
         setting= Gdx.app.getPreferences("setting");
         musica=setting.getBoolean("musica",true);
@@ -29,6 +31,8 @@ public class Setts {
         musicaFondo=musica;
         musicaFondo.setLooping(true);
     }
+
+
     public static void cambiarEstatusMusica(){
         cargarSetts();
         musica=!musica;
@@ -46,6 +50,7 @@ public class Setts {
         }
     }
 
+
     public static void cambiarEstatusEfec(){
         cargarSetts();
         eff=!eff;
@@ -62,7 +67,7 @@ public class Setts {
 
     public static void verificrMarcadorAlto(float distRecorrida)
     {
-        final float finalDistRecorrida = distRecorrida;
+        finalDistRecorrida = distRecorrida;
         Input.TextInputListener listener = new Input.TextInputListener() {
             @Override
             public void input(String text) {

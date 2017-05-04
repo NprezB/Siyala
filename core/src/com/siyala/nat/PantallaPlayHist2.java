@@ -66,6 +66,8 @@ public class PantallaPlayHist2 extends Pantalla {
 
     // Música
     private Music musicaFondo;  // Sonidos largos
+    private Music effCamina;
+    private Music effBrinca;
 
     //HUDs
     private OrthographicCamera camaraHUD;
@@ -85,6 +87,9 @@ public class PantallaPlayHist2 extends Pantalla {
 
         //Carga la musica y la manda a settings para ponerle play
         musicaFondo = manager.get("DarkMusic.mp3");
+        effCamina = manager.get("footstep.wav");
+        effBrinca=manager.get("jump.wav");
+        effCamina.setLooping(true);
         Setts.cargarMusica(musicaFondo);
     }
 
@@ -188,6 +193,7 @@ public class PantallaPlayHist2 extends Pantalla {
 
         if(!pausa){
             actualizarValores(delta);
+            ponerEfectos();
         }
 
         //Mapa dependiendo del estado
@@ -244,6 +250,9 @@ public class PantallaPlayHist2 extends Pantalla {
         batch.end();
 
         if(pausa){
+            effCamina.pause();
+            effBrinca.pause();
+
             batch.setProjectionMatrix(camara.combined);
             batch.begin();
             //borrarPantalla();
@@ -278,6 +287,22 @@ public class PantallaPlayHist2 extends Pantalla {
         /*if (pierde){
             juego.setScreen(new PantallaMenu(juego));
         }*/
+    }
+
+    private void ponerEfectos(){
+        if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.MOV_DERECHA && Setts.getefect() ){
+            effCamina.play();
+        }
+        else {
+            effCamina.pause();
+            if((siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.SUBIENDO ||
+                    siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.BAJANDO) && Setts.getefect()){
+                effBrinca.play();
+            }
+            else{
+                effBrinca.pause();
+            }
+        }
     }
 
     private void actualizarCamara() {
@@ -328,6 +353,8 @@ public class PantallaPlayHist2 extends Pantalla {
         manager.unload("Botones/BotonWorld1.png");
         manager.unload("PantallaPausa.png");
         manager.unload("PantallaGameOver.png");
+        manager.unload("footstep.wav");
+        manager.unload("jump.wav");
 
     }
 

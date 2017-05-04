@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -64,6 +65,8 @@ public class PantallaPlayHist extends Pantalla {
 
     // Música
     private Music musicaFondo;  // Sonidos largos
+    private Music effCamina;
+    private Music effBrinca;
 
     //HUDs
     private OrthographicCamera camaraHUD;
@@ -84,6 +87,9 @@ public class PantallaPlayHist extends Pantalla {
 
         //Carga la musica y la manda para ponerle play
         musicaFondo = manager.get("DarkMusic.mp3");
+        effCamina = manager.get("footstep.wav");
+        effBrinca=manager.get("jump.wav");
+        effCamina.setLooping(true);
         Setts.cargarMusica(musicaFondo);
     }
 
@@ -120,6 +126,7 @@ public class PantallaPlayHist extends Pantalla {
 
         texturaSiyala=manager.get("siyala.png");
         siyala = new Personaje(texturaSiyala,182,14*32);
+        //siyala.efectos(effCamina);
         cargarMapa();
 
         pausa=false;
@@ -167,10 +174,13 @@ public class PantallaPlayHist extends Pantalla {
 
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
+
+
         //renderarMapa.setView(camara);
         // renderarMapa.render();
 
         if(!pausa){
+            ponerEfectos();
             actualizarValores(delta);
         }
 
@@ -227,6 +237,10 @@ public class PantallaPlayHist extends Pantalla {
         batch.end();
 
         if(pausa){
+            //pausa el efecto de caminar
+            effCamina.pause();
+            effBrinca.pause();
+
             batch.setProjectionMatrix(camara.combined);
             batch.begin();
             //borrarPantalla();
@@ -255,12 +269,22 @@ public class PantallaPlayHist extends Pantalla {
             escenaHUD.draw();
         }
 
-        /*if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
-            juego.setScreen(new PantallaMenu(juego));
-        }*/
-        /*if (pierde){
-            juego.setScreen(new PantallaMenu(juego));
-        }*/
+
+    }
+    private void ponerEfectos(){
+        if(siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.MOV_DERECHA && Setts.getefect() ){
+            effCamina.play();
+        }
+        else {
+            effCamina.pause();
+            if((siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.SUBIENDO ||
+                    siyala.getEstadoMovimiento()== Personaje.EstadoMovimiento.BAJANDO) && Setts.getefect()){
+                effBrinca.play();
+            }
+            else{
+                effBrinca.pause();
+            }
+        }
     }
 
     private void actualizarCamara() {
@@ -311,6 +335,8 @@ public class PantallaPlayHist extends Pantalla {
         manager.unload("PantallaPausa.png");
         manager.unload("PantallaGameOver.png");
         manager.unload("Botones/BotonWorld1.png");
+        manager.unload("footstep.wav");
+        manager.unload("jump.wav");
 
     }
 
@@ -420,6 +446,8 @@ public class PantallaPlayHist extends Pantalla {
         public boolean scrolled(int amount) {
             return false;
         }
+
+
     }
 
 

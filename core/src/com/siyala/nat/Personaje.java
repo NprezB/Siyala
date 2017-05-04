@@ -1,6 +1,8 @@
 package com.siyala.nat;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -27,6 +29,14 @@ public class Personaje extends Objeto
     public float y; //La posición origen de salto, modificada cada vez que se aterriza
     private int numJump = 1;
     public boolean flagDesap;
+
+    private Music effCamina;
+
+    /*public void efectos(Music eff){
+        effCamina=eff;
+        effCamina.setLooping(true);
+        effCamina.pause();
+    }*/
 
     // Recibe una imagen con varios frames (ver marioSprite.png)
     public Personaje(Texture textura, float x, float y) {
@@ -94,6 +104,7 @@ public class Personaje extends Objeto
         int y2= (int) (((sprite.getY()+30)/32));
         //TiledMapTileLayer.Cell arribaIzquierda = capa.getCell(x2,y2);
         if (estadoMovimiento==EstadoMovimiento.BAJANDO){
+            //effCamina.pause();
             TiledMapTileLayer.Cell abajoDerecha = capa.getCell(x1,y1);
             TiledMapTileLayer.Cell abajoIzquierda = capa.getCell(x2,y1);
             if (abajoDerecha != null) {TiledMapTileLayer.Cell arribaDerecha = capa.getCell(x1,y2);
@@ -136,6 +147,7 @@ public class Personaje extends Objeto
             }
         }
         if (estadoMovimiento==EstadoMovimiento.SUBIENDO){
+            //effCamina.pause();
             TiledMapTileLayer.Cell abajoDerecha = capa.getCell(x1,y1);
             TiledMapTileLayer.Cell arribaDerecha = capa.getCell(x1,y2);
             TiledMapTileLayer.Cell arribaIzquierda = capa.getCell(x2,y2);
@@ -174,6 +186,7 @@ public class Personaje extends Objeto
         }
 
         if ( estadoMovimiento== EstadoMovimiento.MOV_DERECHA) {
+
             flagDesap=true;
             sprite.setColor(1,1,1,1);
             // Obtiene el bloque del lado derecho. Asigna null si puede pasar.
@@ -185,8 +198,10 @@ public class Personaje extends Objeto
             TiledMapTileLayer.Cell celdaDerecha = capa.getCell(x, y);
             TiledMapTileLayer.Cell celdaAbajo1 = capa.getCell(xDown, yDown);
             TiledMapTileLayer.Cell celdaAbajo2 = capa.getCell(xDown2, yDown);
+
             if (celdaAbajo1!=null){
                 Object tipo = (String) celdaAbajo1.getTile().getProperties().get("tipo");
+                //effCamina.play();
                 if(!"pasto".equals(tipo)){
                     celdaAbajo1 = null;
                 }
@@ -198,6 +213,7 @@ public class Personaje extends Objeto
                 }
             }
             if(celdaAbajo1 == null && celdaAbajo2 == null){
+                //effCamina.pause();
                 setEstadoMovimiento(EstadoMovimiento.BAJANDO);
             }
             if (celdaDerecha != null) {
@@ -275,5 +291,7 @@ public class Personaje extends Objeto
         DESAPARECIDO,
         PERDIENDO
     }
+
+
 }
 
